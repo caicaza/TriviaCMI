@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { EncryptionService } from 'src/app/encryption.service';
 import { PuntosJugador } from 'src/app/model/PuntosJugador';
@@ -8,10 +16,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { MessageService } from 'primeng/api';
 import { ConstantsService } from 'src/app/constants.service';
 
-
-
 declare var bootstrap: any;
-
 
 @Component({
   selector: 'app-survivor-game',
@@ -19,19 +24,18 @@ declare var bootstrap: any;
   styleUrls: ['./survivor-game.component.css'],
   providers: [MessageService],
 })
-export class SurvivorGameComponent 
-implements OnInit, AfterViewInit, OnDestroy{
-    //Menjase error
-    Mensaje_error: string = 'Respuesta equivocada';
+export class SurvivorGameComponent implements OnInit, AfterViewInit, OnDestroy {
+  //Menjase error
+  Mensaje_error: string = 'Respuesta equivocada';
 
-     //Para el modal
+  //Para el modal
 
-    mostrarAlert = false;
-    mostrarWrongAlert = false;
-    modalElement: any;
-    modal: any;
+  mostrarAlert = false;
+  mostrarWrongAlert = false;
+  modalElement: any;
+  modal: any;
 
-    //Para colocar las preguntas
+  //Para colocar las preguntas
   preguntaActual: Pregunta = {
     idPregunta: 0,
     nombre: 'Mi primera Pregunta de prueba',
@@ -82,7 +86,7 @@ implements OnInit, AfterViewInit, OnDestroy{
   puedeResponder: boolean = true;
 
   //sala y usuario
-  
+
   idSala: number = 0;
   idUsuario: number = 0;
 
@@ -95,25 +99,25 @@ implements OnInit, AfterViewInit, OnDestroy{
     sala: '',
     puntaje: 23,
     tiempo: 0,
-    fechaCreacion: '',
-    fechaModificacion: '',
+    fecha_creacion: '',
+    fecha_modificacion: '',
   };
-   //TEMPORIZADOR Y SUMA DEL TIEMPO QUE SE DEMORQA EN RESPONDER
+  //TEMPORIZADOR Y SUMA DEL TIEMPO QUE SE DEMORQA EN RESPONDER
 
-   numIntervaloImg: number = 4;
-   countdown: number = 20; // Temporizador principal en segundos
- 
-   mainTimerInterval: any;
-   userClicked: boolean = false;
-   startTime: Date = new Date('2023-10-10T10:00:00');
-   userClickTime: Date = new Date('2023-10-10T10:00:00');
- 
-   tiempoDelJugador: number = 0;
-   isTimerRunning: boolean = false;
- 
-   juegoTerminado: boolean = false;
+  numIntervaloImg: number = 4;
+  countdown: number = 20; // Temporizador principal en segundos
 
-     //Tiempo 
+  mainTimerInterval: any;
+  userClicked: boolean = false;
+  startTime: Date = new Date('2023-10-10T10:00:00');
+  userClickTime: Date = new Date('2023-10-10T10:00:00');
+
+  tiempoDelJugador: number = 0;
+  isTimerRunning: boolean = false;
+
+  juegoTerminado: boolean = false;
+
+  //Tiempo
   tiempoMostrarPrimerModal: number = 3000;
   tiempoMostrarModal: number = 6000;
 
@@ -121,7 +125,6 @@ implements OnInit, AfterViewInit, OnDestroy{
   musicaFondo: HTMLAudioElement | null = null;
 
   @Input() PreguntasList: Pregunta_OpcionList[] = [];
-
 
   constructor(
     private renderer: Renderer2,
@@ -153,7 +156,7 @@ implements OnInit, AfterViewInit, OnDestroy{
     }
 
     setTimeout(() => {
-      this.mostrarModal();//ACTIVAR CUANDO TERMINES DE TESTEAR <------------
+      this.mostrarModal(); //ACTIVAR CUANDO TERMINES DE TESTEAR <------------
       //console.log("Entro");
     }, this.tiempoMostrarPrimerModal);
 
@@ -161,7 +164,6 @@ implements OnInit, AfterViewInit, OnDestroy{
 
     for (let i = 0; i < 6; i++) {
       this.listaDePreguntas.push(this.preguntaOpcionTest);
-      
     }
     //this.listaDePreguntas = this.PreguntasList;//ACTIVAR CUANDO TERMINES DE TESTEAR <------------
 
@@ -169,30 +171,19 @@ implements OnInit, AfterViewInit, OnDestroy{
 
     //Para las imagenes de los edificios principales
 
-    
     if (this.listaDePreguntas.length > 20) {
       this.numIntervaloImg = 5;
     }
     this.rellenarPregunta(1);
     //this.updateCenters(window.innerWidth);
-
   }
-  ngAfterViewInit() {
-
-  }
+  ngAfterViewInit() {}
 
   ngOnDestroy(): void {
     this.modal.hide();
-    
   }
 
-
-
-
-
-
-
-   mostrarModal() {
+  mostrarModal() {
     //this.sidebarVisible4 = false;
     //this.value++;
     this.modalElement = this.el.nativeElement.querySelector('#exampleModal');
@@ -229,7 +220,7 @@ implements OnInit, AfterViewInit, OnDestroy{
 
         setTimeout(() => {
           this.mostrarAlert = false;
-         
+
           this.modal.hide();
           this.numPreguntasContestadas++;
           this.puedeResponder = true;
@@ -250,7 +241,7 @@ implements OnInit, AfterViewInit, OnDestroy{
     setTimeout(() => {
       this.mostrarWrongAlert = false;
       this.modal.hide();
-      
+
       this.numPreguntasContestadas++;
       this.puedeResponder = true;
       this.countdown = 20;
@@ -284,7 +275,6 @@ implements OnInit, AfterViewInit, OnDestroy{
       const PreguntaActual = this.listaDePreguntas[numPregunta - 1];
       this.preguntaTexto = PreguntaActual.pregunta.nombre;
       this.actualOpcionList = PreguntaActual.opcionList;
-      
     }, 1000);
   }
 
@@ -296,7 +286,6 @@ implements OnInit, AfterViewInit, OnDestroy{
     this.botonSeleccionado = reiniciarSeleccionados;
   }
 
-
   reproducirSonido(nombreArchivo: string) {
     const audio = new Audio();
     audio.src = nombreArchivo;
@@ -304,8 +293,8 @@ implements OnInit, AfterViewInit, OnDestroy{
     audio.play();
   }
 
-   //para el temporizador
-   startMainTimer() {
+  //para el temporizador
+  startMainTimer() {
     if (!this.isTimerRunning) {
       this.isTimerRunning = true; // Marca que el temporizador está en funcionamiento
       this.countdown = 20; // Restablece el tiempo en segundos

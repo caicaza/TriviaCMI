@@ -89,3 +89,7 @@ body {
 .form-control {
   border-radius: 15px;
 }
+
+.link-primary {
+  cursor: pointer;
+}

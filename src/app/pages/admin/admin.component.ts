@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConstantsService } from 'src/app/constants.service';
 import { EncryptionService } from 'src/app/encryption.service';
 import { Sala } from 'src/app/model/SalaModel';
 import { SalaService } from 'src/app/services/sala.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { Location } from '@angular/common';
+//import { environment } from 'src/environments/environments';
+//import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-admin',
@@ -14,11 +17,16 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   providers: [ConfirmationService, MessageService],
 })
 export class AdminComponent implements OnInit {
+  @ViewChild('closeModal') closeModal!: ElementRef;
+
   misSalas: Sala[] = [];
   auxMisSalas: Sala[] = [];
   existeError: boolean = false;
   result: string = '';
   textoBuscar: string = '';
+
+  idSalaItem: number = 0;
+  codigoSala: string = '';
 
   salaItem: Sala = {
     idSala: 0,
@@ -39,7 +47,8 @@ export class AdminComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private encryptionService: EncryptionService,
-    private constantsService: ConstantsService
+    private constantsService: ConstantsService, //private clipboard: Clipboard
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -113,6 +122,32 @@ export class AdminComponent implements OnInit {
   getImageSala(nombreImagen: string): string {
     let imageUrl = `${this.salaServicio.getURLImages()}/${nombreImagen}`;
     return imageUrl;
+  }
+
+  getIdSala(idSala: number) {
+    this.idSalaItem = idSala;
+  }
+
+  nameLink() {
+    this.codigoSala = this.encryptionService.encrypt(
+      this.idSalaItem.toString()
+    );
+
+    return `${window.location.origin}/EntradaSala?idSala`;
+  }
+
+  copiarText() {
+    let idSala = '';
+    idSala = this.encryptionService.encrypt(this.idSalaItem.toString());
+    let currentUrl = `${window.location.origin}/EntradaSala?idSala=${idSala}`;
+
+    console.log(this.idSalaItem, idSala, currentUrl);
+
+    /* const texto = this.textoACopiar.nativeElement;
+    texto.select();
+    document.execCommand('copy');
+
+    this.clipboard.copy(texto); */
   }
 
   cambiarEstado(estado: number, idSala: number) {
@@ -190,6 +225,7 @@ export class AdminComponent implements OnInit {
   }
 
   cambiarPag(ruta: string, id: number) {
+    this.closeModal.nativeElement.click();
     let idSala = this.encryptionService.encrypt(id.toString());
     let params = { idSala };
     this.router.navigate([ruta], { queryParams: params });

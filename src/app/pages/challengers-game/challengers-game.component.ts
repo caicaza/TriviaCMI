@@ -194,25 +194,25 @@ export class ChallengersGameComponent
     ceil: this.cantidadDeBotones,
     showTicks: true,
     tickStep: 5,
-    readOnly: true
+    readOnly: true,
   };
   optionsAux1: Options = {
     floor: 0,
     ceil: this.cantidadDeBotones,
     showTicks: false,
-    readOnly: true
+    readOnly: true,
   };
   optionsAux2: Options = {
     floor: 0,
     ceil: this.cantidadDeBotones,
     showTicks: false,
-    readOnly: true
+    readOnly: true,
   };
   optionsAux3: Options = {
     floor: 0,
     ceil: this.cantidadDeBotones,
     showTicks: false,
-    readOnly: true
+    readOnly: true,
   };
 
   value2: number = 10; // Valor del slider jugador 2
@@ -231,11 +231,11 @@ export class ChallengersGameComponent
     sala: '',
     puntaje: 23,
     tiempo: 0,
-    fechaCreacion: '',
-    fechaModificacion: '',
+    fecha_creacion: '',
+    fecha_modificacion: '',
   };
 
-  //Tiempo 
+  //Tiempo
   tiempoMostrarPrimerModal: number = 3000;
   tiempoMostrarModal: number = 6000;
 
@@ -276,7 +276,7 @@ export class ChallengersGameComponent
     }
 
     setTimeout(() => {
-      this.mostrarModal();//ACTIVAR CUANDO TERMINES DE TESTEAR <------------
+      this.mostrarModal(); //ACTIVAR CUANDO TERMINES DE TESTEAR <------------
       //console.log("Entro");
     }, this.tiempoMostrarPrimerModal);
 
@@ -633,6 +633,7 @@ export class ChallengersGameComponent
   }
 
   onClickCambiar() {
+    this.constantsService.loading(true);
     this.juegoTerminado = true;
 
     //RESULTADO RECOPILADOS
@@ -650,6 +651,8 @@ export class ChallengersGameComponent
     // @ts-ignore
     this.musicaFondo.currentTime = 0;
     //this.numVentanaH.emit(3); //1 para la ventana inicio sala, 2 para el juego y 3 para la ventana de resultados
+
+    //console.log(this.puntosJugador);
     this.guardarPuntaje(this.puntosJugador);
   }
 
@@ -664,6 +667,7 @@ export class ChallengersGameComponent
             detail: 'ha ocurrido un error con la conexión',
           });
         } else {
+          this.constantsService.loading(false);
           this.cambiarPag('/RankingChallengers', this.idSala);
         }
       },

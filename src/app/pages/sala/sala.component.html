@@ -122,7 +122,7 @@
           Importar preguntas
         </button>
       </div>
-      <div class="col-auto">
+      <!-- <div class="col-auto">
         <button
           class="btn btn-primary d-flex text-end px-3 my-2 py-2"
           (click)="exportArchivo()"
@@ -130,7 +130,7 @@
           <img src="assets/Icons/Importar2.svg" alt="Icono" class="icono-svg" />
           Descargar formato
         </button>
-      </div>
+      </div> -->
       <!-- <div class="col-auto">
           <button class="btn btn-primary d-flex text-end px-3 my-2" >
             <img  src="assets/Icons/Imagen.svg" alt="Icono" class="icono-svg" >
@@ -153,7 +153,11 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel" style="font-weight: bold;">
+            <h5
+              class="modal-title"
+              id="exampleModalLabel"
+              style="font-weight: bold"
+            >
               Importar Preguntas
             </h5>
             <button
@@ -168,7 +172,15 @@
             <div class="mb-2">
               <strong>Instrucciones:</strong>
               <ol>
-                <li>Descargar el formato (archivo excel).</li>
+                <li>
+                  Descargar el formato (archivo excel).
+                  <button
+                    class="btn btn-primary btm-sm"
+                    (click)="exportArchivo()"
+                  >
+                    Descargar
+                  </button>
+                </li>
                 <li>Ingresar las preguntas.</li>
                 <li>Cada pregunta debe tener su opcion correcta.</li>
                 <li>Si hay campos vacios no se guardará la pregunta.</li>
@@ -178,11 +190,14 @@
             </div>
             <form class="row g-3 mb-3">
               <div class="col-12">
-                <label for="archivoExcel" class="form-label ms-2" style="font-weight: bold;"
+                <label
+                  for="archivoExcel"
+                  class="form-label ms-2"
+                  style="font-weight: bold"
                   >Archivo</label
                 >
                 <input
-                style="background-color: white ; color: #3D5057 ;"
+                  style="background-color: white; color: #3d5057"
                   type="file"
                   class="form-control"
                   (change)="onFileSelected($event)"

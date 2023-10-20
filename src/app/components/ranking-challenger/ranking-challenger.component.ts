@@ -12,6 +12,7 @@ import { ConstantsService } from 'src/app/constants.service';
 import { EncryptionService } from 'src/app/encryption.service';
 import { PuntosJugador } from 'src/app/model/PuntosJugador';
 import { UsuarioSalaService } from 'src/app/services/usuario-sala.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-ranking-challenger',
@@ -44,14 +45,15 @@ export class RankingChallengerComponent
       sala: '',
       puntaje: 23,
       tiempo: 0,
-      fechaCreacion: '',
-      fechaModificacion: '',
+      fecha_creacion: '',
+      fecha_modificacion: '',
     },
   ];
 
   constructor(
     private cd: ChangeDetectorRef,
     private usuarioSalaService: UsuarioSalaService,
+    private usuarioService: UsuarioService,
     private router: Router,
     private route: ActivatedRoute,
     private encryptionService: EncryptionService,
@@ -107,6 +109,9 @@ export class RankingChallengerComponent
           this.existeError = false;
           //console.log(lista);
           this.listaJugadores = lista;
+          this.listaJugadores.forEach((element) => {
+            element.iniciales = this.obtenerIniciales(element.usuario);
+          });
         }
         this.constantsService.loading(false);
       },
@@ -162,5 +167,9 @@ export class RankingChallengerComponent
     const l = Math.floor(Math.random() * (lMax - lMin + 1) + lMin);
 
     return `hsl(${h}, ${s}%, ${l}%)`;
+  }
+
+  salir() {
+    this.usuarioService.logout();
   }
 }

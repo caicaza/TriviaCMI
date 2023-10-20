@@ -7,6 +7,6 @@ export interface PuntosJugador {
   sala: string;
   puntaje: number;
   tiempo: number;
-  fechaCreacion: string;
-  fechaModificacion: string;
+  fecha_creacion: string;
+  fecha_modificacion: string;
 }

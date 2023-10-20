@@ -21,8 +21,8 @@ export class ResultadosAdminComponent {
       sala: '',
       puntaje: 23,
       tiempo: 0,
-      fechaCreacion: '',
-      fechaModificacion: '',
+      fecha_creacion: '',
+      fecha_modificacion: '',
     },
   ];
 
