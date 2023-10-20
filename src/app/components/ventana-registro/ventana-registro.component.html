@@ -19,20 +19,22 @@
     
     
                 <form (ngSubmit)="onSubmit()">
+
+                  <!-- NAME USUARIO -->
+                  <div class="mb-3 px-md-5">
+                    <input [(ngModel)]="nuevoUsuario.nombre" type="text" class="form-control" id="username" placeholder="Ingresa tu nombre de usuario" name="nombreUsuario" required>
+                  </div>
+              
                   <!-- MAIL USUARIO -->
                   
-                    <div class="mb-3 px-md-5">
+                    <!-- <div class="mb-3 px-md-5">
                       <input [(ngModel)]="nuevoUsuario.correo" type="email" class="form-control" id="usermail" placeholder="Ingresa tu correo" name="mailUsuario" required>
-                    </div>
+                    </div> -->
                      <!-- PASSWORD USUARIO -->
                     <div class="mb-3 px-md-5">
                       <input [(ngModel)]="nuevoUsuario.contrasena" type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña"name="passwordUsuario"  required>
                     </div>
-                    <!-- NAME USUARIO -->
-                    <div class="mb-3 px-md-5">
-                        <input [(ngModel)]="nuevoUsuario.nombre" type="text" class="form-control" id="username" placeholder="Ingresa tu nombre de jugador" name="nombreUsuario" required>
-                      </div>
-                  
+                    
                   
                   <div class="text-center">
                     <button type="submit" class="btn btn-primary btn-lg px-5" id="btnIngresar" successModal>Ingresar</button>

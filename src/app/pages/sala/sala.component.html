@@ -218,13 +218,21 @@
     </div>
     <!-- FIN MODAL -->
 
-    <div
-      class="my-3 alert alert-warning"
+    <div class="card my-2 text-center"  *ngIf="existeErrorPregunta">
+      <div class="card-body">
+        {{ resultPregunta }}
+      </div>
+      
+
+    </div>
+
+<!--     <div      
+      class="my-3 alert alert-warning text-center"
       role="alert"
       *ngIf="existeErrorPregunta"
     >
       {{ resultPregunta }}
-    </div>
+    </div> -->
 
     <!-- PREGUNTAS -->
     <div class="container" *ngIf="!existeErrorPregunta">

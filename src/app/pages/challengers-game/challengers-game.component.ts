@@ -56,6 +56,7 @@ export class ChallengersGameComponent
   elementoVehiculo?: ElementRef;
 
   lineas: any[] = [];
+  container = document.getElementById('containerFondo');
   @ViewChildren('elementoImagen') elementosImagen?: QueryList<ElementRef>;
 
   @Output() numVentanaH = new EventEmitter<number>();
@@ -238,6 +239,11 @@ export class ChallengersGameComponent
   tiempoMostrarPrimerModal: number = 3000;
   tiempoMostrarModal: number = 6000;
 
+  @HostListener('mousewheel', ['$event'])
+  onWheel(event: any) {
+    event.preventDefault();
+  }
+
   constructor(
     private renderer: Renderer2,
     private el: ElementRef,
@@ -255,9 +261,10 @@ export class ChallengersGameComponent
   }
 
   ngOnInit() {
+    this.container = document.getElementById('containerFondo');
     //MUSICA NO LE PONEMOS EN METODO APARTE PORQUE DEJA DE FUNCIONAR
     this.musicaFondo = new Audio();
-    this.musicaFondo.src = 'assets/musicAndSFX/MusicaGame3.mp3'; // Ruta a tu archivo de música
+    this.musicaFondo.src = 'assets/musicAndSFX/MusicaGame4.mp3'; // Ruta a tu archivo de música
     this.musicaFondo.loop = true;
     this.musicaFondo.volume = 0.25; // Volumen (0.5 representa la mitad del volumen)
     this.musicaFondo.play();
@@ -357,7 +364,7 @@ export class ChallengersGameComponent
       //this.lineas.length = 0;
 
       for (let i = 0; i < elementos.length - 1; i++) {
-        console.log('LINEAS');
+        //console.log('LINEAS');
         const linea = new LeaderLine(
           elementos[i].nativeElement,
           elementos[i + 1].nativeElement,

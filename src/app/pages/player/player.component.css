@@ -29,6 +29,15 @@ body {
   .btn-secondary {
     font-weight: bold;
     font-size: 12px;
+    border-radius: 25px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
+
+  }
+
+  .btn-primary:active,:focus {
+    border-radius: 25px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
+
   }
 
   .container-orange {

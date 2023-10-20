@@ -7,6 +7,10 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import { ConstantsService } from 'src/app/constants.service';
 
+import { StorageMap } from '@ngx-pwa/local-storage'; // Importa LocalStorage
+
+ 
+
 @Component({
   selector: 'app-ventana-login',
   templateUrl: './ventana-login.component.html',
@@ -25,10 +29,13 @@ export class VentanaLoginComponent implements OnInit {
 
   existeError: boolean = false;
 
+  rememberMe: boolean = false;
+
   constructor(
     private usuarioServicio: UsuarioService,
     private router: Router,
-    private constantsService: ConstantsService
+    private constantsService: ConstantsService,
+    private localStorage: StorageMap
   ) {}
 
   ngOnInit(): void {
@@ -51,6 +58,15 @@ export class VentanaLoginComponent implements OnInit {
           localStorage.setItem('id', id);
           localStorage.setItem('token', info);
           localStorage.setItem('rol', idRol);
+
+           //GUARDO ESTO EN LA CASILLA DE RECUERDAME
+           if (this.rememberMe) {
+            // Guarda el nombre de usuario y contraseña en el almacenamiento local
+            this.localStorage.set('correo', correo).subscribe(() => {});
+            this.localStorage.set('token', info).subscribe(() => {});
+            this.localStorage.set('rol', info).subscribe(() => {});
+          }
+
           //Ruta para el jugador
 
           if (idRol == 2) {
@@ -81,4 +97,9 @@ export class VentanaLoginComponent implements OnInit {
   onClickCambiar() {
     this.isLoginH.emit(false); // Puedes emitir 'true' o 'false' según tu lógica
   }
+  toggleRememberMe() {
+  this.rememberMe = !this.rememberMe;
+}
+
+
 }

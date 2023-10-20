@@ -1,0 +1,118 @@
+<!-- <app-esperar-jchallengers ></app-esperar-jchallengers>
+ --><!-- BOTONES EN FORMA SENOSOIDAL
+ -->
+
+
+
+  <!-- Modal -->
+  <div class="modal-container">
+    <div class="modal fade mobile-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+      <div class="modal-dialog ">
+        
+    
+        <div class="col">
+          <div class="row">
+            <div class="modal-content">
+              <div>
+               <!--  <div class="col">
+                  <div class="row">
+                    {{countdown}}
+                  </div>
+                </div> -->
+                
+                <div class="modal-title m-4 ">
+    
+                  <div class="row my-2">
+                    <div class="col-6 ml-2">
+                      {{numPreguntasContestadas+1}}/{{listaDePreguntas.length}}
+                    </div>
+                    <div class="col-6 te" style="color: orange; text-align: right;">
+                      {{countdown}} <strong style="font-size: small;">SEGUNDOS</strong> 
+                    </div>
+                  </div>
+    
+                  <div class="row text-center">
+                    <div class="col">
+                      <h5 style="font-weight: bold;">
+                        {{preguntaTexto}}
+                      </h5>
+                    </div>
+                  </div>
+                </div>
+    
+              </div>
+                        
+              <div class="modal-body">
+                <div class="container">
+                  <div class="row">
+                      <div class="col text-center">
+                        <div *ngFor="let miOpcion of actualOpcionList; let i = index">
+                          <button type="button" class="btn btn-secondary btn-block text-center my-2"
+                            (click)="closeModal(i)"
+                            [ngClass]="{'respuesta-correcta': miOpcion.correcta==1 && botonSeleccionado[i], 'respuesta-incorrecta': miOpcion.correcta==0 && botonSeleccionado[i], 
+                          }">
+                            {{ miOpcion.nombre }} 
+                          </button>
+                        </div>
+                      </div>
+                  </div>
+      
+                </div>
+              </div>
+    
+            </div>
+          </div>
+    
+          <div class="col py-2">
+            <div class="row">
+              <div  *ngIf="mostrarAlert" class="alert alert-success text-center" role="alert">
+                ¡GENIAL!
+              </div>
+              <div  *ngIf="mostrarWrongAlert" class="alert alert-danger text-center" role="alert">
+                
+                {{Mensaje_error}}
+              </div>
+    
+            </div>
+          </div>      
+        </div>  
+      </div>    
+    
+    </div>
+  
+  </div>
+  
+  <!-- FONDO DEL JUEGO-->
+  <body  id="main-body"style="overflow: hidden;">
+    <div class="containerFondo" style="position: relative; z-index: 5; " id="containerFondo">    
+       
+       <div class="container-fluid overlay-container text-center" style="position: absolute; z-index: 5; top: 0;">
+  
+        <div class="container" style="height: 220px;"></div>
+  
+    </div>
+ 
+  
+  <!-- BOTONES -->
+  
+       <div class="container z-index: 5;">
+        <div class="row justify-content-center text-center">
+          <div class="col-12">
+            <img #elementoVehiculo src="assets/Imagenes Juego/CamionFinal.png" alt="Auto" style="position: absolute; z-index: 6; height: 100px; width: auto;">
+          </div>
+        </div>
+        <div class="row justify-content-center text-center">
+            
+        </div>
+     
+      </div>
+      
+    
+  
+    </div>
+    
+  </body>
+   
+  
+   
+   
