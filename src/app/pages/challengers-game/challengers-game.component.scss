@@ -1,0 +1,213 @@
+.sinusoidal-container {
+  width:100%;
+  height: 500px;;
+  background-image: url('../../../assets/Imagenes Juego/PatronVerde.png');
+  background-repeat: repeat;
+  background-size: contain; /* el fondo se ajusta al contenedor*/
+  background-position: center center;
+  margin: 0;
+  padding: 0;
+  background-attachment: fixed;
+  max-height: 100vh; /* Establece una altura máxima igual a la altura de la ventana */
+  overflow-y: auto; /* Habilita el desplazamiento interno si el contenido excede la altura máxima */
+  overflow: hidden !important;
+
+  }
+  
+  .sinusoidal-button {
+    position: relative;
+    background-color: transparent; /* Color predeterminado del botón */
+    color: white;
+    border: none;
+    /*padding: 10px 20px;*/
+    width: 120px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Animación de cambio de color */
+
+  }
+
+ /*  .sinusoidal-button.active {
+     
+  }
+ */
+  
+  .numero {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centra vertical y horizontalmente */
+    color: #fff; /* Color del texto del número */
+  }
+
+
+  .container-fluid{
+    background-color: transparent; /* Elimina el fondo blanco */
+  }
+
+  button.respuesta-correcta {
+    background-color: #4CAF50; /* Verde para respuestas correctas */
+  }
+  
+  button.respuesta-incorrecta {
+    background-color: #FF5733; /* Rojo para respuestas incorrectas */
+  }
+  
+  button.respuesta-bloqueada {
+    cursor: not-allowed; /* Cambia el cursor para indicar que el botón está bloqueado */
+  }
+
+  .btn-secondary {
+    background-color: #F29523;
+    border: none;    
+    border-radius: 20px;
+    color: #ffffff;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
+  
+  }
+  
+
+  .modal-content{
+    border-radius: 35px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
+  }
+
+  .overlay-container {
+    position: relative;   
+    z-index: 1;
+  }
+  
+  .list-item {
+    
+    padding: 10px;
+    margin-bottom: 10px;
+    position:sticky;
+    z-index: 2;
+  }
+
+  .modal-container {
+    max-width: 80%;
+    margin: 0 auto;
+    z-index: 1050;
+  }
+
+  @media (max-width: 767px) { /* Ajusta el ancho máximo según tus necesidades */
+    .mobile-modal {
+      position: fixed !important;
+    }
+  }
+
+
+  .slider-container {
+    width: 100%; /* Ancho de la ventana */
+    height: 100; /* Ajusta la altura según tus necesidades */
+    position: relative;
+    overflow: hidden
+  }
+  
+  .slider {
+    width: 90%; /* Ocupa el 100% del ancho del contenedor */
+    
+  }
+
+::ng-deep {
+  
+  .custom-slider .ngx-slider .ngx-slider-pointer:after {
+/*     display: none; */  
+background-color: white;
+} 
+
+.custom-slider .ngx-slider .ngx-slider-pointer.ngx-slider-active:after {
+  background-color: #4b4b4b;
+}
+}
+
+
+
+
+.container {
+  width: 300px; /* Ancho del contenedor */
+  height: 200px; /* Altura del contenedor */
+  position: relative;
+}
+
+
+.miSlide{
+  width: 100%;
+  position: absolute;
+}
+
+::ng-deep {
+  
+  .custom-slider2 .ngx-slider .ngx-slider-pointer:after {
+/*     display: none; */  
+background-color: white;
+} 
+
+.custom-slider2 .ngx-slider .ngx-slider-pointer.ngx-slider-active:after {
+  background-color: #4b4b4b;
+}
+
+.custom-slider2 .ngx-slider-span.ngx-slider-bubble.ngx-slider-model-value {
+  top: 300%; 
+  transform: translateY(-500px); /* Alinea el label al centro vertical */
+}
+
+
+}
+
+
+    /* Estilo para dispositivos LG */
+    @media (min-width: 992px) {
+      .arbol12-lg {
+          width: auto;
+          max-height: 120px;     
+      }
+      .arbol16-lg {
+        width: auto;
+        max-height: 160px;     
+    }
+    .arbol20-lg {
+      width: auto;
+      max-height: 200px;     
+  }            
+    
+    }
+    
+    @media (min-width: 577px) and (max-width: 991px) {
+      .arbol12-md {
+        width: auto;
+        max-height: 80px;     
+    }
+    .arbol16-md {
+      width: auto;
+      max-height: 140px;     
+  }   
+  .arbol20-md {
+    width: auto;
+    max-height: 160px;     
+}    
+    }
+    
+    
+    
+    /* Estilo para dispositivos SM */
+    @media (max-width: 576px) {
+      
+      .arbol12-sm {
+        width: auto;
+        max-height: 60px;     
+    }  
+    .arbol16-sm {
+      width: auto;
+      max-height: 80px;     
+  }
+  .arbol20-sm {
+    width: auto;
+    max-height: 100px;     
+}    
+     
+    }
+
+
+

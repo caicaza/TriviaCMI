@@ -1,0 +1,81 @@
+<div class="container my-4">
+  <div class="row">
+    <div class="col-sm-12 col-lg-6">
+      <div class="row">
+        <H3 id="animated-dots" class="my-4" style="font-weight: bold">
+          Esperando participantes
+        </H3>
+      </div>
+
+      <div class="row">
+        <h4></h4>
+      </div>
+
+      <div class="row">
+        <div
+          class="container container-ranking mx-auto px-3 py-4"
+          style="background-color: orange"
+        >
+          <div class="row">
+            <div class="col">
+              <div class="scrollable-list">
+                <ul class="list-group">
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center odd"
+                    *ngFor="let miJugador of listaJugadores; let i = index"
+                    [class]="i % 2 === 0 ? 'even' : 'odd'"
+                  >
+                    <div class="number-text mx-2">{{ i + 1 }}</div>
+
+                    <div class="circle-badge">{{ miJugador.iniciales }}</div>
+                    <!-- Círculo con dos letras -->
+                    <div class="player-text">{{ miJugador.usuario }}</div>
+                    <!-- Texto "Jugador" alineado a la izquierda -->
+                    <span class="badge bg-primary rounded-pill custom-badge"
+                      >{{ miJugador.usuario }} puntos</span
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-lg-6">
+      <div class="custom-container d-flex flex-column mb-3 text-center">
+        <div class="p-2 d-md-none d-sm-none d-none d-lg-block d-xl-block">
+          <img
+            src="assets/Imagenes Juego/Challenger 2.png"
+            alt="Imagen Grande"
+            class="imagen-lg imagen-md imagen-sm centrar-verticalmente"
+          />
+        </div>
+
+        <h3
+          class="p-2 d-md-none d-sm-none d-none d-lg-block d-xl-block"
+          style="font-weight: bold"
+        >
+          {{ numJugadores }} Jugadores
+        </h3>
+
+        <div
+          class="d-flex justify-content-center align-items-center mt-auto p-2"
+        >
+          <div class="row">
+            <div class="col-6">
+              <button class="btn btn-primary d-flex py-3 mx-2 px-4">
+                <img
+                  src="assets/Icons/Puerta3.svg"
+                  alt="Icono"
+                  class="icono-svg"
+                />Salir
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

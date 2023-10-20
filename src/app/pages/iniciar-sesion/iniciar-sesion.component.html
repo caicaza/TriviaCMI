@@ -1,0 +1,14 @@
+<div id="video-container" class="position-fixed w-100 h-100" *ngIf="!isVideoEnded">
+    <video #videoHorizontal allow="autoplay" playsinline muted (canplay)="playVideo(videoHorizontal)" id="background-video-horizontal" (ended)="vidEnded()" [muted]="true" class="w-100 h-100 d-none d-md-block d-lg-block" style="object-fit: cover;">
+      <source src="assets/Videos/Cargando_Horizontal.mp4" type="video/mp4">
+    </video>
+    <video #videoVertical allow="autoplay" playsinline muted (canplay)="playVideo(videoVertical)" id="background-video-vertical"  (ended)="vidEnded()" [muted]="true" class="w-100 h-100 d-sm-block" style="object-fit: cover;">
+      <source src="assets/Videos/Cargando_Vertical.mp4" type="video/mp4">
+    </video>
+  </div>
+  
+  <!-- Contenedor para los componentes de inicio de sesión y registro -->
+  <div id="login-container" *ngIf="isVideoEnded">
+    <app-ventana-login (isLoginH)="cambiarBoolLogin($event)" *ngIf="isLogin"></app-ventana-login>
+    <app-ventana-registro (isLoginH)="cambiarBoolLogin($event)" *ngIf="!isLogin"></app-ventana-registro>
+  </div>

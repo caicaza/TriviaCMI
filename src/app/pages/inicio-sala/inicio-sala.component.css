@@ -1,0 +1,122 @@
+
+body {
+    
+    background-color: #F0F0F0;
+    min-height: calc(100vh - 1px); /* Establece la altura mínima igual a la altura de la ventana menos 50px */
+     /* Agrega un relleno opcional para separar el contenido del borde */
+    box-sizing: border-box; /* Incluye el relleno en la altura total del contenedor */
+  
+  }
+  .img-thumbnail {
+    padding: 0.25rem;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+}
+
+.btn-primary {
+    background-color: #3D5057;
+    border: none;
+    font-weight: bold;
+    border-radius: 25px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
+
+  }
+  .btn-primary:active,:focus {
+    background-color: #DC8127; /* Naranja */
+    border-radius: 25px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
+
+  }
+ 
+  .btn-secondary {
+    background-color: #DC8127;
+    border: none;
+    font-weight: bold;
+    border-radius: 25px;    
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
+
+    
+  }
+  .btn-secondary:active,:focus {
+    background-color: #3D5057; /* Naranja */
+    /* Color del borde si deseas cambiarlo también */
+   
+    border-radius: 25px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
+
+  }
+
+  h2 {
+    color: #3D5057;
+  }
+
+ 
+
+    /* Estilo para dispositivos LG */
+@media (min-width: 992px) {
+  .imagen-lg {
+      max-width: 40%; /* Ajusta el ancho máximo para dispositivos LG y mayores */
+  height: auto; /* Mantiene la proporción de aspecto original */
+
+  }  
+  .imagen-lg-h {
+    max-width: 55%; 
+    max-height: auto; 
+
+  }
+
+  .img-fluid {
+    height: 100px; 
+    width: auto
+  }
+
+  .extra-container {
+    height: 50px;
+  }
+
+}
+
+@media (min-width: 577px) and (max-width: 991px) {
+  .imagen-md {
+    max-width: 60%; /* Ajusta el ancho máximo para dispositivos MD */
+    height: auto; /* Mantiene la proporción de aspecto original */
+  }
+  .imagen-md-h {
+    max-width: 90%; 
+    height: auto; 
+  }
+  .img-fluid {
+    height: 70px; 
+    width: auto
+  }
+  .extra-container {
+    height: 20px;
+  }
+}
+
+
+
+/* Estilo para dispositivos SM */
+@media (max-width: 576px) {
+  
+  .imagen-sm {
+      max-width: 70%; /* Ajusta el ancho máximo para dispositivos SM */
+  height: auto; /* Mantiene la proporción de aspecto original */
+
+  }
+
+  .imagen-sm-h {
+    max-width: 100%; 
+    height: auto; 
+  }
+
+  .img-fluid {
+    height: 60px; 
+    width: auto
+  }
+
+  .extra-container {
+    height: 0px;
+  }
+ 
+}

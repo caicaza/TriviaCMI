@@ -1,0 +1,103 @@
+.input-group input[type="file"]::-webkit-file-upload-button {
+  background-color: #3D5057; /* Cambia el color del fondo del botón */
+  color: white; /* Cambia el color del texto del botón */
+}
+
+body {
+  background-color: #efefef;
+  min-height: calc(
+    100vh - 1px
+  ); /* Establece la altura mínima igual a la altura de la ventana menos 50px */
+  box-sizing: border-box; /* Incluye el relleno en la altura total del contenedor */
+}
+.img-thumbnail {
+  padding: 0.25rem;
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+}
+
+.btn-primary2 {
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
+  border-radius: 10px;
+}
+.btn-primary2:active,
+:focus,
+:visited {
+  background-color: transparent; /* Naranja */
+  border: none;
+  border-radius: 10px;
+}
+
+.btn-primary {
+  background-color: #3d5057;
+  border: none;
+  font-weight: bold;
+  border-radius: 25px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+.btn-primary:active,
+:focus {
+  background-color: #dc8127; /* Naranja */
+  border-color: #dc8127; /* Color del borde si deseas cambiarlo también */
+  border-radius: 25px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary {
+  font-weight: bold;
+  font-size: 12px;
+  border-radius: 25px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.container-orange {
+  background-color: #dc8127;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.image-inside-container {
+  width: 100%;
+  height: auto;
+}
+
+.container-with-shadow {
+  height: 4px;
+  width: 100%;
+  background-color: #dc8127;
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2); /* Sombra solo en la parte superior */
+
+  z-index: 1; /* Asegura que esté por encima del contenido */
+}
+
+.input-group {
+  border-radius: 25px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+.form-control {
+  border-radius: 15px;
+}
+
+.card {
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+}
+
+.modal-content{
+  border-radius: 35px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
+}
+
+.form-select {
+  background-color: white; /* Naranja */
+  border-radius: 25px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.input-group input[type="file"]::-webkit-file-upload-button {
+  background-color: #3D5057 !important;
+  color: white !important;
+}

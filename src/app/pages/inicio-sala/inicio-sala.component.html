@@ -1,0 +1,88 @@
+<body class="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+  <div class="container-fluid">
+    <div class="extra-container" ></div>
+    <div class="row align-items-center text-center">
+      <div class="col-12 py-3">
+        <!-- Contenido izquierdo foto -->
+        <img
+          src="assets/Imagenes Empresa/Logo_App.png"
+          alt="Imagen"
+          class="img-fluid"
+          
+        />
+      </div>
+      <!-- TITULO-->
+      <div class="col-sm-12 col-lg-12 text-center">
+        <h2 class="text-center py-3" style="font-weight: bold">
+          {{ miSala.nombre }}
+        </h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- <div class="row" style="vertical-align: middle">
+      <div
+        class="col-lg-1 col-sm-2 px-3 py-1 py-lg-2"
+        style="color: #3d5057; font-weight: bold"
+      >
+        ID: {{ miSala.idSala }}
+      </div>
+    </div> -->
+
+    <!-- IMAGEN -->
+
+    <div class="row">
+      <div class="col text-center m-4">
+        <img #mi_imagen
+          [src]="getImageSala(miSala.imagen)"
+          onerror="this.src='assets/Imagenes Juego/ImagenDefault.png'"
+          alt="imagen de la clase"
+          [ngClass]="{'imagen-sm': imagenEsHorizontal, 'imagen-md': imagenEsHorizontal, 'imagen-lg': imagenEsHorizontal, 'imagen-sm-h': !imagenEsHorizontal, 'imagen-md-h': !imagenEsHorizontal, 'imagen-lg-h': !imagenEsHorizontal}"
+
+        />
+      </div>
+    </div>
+
+    <!-- BOTONES -->
+
+    <div class="row">
+      <div class="col align-items-center">
+        <div class="text-center">
+          <button
+            class="btn btn-secondary btn-lg px-5"
+            (click)="validarDataPregOpc()"
+          >
+            Jugar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col align-items-center my-2">
+        <div class="text-center">
+          <button
+            class="btn btn-primary btn-lg px-5"
+            (click)="onClickCambiarTest()"
+          >
+            <img src="assets/Icons/Puerta3.svg" alt="Icono" class="icono-svg" />
+            Salir
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p-confirmDialog #cd [styleClass]="'col-10 col-md-4'">
+    <ng-template pTemplate="footer">
+      <button
+        type="button"
+        pButton
+        class="btn btn-primary"
+        label="Ok"
+        (click)="cd.accept()"
+      ></button>
+    </ng-template>
+  </p-confirmDialog>
+</body>

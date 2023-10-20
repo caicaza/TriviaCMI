@@ -1,0 +1,210 @@
+<body class="justify-content-center align-items-center">
+  <div class="container-orange py-2">
+    <div class="row">
+      <!-- Contenido derecho -->
+      <div class="col mx-2">
+        <button
+          class="btn btn-primary d-flex text-end px-4"
+          style="float: right"
+          (click)="cerrarSesion()"
+        >
+          <img src="assets/Icons/Puerta3.svg" alt="Icono" class="icono-svg" />
+          Salir
+        </button>
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col">
+        <img
+          src="assets/Imagenes Empresa/LogoBlanco_App.png"
+          style="height: 80px; width: auto"
+          alt="Imagen"
+          class="image-inside-container"
+        />
+      </div>
+    </div>
+
+    <div class="row mx-2" style="vertical-align: middle">
+      <div
+        class="col-lg-1 col-sm-2 px-3 py-1 py-lg-4"
+        style="color: white; font-weight: bold"
+      >
+        Buscar
+      </div>
+      <!-- Buscador de Salas -->
+      <div class="col-lg-9 col-sm-10 py-lg-3">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            style="background-color: #fff"
+            placeholder="Sala..."
+            [(ngModel)]="textoBuscar"
+            (input)="verSalasAll($event)"
+            (keyup.enter)="buscar()"
+          />
+          <button class="btn btn-primary" type="button" (click)="buscar()">
+            <img src="assets/Icons/Lupa.svg" alt="Icono" class="icono-svg2" />
+          </button>
+        </div>
+      </div>
+      <div class="col-lg-2 col-sm-8 text-end px-3 py-3">
+        <button
+          type="button"
+          class="btn btn-primary d-flex text-end px-4"
+          routerLink="/CrearSala"
+          [queryParams]="{ type: 'crear' }"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="currentColor"
+            class="bi bi-plus-circle-fill mx-2 my-1"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
+            />
+          </svg>
+          Sala
+        </button>
+      </div>
+    </div>
+
+    <!-- Mensaje error -->
+    <div
+      class="mb-3 px-md-5"
+      *ngIf="existeError"
+      style="color: rgb(255, 255, 255)"
+    >
+      {{ result }}
+    </div>
+  </div>
+
+  <div class="container-with-shadow"></div>
+  <!-- TITULO Y BUSCADOR -->
+  <div class="container">
+    <!-- SALAS CREADAS -->
+    <div class="container">
+      <div class="row">
+        <div class="mx-auto">
+          <div class="card my-2" *ngFor="let sala of misSalas">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div
+                  class="col-sm-12 col-lg-2 align-items-center text-center px-sm-5"
+                >
+                  <img
+                    [src]="getImageSala(sala.imagen)"
+                    onerror="this.src='assets/Imagenes Juego/ImagenDefault.png'"
+                    alt="Imagen"
+                    class="img-fluid imagen-lg imagen-md imagen-sm"
+                  />
+                </div>
+                <!-- Información de las salas -->
+                <div
+                  class="col-sm-12 col-lg-6 align-items-center text-center text-lg-start my-3"
+                >
+                  <div class="container">
+                    <div class="row">
+                      <div class="py-sm-0 py-lg-2 col-sm-12 col-lg-2">
+                        <strong>Id:</strong>
+                        {{ sala.idSala }}
+                      </div>
+                      <div class="py-sm-0 py-lg-2 col-sm-12 col-lg-10">
+                        <strong>Sala:</strong>
+                        {{ sala.nombre }}
+                      </div>
+                      <div class="py-sm-0 py-lg-2 col-sm-12 col-lg-6">
+                        <strong>Modo:</strong>
+                        {{ sala.modoJuego }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Botones -->
+                <div class="col-sm-12 col-lg-4 text-end">
+                  <button
+                    type="button"
+                    class="btn btn-secondary mx-1"
+                    (click)="cambiarPag('/Sala', sala.idSala)"
+                  >
+                    <img
+                      src="assets/Icons/Editar.svg"
+                      alt="Icono"
+                      class="icono-svg2"
+                    />
+                    Editar
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary mx-1 my-2"
+                    (click)="confirmEliminar(sala.idSala)"
+                  >
+                    <img
+                      src="assets/Icons/Basurero.svg"
+                      alt="Icono"
+                      class="icono-svg2"
+                    />
+                    Eliminar
+                  </button>
+                  <button type="button" class="btn btn-secondary mx-1 my-2">
+                    <img
+                      src="assets/Icons/Trofeo.svg"
+                      alt="Icono"
+                      class="icono-svg2"
+                    />
+                    Resultados
+                  </button>
+                  <button type="button" class="btn btn-secondary mx-1 my-2">
+                    Compartir
+                  </button>
+
+                  <button
+                    *ngIf="sala.estado === 1"
+                    type="button"
+                    class="btn btn-success mx-1 my-2"
+                    (click)="cambiarEstado(0, sala.idSala)"
+                  >
+                    Activado
+                  </button>
+                  <button
+                    *ngIf="sala.estado === 0"
+                    type="button"
+                    class="btn btn-danger mx-1 my-2"
+                    (click)="cambiarEstado(1, sala.idSala)"
+                  >
+                    Desactivado
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p-toast [styleClass]="'col-10 col-md-6 col-lg-3'"></p-toast>
+  <p-confirmDialog #cd [styleClass]="'col-10 col-md-4'">
+    <ng-template pTemplate="footer">
+      <button
+        type="button"
+        class="btn btn-primary me-2"
+        pButton
+        label="Cancelar"
+        (click)="cd.reject()"
+      ></button>
+      <button
+        type="button"
+        pButton
+        class="btn btn-primary"
+        label="Aceptar"
+        (click)="cd.accept()"
+      ></button>
+    </ng-template>
+  </p-confirmDialog>
+
+  <div class="flexcontainer"></div>
+</body>

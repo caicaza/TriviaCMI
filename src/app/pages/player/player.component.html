@@ -1,0 +1,168 @@
+<body class="justify-content-center align-items-center">
+  <div class="container-orange py-2">
+    <div class="row">
+      <!-- Contenido derecho -->
+      <div class="col mx-2">
+        <button
+          class="btn btn-primary d-flex text-end px-4"
+          style="float: right"
+          (click)="cerrarSesion()"
+        >
+          <img src="assets/Icons/Puerta3.svg" alt="Icono" class="icono-svg" />
+          Salir
+        </button>
+      </div>
+    </div>
+
+    <div class="row text-center my-4">
+      <div class="col">
+        <img
+          src="assets/Imagenes Empresa/LogoBlanco_App.png"
+          style="height: 80px; width: auto"
+          alt="Imagen"
+          class="image-inside-container"
+        />
+      </div>
+    </div>
+
+    <div class="row mx-2 my-2" style="vertical-align: middle">
+      <div
+        class="col-lg-1 col-sm-2 px-3 py-1 py-lg-4"
+        style="color: white; font-weight: bold"
+      >
+        Buscar
+      </div>
+      <!-- Buscador de Salas -->
+      <div class="col-lg-11 col-sm-10 py-lg-3">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            style="background-color: #fff"
+            placeholder="Sala..."
+            [(ngModel)]="textoBuscar"
+            (keyup.enter)="buscar()"
+          />
+          <button class="btn btn-primary" type="button">
+            <img src="assets/Icons/Lupa.svg" alt="Icono" class="icono-svg2" />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mensaje error -->
+    <div
+      class="mb-3 px-md-5"
+      *ngIf="existeError"
+      style="color: rgb(255, 255, 255)"
+    >
+      {{ result }}
+    </div>
+  </div>
+
+  <div class="container-with-shadow"></div>
+  <!-- TITULO Y BUSCADOR -->
+  <div class="container"></div>
+  <div class="container my-3">
+    <!-- SALAS  -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6" *ngFor="let sala of misSalas">
+          <!-- <a
+            routerLink="/EntradaSala"
+            [queryParams]="{ idSala: sala.idSala }"
+            style="text-decoration: none"
+          > -->
+          <div class="card my-2">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div
+                  class="col-sm-6 col-lg-6 align-items-center text-center px-sm-5"
+                >
+                  <img
+                    [src]="getImageSala(sala.imagen)"
+                    onerror="this.src='assets/Imagenes Juego/ImagenDefault.png'"
+                    alt="Imagen"
+                    class="imagen-lg imagen-sm"
+                  />
+                </div>
+                <div
+                  class="col-sm-6 col-lg-6 align-items-center text-center text-lg-start my-3"
+                >
+                  <div class="container">
+                    <div class="row">
+                      {{ sala.nombre }}
+                    </div>
+                    <button
+                      class="btn btn-primary btn-md my-2"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      (click)="abrirModal(sala.idSala)"
+                    >
+                      Ingresar
+                    </button>
+                    <!-- <div class="row">id: {{ sala.idSala }}</div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--  </a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--   MODAL-->
+
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+    data-bs-backdrop="static"
+    style="background-color: rgba(0, 0, 0, 0.5)"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            Ingresar a la Sala
+          </h1>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="ingresarSala()" #salaForm="ngForm">
+            <div class="mb-3">
+              <label for="codigo" class="form-label">ID de acceso:</label>
+              <input
+                style="background-color: #fff"
+                type="text"
+                class="form-control"
+                id="codigo"
+                name="codigo"
+                ngModel
+                required
+              />
+            </div>
+            <button
+              type="button"
+              class="btn btn-secondary mx-2"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              class="btn btn-secondary"
+              style="color: white"
+              data-bs-dismiss="modal"
+            >
+              Ingresar
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

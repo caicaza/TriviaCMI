@@ -1,0 +1,105 @@
+body {
+  background-color: #dc8127;
+  min-height: calc(
+    100vh - 1px
+  ); /* Establece la altura mínima igual a la altura de la ventana menos 50px */
+  /* Agrega un relleno opcional para separar el contenido del borde */
+  box-sizing: border-box; /* Incluye el relleno en la altura total del contenedor */
+}
+.btn-primary {
+  background-color: #3d5057;
+  border: none;
+  font-weight: bold;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+#btn-primary:active,
+:focus {
+  background-color: #dc8127; /* Naranja */
+  border-radius: 28px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.formText {
+  font-weight: bold;
+}
+
+.card {
+  background-color: #f0f0f0;
+  border-radius: 25px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+.card h5 {
+  color: #3d5057; /* Cambia el color del texto a blanco */
+  font-weight: bold; /* Aplica el estilo en negrita */
+  text-decoration: underline; /* Aplica un subrayado */
+  text-underline-offset: 12px;
+}
+.card label {
+  color: white; /* Cambia el color del texto a blanco */
+}
+
+.form-control {
+  background-color: white; /* Naranja */
+  border-radius: 25px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.form-select {
+  background-color: white; /* Naranja */
+  border-radius: 25px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.radio-buttons {
+  align-items: center;
+}
+
+.radio-button {
+  margin-right: 20px; /* Espacio entre botones */
+}
+
+.radio-button input[type="radio"] {
+  transform: scale(2); /* Ajusta el tamaño del botón de radio */
+}
+
+input[type="radio"] {
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgb(36, 36, 36);
+  border-radius: 50%;
+  background-color: transparent; /* Fondo transparente para que el botón de radio sea visible */
+  margin-right: 5px; /* Espacio entre el botón y el texto */
+  position: relative;
+  top: 3px; /* Ajuste la posición vertical según sea necesario */
+}
+
+/* Estilo para el botón de radio seleccionado */
+input[type="radio"]:checked {
+  background-color: #ff7300; /* Cambia el color de fondo cuando se selecciona */
+}
+.radio-button label {
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  padding-left: 10px; /* Espacio para el icono de check */
+  font-size: 20px; /* Tamaño de fuente para el texto del botón de radio */
+}
+
+.radio-button label:before {
+  content: "";
+  display: inline-block;
+  width: 20px; /* Tamaño del icono de check */
+  height: 20px; /* Tamaño del icono de check */
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+:host ::ng-deep .p-dropdown {
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}

@@ -1,0 +1,11 @@
+<app-inicio-sala
+  (numVentanaH)="cambiarnumVentana($event)"
+  [errorResultDataPregOpc]="errorResultPreOp"
+  *ngIf="numVentana == 1"
+></app-inicio-sala>
+<app-challengers-game
+  (numVentanaH)="cambiarnumVentana($event)"
+  [PreguntasList]="preList_opcList"
+  *ngIf="numVentana == 2"
+></app-challengers-game>
+<app-ranking-challenger *ngIf="numVentana == 3"></app-ranking-challenger>

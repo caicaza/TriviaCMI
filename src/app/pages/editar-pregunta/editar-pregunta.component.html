@@ -1,0 +1,296 @@
+<body>
+  <div class="container py-4">
+    <div class="row justify-content-center align-items-center">
+      <div>
+        <div class="card py-3 px-3">
+          <div class="card-body">
+            <form
+              ngNativeValidate
+              #form
+              (ngSubmit)="form.checkValidity() ? UpsertSala() : null"
+            >
+              <div class="d-flex justify-content-between align-items-center">
+                <h2 class="m-0 mx-lg-auto">{{ titulo }}</h2>
+                <button type="button" class="btn-circle my-2" (click)="atras()">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="35"
+                    height="35"
+                    fill="currentColor"
+                    class="bi bi-arrow-left"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Mensaje error -->
+              <div
+                class="mb-3 px-md-5 text-center"
+                *ngIf="existeError"
+                style="color: rgb(0, 0, 0)"
+              >
+                {{ result }}
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12 col-lg-9">
+                  <div class="m-2 formText">Pregunta</div>
+                  <div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="Question"
+                      placeholder="Escriba la pregunta"
+                      name="pregunta"
+                      [(ngModel)]="pregutaOpciones.pregunta.nombre"
+                      title="Ingresa un texto válido no se permiten los caracteres <, >, o ="
+                      pattern="^[^<>=]*$"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-3">
+                  <div class="container">
+                    <div class="row py-2">
+                      <div class="col" style="font-weight: bold">
+                        Número de opciones
+                      </div>
+                    </div>
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      required
+                      (change)="selectTotalOpciones($event)"
+                      [selectedIndex]="totalOpciones()"
+                    >
+                      <option value="" selected>Seleccione...</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                    </select>
+
+                    <!-- <div class="row py-2">
+                      <div class="col">
+                        <p-dropdown
+                          [options]="items"
+                          [(ngModel)]="selectedItem"
+                          placeholder="Seleccionar"
+                          [virtualScroll]="true"
+                          [virtualScrollItemSize]="20"
+                        ></p-dropdown>
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+
+              <div class="container" style="height: 20px"></div>
+
+              <div
+                *ngFor="let pregunta of pregutaOpciones.opcionList; index as i"
+              >
+                <div class="row g-3">
+                  <div class="col-9 mb-3">
+                    <div class="ms-3 formText">Opción {{ opcion[i] }}</div>
+                    <input
+                      class="form-control"
+                      type="text"
+                      placeholder="Escriba la opción"
+                      name="Opcion{{ opcion[i] }}"
+                      [(ngModel)]="pregutaOpciones.opcionList[i].nombre"
+                      title="Ingresa un texto válido no se permiten los caracteres <, >, o ="
+                      pattern="^[^<>=]*$"
+                      required
+                    />
+                  </div>
+                  <div class="col-3 mb-3">
+                    <div
+                      class="mb-3 formText"
+                      style="text-align: center; height: 17px"
+                    >
+                      <span *ngIf="i == 0" class="d-none d-lg-grid"
+                        >Elija la opción correcta</span
+                      >
+                    </div>
+                    <div class="radio-button" style="text-align: center">
+                      <input
+                        style="height: 50"
+                        type="radio"
+                        name="opciones"
+                        value="{{ i }}"
+                        (change)="opcionCorrecta($event)"
+                        [checked]="pregutaOpciones.opcionList[i].correcta"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="row">
+                <div class="col-9">
+                  <div class="m-2 formText">Opción A</div>
+                </div>
+                <div class="col-3">
+                  <div class="m-0 formText" style="text-align: center">
+                    Elija la opción correcta
+                  </div>
+                </div>
+              </div>
+
+              <div class="radio-buttons">
+                <div class="row">
+                  <div class="col-9">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="opcion1"
+                      placeholder="Escriba la opción"
+                      name="opcionA"
+                      [(ngModel)]="pregutaOpciones.opcionList[0].nombre"
+                      title="Ingresa un texto válido no se permiten los caracteres <, >, o ="
+                      pattern="^[^<>=]*$"
+                      required
+                    />
+                  </div>
+                  <div class="col-3 py-2">
+                    <div class="radio-button" style="text-align: center">
+                      <input
+                        style="height: 50"
+                        type="radio"
+                        id="radio1"
+                        name="radios"
+                        value="0"
+                        (change)="opcionCorrecta($event)"
+                        [checked]="pregutaOpciones.opcionList[0].correcta"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-9">
+                    <div class="m-2 formText">Opción B</div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-9">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="opcion2"
+                      placeholder="Escriba la opción"
+                      name="opcionB"
+                      [(ngModel)]="pregutaOpciones.opcionList[1].nombre"
+                      title="Ingresa un texto válido no se permiten los caracteres <, >, o ="
+                      pattern="^[^<>=]*$"
+                      required
+                    />
+                  </div>
+                  <div class="col-3 py-2">
+                    <div class="radio-button" style="text-align: center">
+                      <input
+                        style="height: 50"
+                        type="radio"
+                        id="radio2"
+                        name="radios"
+                        value="1"
+                        (change)="opcionCorrecta($event)"
+                        [checked]="pregutaOpciones.opcionList[1].correcta"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-9">
+                    <div class="m-2 formText">Opción C</div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-9">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="opcion3"
+                      placeholder="Escriba la opción"
+                      name="opcionC"
+                      [(ngModel)]="pregutaOpciones.opcionList[2].nombre"
+                      title="Ingresa un texto válido no se permiten los caracteres <, >, o ="
+                      pattern="^[^<>=]*$"
+                    />
+                  </div>
+                  <div class="col-3 py-2">
+                    <div class="radio-button" style="text-align: center">
+                      <input
+                        style="height: 50"
+                        type="radio"
+                        id="radio3"
+                        name="radios"
+                        value="2"
+                        (change)="opcionCorrecta($event)"
+                        [checked]="pregutaOpciones.opcionList[2].correcta"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-9">
+                    <div class="m-2 formText">Opción D</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-9">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="opcion4"
+                      placeholder="Escriba la opción"
+                      name="opcionD"
+                      [(ngModel)]="pregutaOpciones.opcionList[3].nombre"
+                      title="Ingresa un texto válido no se permiten los caracteres <, >, o ="
+                      pattern="^[^<>=]*$"
+                    />
+                  </div>
+                  <div class="col-3 py-2">
+                    <div class="radio-button" style="text-align: center">
+                      <input
+                        style="height: 50"
+                        type="radio"
+                        id="radio4"
+                        name="radios"
+                        value="3"
+                        (change)="opcionCorrecta($event)"
+                        [checked]="pregutaOpciones.opcionList[3].correcta"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+              <div>
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-lg px-5 my-4"
+                  id="btnGuardar"
+                >
+                  Guardar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

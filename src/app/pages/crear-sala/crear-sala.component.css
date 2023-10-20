@@ -1,0 +1,131 @@
+
+body {
+    
+    background-color: #F29523;
+    /*height: 100vh;*/
+   
+    min-height: calc(
+    100vh - 105px
+  ); /* Establece la altura mínima igual a la altura de la ventana menos 50px */
+
+  box-sizing: border-box; /* Incluye el relleno en la altura total del contenedor */
+  }
+  .img-thumbnail {
+    padding: 0.25rem;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+}
+
+.btn-primary {
+    background-color: #ffffff;
+    border: none;    
+    border-radius: 20px;
+    color: #F29523;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
+
+  }
+
+  .btn-primary:hover,
+  .btn-primary:active,
+  .btn-primary:focus
+  {
+    background-color: #F29523; /* Naranja */
+    padding: 10px 20px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
+    color: #3D5057;
+    font-weight: bold;
+
+  }
+  
+  
+
+
+  #btnIngresar:active,
+  #btnIngresar:focus {
+    background-color: #DC8127; /* Naranja */
+    border-color: #DC8127; /* Color del borde si deseas cambiarlo también */
+    border: 3px solid  #3D5057; /* Borde negro de 1 píxel */
+    border-radius: 28px;
+  }
+ 
+  .btn-secondary {
+    font-weight: bold;
+    font-size: 12px;
+  }
+
+  .card {
+    border-radius: 35px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
+  }
+
+  .card p {
+    color: white;
+  }
+
+  .custom-placeholder::placeholder {
+    color: #DC8127;
+  }
+
+  .input-group input[type="file"]::-webkit-file-upload-button {
+    background-color: #3D5057; /* Cambia el color del fondo del botón */
+    color: white; /* Cambia el color del texto del botón */
+  }
+
+  .container-with-shadow {
+  background-color: white;
+  width: 100%;
+  position: relative;
+}
+
+.container-with-shadow::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 10px; /* Ajusta la altura de la sombra según tus preferencias */
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.image-inside-container {
+  width: 100%;
+  height: auto;
+}
+
+.container-white {
+  background-color: white;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+
+.image-inside-container {
+  width: 100%;
+  height: auto;
+}
+
+.container-with-shadow {
+  height: 4px;
+  width: 100%;
+  background-color: #ffffff;
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2); /* Sombra solo en la parte superior */
+  
+  
+  
+  z-index: 1; /* Asegura que esté por encima del contenido */
+}
+
+.input-group {
+  border-radius: 25px;  
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
+
+}
+.form-control {
+  border-radius: 15px;  
+
+}
+
+
+
+

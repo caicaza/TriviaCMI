@@ -1,0 +1,176 @@
+.scrollable-list {
+    max-height: 500px; /* Define la altura máxima que desees */
+    overflow-y: auto; /* Agrega un scroll vertical cuando el contenido excede la altura */
+  }
+
+/* Estilos para pantallas grandes ("lg") */
+@media (min-width: 992px) {
+  .custom-container {
+    height: 650px; /* Altura en pantallas grandes */
+  }
+}
+
+/* Estilos para pantallas pequeñas ("sm") */
+@media (max-width: 576px) {
+  .custom-container {
+    height: 150px; /* Altura en pantallas pequeñas */
+  }
+}
+
+  @media (max-width: 767.98px) {
+    .scrollable-list {
+      max-height: 300px;
+    }
+  }
+  
+  /* Tamaño en pantallas grandes ("lg") */
+  @media (min-width: 992px) {
+    .scrollable-list {
+      max-height: 700px;
+    }
+  }
+
+.odd {
+    background-color: #ffb85c; /* Fondo de color naranja para elementos impares */
+  }
+  
+  .even {
+    background-color: #ffd69f; /* Fondo de color azul para elementos pares */
+  }
+  
+  .circle-badge {
+    width: 40px; /* Ancho del círculo */
+    height: 40px; /* Altura del círculo */
+    background-color: #D47700; /* Color de fondo del círculo */
+    border-radius: 50%; /* Borde redondeado para crear un círculo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white; /* Color del texto dentro del círculo */
+    font-size: 14px; /* Tamaño de fuente del texto dentro del círculo */
+  }
+  
+
+  .player-text {
+    flex-grow: 1; /* Permite que el texto "Jugador" ocupe el espacio restante */
+    text-align: left; /* Alineación del texto a la izquierda */
+    margin-left: 10px; /* Espacio entre el círculo y el texto */
+    font-weight: bold;
+  }
+
+  .custom-badge {
+    background-color: #54585B !important; /* Color de fondo personalizado para el badge */
+    color: white; /* Color del texto dentro del badge */
+  }
+
+  .number-text {
+    font-size: 16px;
+    font-weight: bold;
+
+  }
+
+  .list-group-item {
+    
+    border: none !important;
+  }
+
+  .container-ranking {
+    border-radius: 10px; /* Puedes ajustar el valor según el nivel de redondeo deseado */
+    padding: 20px; /* Puedes ajustar el relleno según tus necesidades */
+    border: 1px solid #ccc; /* Puedes agregar un borde opcional si lo deseas */
+  }
+
+
+  .background-image {
+    position: fixed; /* Fija la imagen en su posición */
+    top: 0;
+    left: 0;
+    /* width: 100%;  *//* Ocupa el ancho completo de la ventana */
+    height: 100%; /* Ocupa el alto completo de la ventana */
+    z-index: -1; /* Coloca la imagen detrás del contenido */
+
+    background-size: cover; /* Hace que la imagen sea responsiva */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita la repetición de la imagen */
+  
+    /* Añade otros estilos según tus necesidades, como el fondo específico que desees */
+  }
+
+  /* Estilo para dispositivos LG */
+@media (min-width: 992px) {
+  .imagen-lg {
+    height: 300px; /* Altura específica para dispositivos LG */
+  }
+ 
+  .centrar-verticalmente {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/* Estilos personalizados para dispositivos de tamaño medio (md) */
+@media (min-width: 768px) {
+  .imagen-md {
+    height: 200px; /* Altura específica para dispositivos SM */
+  }
+}
+
+/* Estilo para dispositivos SM */
+@media (max-width: 768px) {
+  
+  .imagen-sm {
+    height: 150px; /* Altura específica para dispositivos SM */
+  }
+  .centrar-verticalmente {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.btn-primary {
+  background-color: #54585B;
+  border: none;
+  font-weight: bold;
+  border-radius: 25px;
+  font-size: 24px;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus
+{
+  background-color: #DC8127; /* Naranja */
+  border-color: #DC8127; /* Color del borde si deseas cambiarlo también */
+  border: 3px solid  #54585B; /* Borde negro de 1 píxel */
+  
+}
+h4 {
+  color: #54585B;
+}
+
+#animated-dots::after {
+    content: "";
+    animation: dots 1.5s infinite;
+  }
+  
+  @keyframes dots {
+    0%, 20% {
+      content: ".";
+    }
+    40% {
+      content: "..";
+    }
+    60% {
+      content: "...";
+    }
+    80%, 100% {
+      content: "";
+    }
+  }
+
+ 
+  
+ 

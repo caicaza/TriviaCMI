@@ -1,0 +1,91 @@
+body {
+  background-color: #efefef;
+  min-height: calc(
+    100vh - 10px
+  ); /* Establece la altura mínima igual a la altura de la ventana menos 50px */
+
+  box-sizing: border-box; /* Incluye el relleno en la altura total del contenedor */
+}
+.img-thumbnail {
+  padding: 0.25rem;
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+}
+
+.btn-primary {
+  background-color: #3d5057;
+  border: none;
+  font-weight: bold;
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+.btn-primary:active,
+:focus {
+  background-color: #dc8127; /* Naranja */
+  border-color: #dc8127; /* Color del borde si deseas cambiarlo también */
+  border-radius: 28px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary {
+  font-weight: bold;
+  font-size: 12px;
+  border-radius: 20px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+.btn-success {
+  font-weight: bold;
+  font-size: 12px;
+  border-radius: 20px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+.btn-danger {
+  font-weight: bold;
+  font-size: 12px;
+  border-radius: 20px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+.card {
+  border-radius: 15px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+.input-group {
+  border-radius: 25px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+.form-control {
+  border-radius: 15px;
+}
+
+.container-orange {
+  background-color: #dc8127;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.image-inside-container {
+  width: 100%;
+  height: auto;
+}
+
+.container-with-shadow {
+  height: 4px;
+  width: 100%;
+  background-color: #dc8127;
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2); /* Sombra solo en la parte superior */
+
+  z-index: 1; /* Asegura que esté por encima del contenido */
+}
+
+.input-group {
+  border-radius: 25px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+.form-control {
+  border-radius: 15px;
+}

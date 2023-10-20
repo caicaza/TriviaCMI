@@ -1,0 +1,118 @@
+<!-- <img src="assets/Imagenes Juego/pistaLarga.jpg" alt="Imagen de fondo" class="background-image"> -->
+<div class="container my-4">
+  <div class="row">
+    <div class="col-sm-12 col-lg-6">
+      <div class="row">
+        <H3 class="my-4" style="font-weight: bold"> RESULTADOS </H3>
+      </div>
+
+      <div class="row">
+        <div
+          class="container container-ranking mx-auto px-3 py-4"
+          style="background-color: orange"
+        >
+          <div class="row">
+            <div class="col text-center py-2">
+              <img
+                src="assets/Imagenes Empresa/LogoBlanco_App.png"
+                alt="cmiBlanco"
+                style="width: 300px; height: auto"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="scrollable-list">
+                <ul class="list-group">
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center odd"
+                    *ngFor="let miJugador of listaJugadores; let i = index"
+                    [class]="i % 2 === 0 ? 'even' : 'odd'"
+                  >
+                    <div class="number-text mx-2">{{ i + 1 }}</div>
+                    <div class="container" style="width: 45px">
+                      <div class="circle-badge">{{ miJugador.iniciales }}</div>
+                      <!-- Círculo con dos letras -->
+                    </div>
+
+                    <div
+                      class="container mx-4"
+                      style="
+                        background-color: orange;
+                        border-radius: 20px;
+                        height: 40px;
+                        display: flex;
+                        align-items: center;
+                      "
+                    >
+                      <div class="player-text">{{ miJugador.usuario }}</div>
+                    </div>
+                    <!-- Texto "Jugador" alineado a la izquierda -->
+                    <span class="badge bg-primary rounded-pill custom-badge"
+                      >{{ miJugador.usuario }} puntos</span
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-lg-6">
+      <div class="custom-container d-flex flex-column mb-3 my-3 text-center">
+        <div class="p-2 d-md-none d-sm-none d-none d-lg-block d-xl-block">
+          <div class="card">
+            <div class="card-top">
+              <!-- Imagen con fondo naranja -->
+              <img
+                src="assets/Imagenes Juego/ChallengerBlanco.png"
+                alt="Imagen"
+                class="card-img-top my-3"
+                style="height: 200px; width: auto"
+              />
+            </div>
+            <div class="card-bottom">
+              <!-- Texto con fondo blanco -->
+              <div class="card-body">
+                <h5 class="card-title" style="font-weight: bold">
+                  {{ numJugadores }} Jugadores
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-auto p-2">
+          <div class="row">
+            <div class="col-6">
+              <button
+                class="btn btn-primary btn-lar py-3 d-flex mx-2 px-4"
+                style="float: right"
+              >
+                <img
+                  src="assets/Icons/Descargar.svg"
+                  alt="Icono"
+                  class="icono-svg"
+                />
+                Informe
+              </button>
+            </div>
+
+            <div class="col-6">
+              <button class="btn btn-primary d-flex py-3 mx-2 px-4">
+                <img
+                  src="assets/Icons/Puerta3.svg"
+                  alt="Icono"
+                  class="icono-svg"
+                />
+                Salir
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

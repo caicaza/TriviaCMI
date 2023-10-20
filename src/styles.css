@@ -1,0 +1,133 @@
+/* You can add global styles to this file, and also import other style files */
+
+body {
+  font-family: "Century Gothic", sans-serif;
+}
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+.btn-primary {
+  border-radius: 25px;
+}
+/* Controlar el tamaño de las imagenes */
+.imagen-lg {
+  max-width: 100%; /* Ancho máximo en pantallas grandes (100% del contenedor) */
+  height: auto; /* Altura automática para mantener la proporción original */
+  display: block; /* Hacer que la imagen sea un elemento de bloque */
+  margin: 0 auto; /* Centrar horizontalmente la imagen en pantallas grandes */
+}
+
+/* Estilo para la imagen en pantallas medianas (md) */
+@media (max-width: 991.98px) {
+  .imagen-md {
+    max-width: 100%; /* Ancho máximo en pantallas medianas (100% del contenedor) */
+    height: 150px; /* Altura máxima en pantallas medianas (ajusta según tus necesidades) */
+    display: block; /* Hacer que la imagen sea un elemento de bloque */
+    margin: 0 auto; /* Centrar horizontalmente la imagen en pantallas medianas */
+  }
+}
+
+/* Estilo para la imagen en pantallas pequeñas (sm) */
+@media (max-width: 767.98px) {
+  .imagen-sm {
+    max-width: 100%; /* Ancho máximo en pantallas pequeñas (100% del contenedor) */
+    height: 80px; /* Altura máxima en pantallas pequeñas (ajusta según tus necesidades) */
+    display: block; /* Hacer que la imagen sea un elemento de bloque */
+    margin: 0 auto; /* Centrar horizontalmente la imagen en pantallas pequeñas */
+  }
+}
+
+/* Controlar el tamaño de las imagenes */
+.imagen2-lg {
+  max-width: 100%; /* Ancho máximo en pantallas grandes (100% del contenedor) */
+  height: 200px; /* Altura automática para mantener la proporción original */
+  display: block; /* Hacer que la imagen sea un elemento de bloque */
+  margin: 0 auto; /* Centrar horizontalmente la imagen en pantallas grandes */
+}
+
+/* Estilo para la imagen en pantallas medianas (md) */
+@media (max-width: 991.98px) {
+  .imagen2-md {
+    max-width: 100%; /* Ancho máximo en pantallas medianas (100% del contenedor) */
+    height: 150px; /* Altura máxima en pantallas medianas (ajusta según tus necesidades) */
+    display: block; /* Hacer que la imagen sea un elemento de bloque */
+    margin: 0 auto; /* Centrar horizontalmente la imagen en pantallas medianas */
+  }
+}
+
+/* Estilo para la imagen en pantallas pequeñas (sm) */
+@media (max-width: 767.98px) {
+  .imagen2-sm {
+    max-width: 100%; /* Ancho máximo en pantallas pequeñas (100% del contenedor) */
+    height: 80px; /* Altura máxima en pantallas pequeñas (ajusta según tus necesidades) */
+    display: block; /* Hacer que la imagen sea un elemento de bloque */
+    margin: 0 auto; /* Centrar horizontalmente la imagen en pantallas pequeñas */
+  }
+}
+
+.flexcontainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 20vh; /* Establece una altura mínima igual al 100% de la altura de la ventana */
+}
+/* ICONOS */
+.icono-svg {
+  width: 25px; /* Ajusta el ancho según tus necesidades */
+  height: 25px; /* Ajusta la altura según tus necesidades */
+  margin-right: 10px; /* Opcional: espacio entre el icono y el texto */
+}
+.icono-svg2 {
+  width: 20px; /* Ajusta el ancho según tus necesidades */
+  height: 20px; /* Ajusta la altura según tus necesidades */
+  margin-right: 5px; /* Opcional: espacio entre el icono y el texto */
+}
+.icono-svgP {
+  width: 50px; /* Ajusta el ancho según tus necesidades */
+  height: 50px; /* Ajusta la altura según tus necesidades */
+  margin-right: 5px; /* Opcional: espacio entre el icono y el texto */
+}
+
+/*BOTON CIRCULAR*/
+.btn-circle {
+  background-color: #3d5057;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* Hace que el botón sea circular */
+  text-align: center;
+  padding: 0; /* Ajusta el espacio interno del botón */
+
+  color: #fff;
+}
+.btn-circle:hover {
+  background-color: #2f3a40; /* Color más oscuro cuando el mouse pasa por encima */
+}
+
+.btn-circle:active {
+  background-color: #1f292f; /* Color más oscuro cuando se hace clic */
+}
+
+.containerJuego {
+  background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el elemento body */
+}
+
+body.modal-open {
+  overflow: hidden; /* Esto ya evita el desplazamiento vertical */
+  padding-right: 0 !important; /* Establece el padding-right a 0 */
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.hidden {
+  display: none;
+}
