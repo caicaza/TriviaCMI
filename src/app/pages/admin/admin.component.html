@@ -68,7 +68,7 @@
               d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"
             />
           </svg>
-          Sala
+          Nueva
         </button>
       </div>
     </div>
@@ -167,7 +167,7 @@
                     class="btn btn-secondary mx-1 my-2"
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
-                    (click)="getIdSala(sala.idSala)"
+                    (click)="dataSalaOnModal(sala)"
                   >
                     Compartir
                   </button>
@@ -189,6 +189,97 @@
                     Desactivado
                   </button>
                 </div>
+                <!-- INICIO MODAL -->
+                <div
+                  class="modal fade"
+                  id="exampleModal"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                  style="background-color: rgba(0, 0, 0, 0.5)"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5
+                          class="modal-title"
+                          id="exampleModalLabel"
+                          style="font-weight: bold"
+                        >
+                          Compartir
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                          #closeModal
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="text-center mb-3">
+                          <h5>{{ salaItem.nombre }}</h5>
+                        </div>
+                        <div class="row g-3">
+                          <div class="col-8 text-truncate">
+                            <strong>Link:&nbsp;</strong>
+                            <a
+                              class="link-primary"
+                              (click)="cambiarPag('/EntradaSala', sala.idSala)"
+                              >{{ currentURL }}</a
+                            >
+                          </div>
+                          <div class="col-4">
+                            <button
+                              class="btn btn-primary btn-sm"
+                              (click)="copiarText('txtURL')"
+                            >
+                              Copiar
+                            </button>
+                          </div>
+                          <div class="col-8 text-truncate">
+                            <strong>Código de la sala:&nbsp;</strong>
+                            <span>{{ currentCodigo }}</span>
+                          </div>
+                          <div class="col-4">
+                            <button
+                              class="btn btn-primary btn-sm"
+                              (click)="copiarText('txtCodigo')"
+                            >
+                              Copiar
+                            </button>
+                          </div>
+                          <textarea
+                            class="currentText"
+                            id="txtCodigo"
+                            cols="1"
+                            rows="1"
+                            readonly
+                            [defaultValue]="currentCodigo"
+                          ></textarea>
+                          <textarea
+                            class="currentText"
+                            id="txtURL"
+                            cols="1"
+                            rows="1"
+                            readonly
+                            [defaultValue]="currentURL"
+                          ></textarea>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Ok
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- FIN MODAL -->
               </div>
             </div>
           </div>
@@ -196,65 +287,6 @@
       </div>
     </div>
   </div>
-
-  <!-- INICIO MODAL -->
-  <div
-    class="modal fade"
-    id="exampleModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-    data-bs-backdrop="static"
-    style="background-color: rgba(0, 0, 0, 0.5)"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5
-            class="modal-title"
-            id="exampleModalLabel"
-            style="font-weight: bold"
-          >
-            Compartir
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            #closeModal
-          ></button>
-        </div>
-        <div class="modal-body">
-          <div class="row g-3">
-            <div class="col-8 text-truncate">
-              <strong>Link: </strong>
-              <a
-                class="link-primary"
-                (click)="cambiarPag('/EntradaSala', idSalaItem)"
-                >{{ nameLink() }}</a
-              >
-            </div>
-            <div class="col-4">
-              <button class="btn btn-primary btn-sm" (click)="copiarText()">
-                Copiar
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Ok
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- FIN MODAL -->
 
   <p-toast [styleClass]="'col-10 col-md-6 col-lg-3'"></p-toast>
   <p-confirmDialog #cd [styleClass]="'col-10 col-md-4'">

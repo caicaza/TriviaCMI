@@ -14,6 +14,10 @@ export class ConstantsService {
     return 'Error';
   }
 
+  randomNumber(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
   loading(visible: boolean) {
     //, none: boolean
     const loading = document.getElementById('loading');

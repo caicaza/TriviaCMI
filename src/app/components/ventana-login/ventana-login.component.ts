@@ -9,8 +9,6 @@ import { ConstantsService } from 'src/app/constants.service';
 
 import { StorageMap } from '@ngx-pwa/local-storage'; // Importa LocalStorage
 
- 
-
 @Component({
   selector: 'app-ventana-login',
   templateUrl: './ventana-login.component.html',
@@ -23,13 +21,15 @@ export class VentanaLoginComponent implements OnInit {
 
   //Inputs
   loginUsuario: LoginUsuario = {
-    correo: '',
+    nombre: '',
     contrasena: '',
   };
 
   existeError: boolean = false;
 
   rememberMe: boolean = false;
+
+  rol: number = 0;
 
   constructor(
     private usuarioServicio: UsuarioService,
@@ -40,6 +40,43 @@ export class VentanaLoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.constantsService.loading(false);
+
+    // Recupera los datos guardados desde el almacenamiento local
+    this.localStorage.get('user').subscribe((nombre) => {
+      if (typeof nombre == 'string') {
+        this.loginUsuario.nombre = nombre;
+        console.log(this.loginUsuario.nombre);
+      }
+    });
+
+    this.localStorage.get('contrasena').subscribe((contrasena) => {
+      if (typeof contrasena == 'string') {
+        this.loginUsuario.contrasena = contrasena;
+        if (contrasena != '') {
+          this.rememberMe = true;
+        }
+      }
+    });
+
+    //REVISAR ESTA PARTE, NO CACHO PORQUE SE HACE BUGG A BYRON
+
+    /*   if (localStorage.getItem('rol')) {
+      const rolString = localStorage.getItem('rol'); 
+
+      if(rolString){
+        this.rol=parseInt(rolString,10); 
+
+        if (this.rol == 2) {
+          this.router.navigate(['/MisSalas']);
+        }
+        if (this.rol == 1) {
+          this.router.navigate(['/Administrador']);
+        }
+
+      }
+      
+    }
+ */
   }
 
   onSubmit() {
@@ -52,19 +89,35 @@ export class VentanaLoginComponent implements OnInit {
           this.existeError = true;
         } else {
           // no hay error
+          this.existeError = false;
           const decodeToken = this.helper.decodeToken(info);
           //console.log(decodeToken);
-          let { correo, idRol, nombre, id } = decodeToken;
+          let { idRol, nombre, id } = decodeToken;
           localStorage.setItem('id', id);
           localStorage.setItem('token', info);
           localStorage.setItem('rol', idRol);
+          localStorage.setItem('user', nombre);
 
-           //GUARDO ESTO EN LA CASILLA DE RECUERDAME
-           if (this.rememberMe) {
+          //GUARDO ESTO EN LA CASILLA DE RECUERDAME
+          if (this.rememberMe) {
             // Guarda el nombre de usuario y contraseña en el almacenamiento local
-            this.localStorage.set('correo', correo).subscribe(() => {});
-            this.localStorage.set('token', info).subscribe(() => {});
-            this.localStorage.set('rol', info).subscribe(() => {});
+            this.localStorage
+              .set('user', this.loginUsuario.nombre)
+              .subscribe(() => {
+                //console.log(this.loginUsuario.correo);
+              });
+            this.localStorage
+              .set('contrasena', this.loginUsuario.contrasena)
+              .subscribe(() => {
+                //console.log(this.loginUsuario.contrasena);
+              });
+          } else {
+            this.localStorage.set('user', '').subscribe(() => {
+              //console.log(this.loginUsuario.correo);
+            });
+            this.localStorage.set('contrasena', '').subscribe(() => {
+              //console.log(this.loginUsuario.contrasena);
+            });
           }
 
           //Ruta para el jugador
@@ -98,8 +151,6 @@ export class VentanaLoginComponent implements OnInit {
     this.isLoginH.emit(false); // Puedes emitir 'true' o 'false' según tu lógica
   }
   toggleRememberMe() {
-  this.rememberMe = !this.rememberMe;
-}
-
-
+    this.rememberMe = !this.rememberMe;
+  }
 }

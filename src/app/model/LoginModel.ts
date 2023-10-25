@@ -1,6 +1,4 @@
-export interface LoginUsuario {    
-    correo: string;
-    contrasena: string;     
-  }
-
-  
+export interface LoginUsuario {
+  nombre: string;
+  contrasena: string;
+}

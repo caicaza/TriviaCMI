@@ -55,13 +55,13 @@ body {
     /* Estilo para dispositivos LG */
 @media (min-width: 992px) {
   .imagen-lg {
-      max-width: 40%; /* Ajusta el ancho máximo para dispositivos LG y mayores */
-  height: auto; /* Mantiene la proporción de aspecto original */
+      width: auto; /* Ajusta el ancho máximo para dispositivos LG y mayores */
+      max-height: 225px; /* Mantiene la proporción de aspecto original */
 
   }  
   .imagen-lg-h {
-    max-width: 55%; 
-    max-height: auto; 
+    width: auto; /* Ajusta el ancho máximo para dispositivos LG y mayores */
+      max-height: 225px; /* Mantiene la proporción de aspecto original */
 
   }
 
@@ -78,11 +78,11 @@ body {
 
 @media (min-width: 577px) and (max-width: 991px) {
   .imagen-md {
-    max-width: 60%; /* Ajusta el ancho máximo para dispositivos MD */
+    max-width: 40%; /* Ajusta el ancho máximo para dispositivos MD */
     height: auto; /* Mantiene la proporción de aspecto original */
   }
   .imagen-md-h {
-    max-width: 90%; 
+    max-width: 60%; 
     height: auto; 
   }
   .img-fluid {
@@ -106,7 +106,7 @@ body {
   }
 
   .imagen-sm-h {
-    max-width: 100%; 
+    max-width: 80%; 
     height: auto; 
   }
 
@@ -119,4 +119,29 @@ body {
     height: 0px;
   }
  
+}
+
+.textmsj{
+  color: #DC8127;
+  font-weight: bold;
+}
+
+#animated-dots::after {
+  content: "";
+  animation: dots 1.5s infinite;
+}
+
+@keyframes dots {
+  0%, 20% {
+    content: ".";
+  }
+  40% {
+    content: "..";
+  }
+  60% {
+    content: "...";
+  }
+  80%, 100% {
+    content: "";
+  }
 }

@@ -1,5 +1,6 @@
 export interface Sala {
   idSala: number;
+  idEncrypt: string;
   nombre: string;
   imagen: string;
   descripcion: string;

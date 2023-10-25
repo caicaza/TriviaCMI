@@ -1,10 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { ConstantsService } from 'src/app/constants.service';
 import { EncryptionService } from 'src/app/encryption.service';
 import { Sala } from 'src/app/model/SalaModel';
+import { JuegoChallengerService } from 'src/app/services/juego-challenger.service';
 import { SalaService } from 'src/app/services/sala.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 //import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -14,7 +25,6 @@ import { SalaService } from 'src/app/services/sala.service';
   providers: [ConfirmationService],
 })
 export class InicioSalaComponent implements OnInit, AfterViewInit {
-
   @ViewChild('mi_imagen') miImagen: ElementRef | undefined;
   imagenEsHorizontal: boolean = true;
   //nombreSala: string = 'Mi sala!';
@@ -24,8 +34,12 @@ export class InicioSalaComponent implements OnInit, AfterViewInit {
   existeError: boolean = false;
   result: string = '';
 
+  idJugador: number = 0;
+  iniciales: string = '';
+
   miSala: Sala = {
     idSala: 1,
+    idEncrypt: '',
     nombre: 'Mi primera sala',
     imagen: 'assets/Imagenes Juego/Imagen test.png',
     descripcion: 'Descripcion Sala',
@@ -41,6 +55,8 @@ export class InicioSalaComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.constantsService.loading(true);
+    this.iniciales = this.obtenerIniciales(this.usuarioService.getUserName()!);
+    this.idJugador = parseInt(this.usuarioService.getIdUsuario()!);
     this.route.queryParams.subscribe((params) => {
       let idSala = this.encryptionService.decrypt(params['idSala']);
       if (idSala === '') {
@@ -61,7 +77,9 @@ export class InicioSalaComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private encryptionService: EncryptionService,
-    private constantsService: ConstantsService
+    private constantsService: ConstantsService,
+    private juegoChallengerService: JuegoChallengerService,
+    private usuarioService: UsuarioService
   ) {}
 
   cargarInfoSala(idSala: number) {
@@ -101,6 +119,7 @@ export class InicioSalaComponent implements OnInit, AfterViewInit {
         accept: () => {},
       });
     } else {
+      this.createPosicion();
       this.onClickCambiar();
     }
   }
@@ -115,7 +134,60 @@ export class InicioSalaComponent implements OnInit, AfterViewInit {
   }
 
   onClickCambiarTest() {
-    this.numVentanaH.emit(3); //1 para la ventana inicio sala, 2 para el juego y 3 para la ventana de resultados
+    //this.numVentanaH.emit(3); //1 para la ventana inicio sala, 2 para el juego y 3 para la ventana de resultados
+    this.router.navigate(['/MisSalas']);
+
+  }
+
+  createPosicion() {
+    let juego = {
+      idSala: this.miSala.idSala,
+      idJugador: this.idJugador,
+      iniciales: this.iniciales,
+      posicion: 0,
+    };
+
+    this.juegoChallengerService.createItem(juego).subscribe({
+      next: (data: any) => {
+        let { error } = data.result;
+        return error;
+      },
+      error: (e) => {
+        console.log(e);
+        return 1;
+      },
+    });
+  }
+
+  obtenerIniciales(nombre: string) {
+    // Divide el nombre en palabras utilizando espacio como separador
+    const palabras = nombre.split(' ');
+
+    // Verifica si hay al menos una palabra en el nombre
+    if (palabras.length >= 1) {
+      // Inicializa una variable para almacenar las iniciales
+      let iniciales = '';
+      if (palabras.length > 1) {
+        // Recorre las palabras y obtiene las iniciales de las dos primeras
+        for (let i = 0; i < Math.min(palabras.length, 2); i++) {
+          const palabra = palabras[i];
+          if (palabra.length > 0) {
+            iniciales += palabra[0].toUpperCase();
+          }
+        }
+      } else {
+        for (let i = 0; i < palabras.length; i++) {
+          const palabra = palabras[i];
+          if (palabra.length > 0) {
+            iniciales += palabra[0].toUpperCase();
+          }
+        }
+      }
+      return iniciales;
+    } else {
+      // En caso de que el nombre esté vacío o no contenga palabras
+      return '';
+    }
   }
 
   // myForm: FormGroup;
@@ -144,10 +216,9 @@ export class InicioSalaComponent implements OnInit, AfterViewInit {
         const ancho = img.width;
         const alto = img.height;
         console.log(`Ancho: ${ancho}px, Alto: ${alto}px`);
-        this.imagenEsHorizontal=ancho<alto;
+        this.imagenEsHorizontal = ancho < alto;
       };
       //img.src = this.imagenSala; // Asegúrate de que la imagen esté cargada antes de obtener sus dimensiones
     }
-    
   }
 }

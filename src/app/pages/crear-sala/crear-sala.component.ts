@@ -23,6 +23,7 @@ export class CrearSalaComponent implements OnInit {
 
   nuevaSala: Sala = {
     idSala: 1,
+    idEncrypt: '',
     nombre: '',
     imagen: '',
     descripcion: '',
@@ -45,10 +46,12 @@ export class CrearSalaComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       this.type = params['type'];
       let idSala = this.encryptionService.decrypt(params['idSala']);
-      if (idSala === '') {
+      if (idSala === '' && this.type === 'editar') {
         history.back();
       }
-      this.nuevaSala.idSala = parseInt(idSala);
+      if (this.type === 'editar') {
+        this.nuevaSala.idSala = parseInt(idSala);
+      }
     });
     switch (this.type) {
       case 'crear': {

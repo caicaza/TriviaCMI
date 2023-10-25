@@ -14,6 +14,7 @@ import { PuntosJugador } from 'src/app/model/PuntosJugador';
 import { UsuarioSalaService } from 'src/app/services/usuario-sala.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
+
 @Component({
   selector: 'app-ranking-challenger',
   templateUrl: './ranking-challenger.component.html',
@@ -39,7 +40,7 @@ export class RankingChallengerComponent
     {
       idUsuario: 0,
       iniciales: 'PP',
-      usuario: 'Preuba preuba',
+      usuario: 'Prueba prueba',
       rol: '',
       idSala: 0,
       sala: '',
@@ -59,16 +60,14 @@ export class RankingChallengerComponent
     private encryptionService: EncryptionService,
     private constantsService: ConstantsService
   ) {
-    this.testIniciales = this.obtenerIniciales(this.nombreJugador);
-    this.numJugadores = this.listaJugadores.length;
+    //this.testIniciales = this.obtenerIniciales(this.nombreJugador);
+    
     // this.cd.detectChanges();
   }
 
   ngOnInit(): void {
     this.constantsService.loading(true);
-    for (let i = 0; i < this.listaJugadores.length; i++) {
-      this.miListadeColores.push(this.generarColorAleatorio());
-    }
+    
 
     this.route.queryParams.subscribe((params) => {
       let idSala = this.encryptionService.decrypt(params['idSala']);
@@ -94,6 +93,8 @@ export class RankingChallengerComponent
       // Ajusta el desplazamiento de la lista
       this.scrollableList.nativeElement.scrollTop = scrollToPosition;
     }
+
+    
   }
 
   ngAfterContentChecked(): void {}
@@ -113,7 +114,11 @@ export class RankingChallengerComponent
             element.iniciales = this.obtenerIniciales(element.usuario);
           });
         }
+        this.numJugadores=this.listaJugadores.length;
         this.constantsService.loading(false);
+        for (let i = 0; i < this.listaJugadores.length; i++) {
+          this.miListadeColores.push(this.generarColorAleatorio());
+        }
       },
       error: (e) => {
         if (e.status === 401) {
@@ -170,6 +175,16 @@ export class RankingChallengerComponent
   }
 
   salir() {
-    this.usuarioService.logout();
+    //this.usuarioService.logout();
+    const rol = this.usuarioService.getRol();
+    if(rol=='1'){
+      this.router.navigate(['/Administrador']);
+    }
+    if(rol=='2'){
+      //this.router.navigate(['/MisSalas']);
+      let idSala = this.encryptionService.encrypt(this.idSala.toString());
+    let params = { idSala };
+    this.router.navigate(['/EntradaSala'], { queryParams: params });
+    }
   }
 }

@@ -32,6 +32,9 @@ export class UsuarioService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('id');
+    localStorage.removeItem('user');
+    localStorage.removeItem('rol');
     this.router.navigate(['/Iniciar_Sesion']);
   }
 
@@ -52,6 +55,14 @@ export class UsuarioService {
       this.router.navigate(['/']);
     }
 
-    return localStorage.getItem('rol');
+    return localStorage.getItem('id');
+  }
+
+  getUserName() {
+    if (!localStorage.getItem('user')) {
+      this.router.navigate(['/']);
+    }
+
+    return localStorage.getItem('user');
   }
 }

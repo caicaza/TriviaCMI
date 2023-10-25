@@ -9,12 +9,15 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { EncryptionService } from 'src/app/encryption.service';
-import { PuntosJugador } from 'src/app/model/PuntosJugador';
+import {  PuntosJugador } from 'src/app/model/PuntosJugador';
 import { Opcion, Pregunta, Pregunta_OpcionList } from 'src/app/model/SalaModel';
 import { UsuarioSalaService } from 'src/app/services/usuario-sala.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { MessageService } from 'primeng/api';
 import { ConstantsService } from 'src/app/constants.service';
+
+
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 declare var bootstrap: any;
 
@@ -23,6 +26,12 @@ declare var bootstrap: any;
   templateUrl: './survivor-game.component.html',
   styleUrls: ['./survivor-game.component.css'],
   providers: [MessageService],
+  animations: [
+    trigger('jugadoresChanged', [
+      state('changed', style({ transform: 'scale(1.2)' })),
+      transition('* => changed', [animate('0.2s')]),
+    ]),
+  ],
 })
 export class SurvivorGameComponent implements OnInit, AfterViewInit, OnDestroy {
   //Menjase error
@@ -34,6 +43,7 @@ export class SurvivorGameComponent implements OnInit, AfterViewInit, OnDestroy {
   mostrarWrongAlert = false;
   modalElement: any;
   modal: any;
+  mostrarMsjAnalisis: boolean = false;
 
   //Para colocar las preguntas
   preguntaActual: Pregunta = {
@@ -85,6 +95,10 @@ export class SurvivorGameComponent implements OnInit, AfterViewInit, OnDestroy {
   puntosGanados: number = 0;
   puedeResponder: boolean = true;
 
+  //PARA LA SALA
+  numerodeJugadores: number = 0;
+  AuxNumerodeJugadores: number = 0;
+
   //sala y usuario
 
   idSala: number = 0;
@@ -93,7 +107,7 @@ export class SurvivorGameComponent implements OnInit, AfterViewInit, OnDestroy {
   puntosJugador: PuntosJugador = {
     idUsuario: 0,
     iniciales: 'PP',
-    usuario: 'Preuba preuba',
+    usuario: 'Prueba prueba',
     rol: '',
     idSala: 0,
     sala: '',
@@ -118,15 +132,42 @@ export class SurvivorGameComponent implements OnInit, AfterViewInit, OnDestroy {
   juegoTerminado: boolean = false;
 
   //Tiempo
-  tiempoMostrarPrimerModal: number = 3000;
-  tiempoMostrarModal: number = 6000;
+  tiempoMostrarPrimerModal: number = 5000;
+  tiempoMostrarModal: number = 10000;
+  tiempoMostrarRespuesta: number = 4500;
 
   //MUSICA
   musicaFondo: HTMLAudioElement | null = null;
 
   @Input() PreguntasList: Pregunta_OpcionList[] = [];
 
-  constructor(
+  //Circulos de nuevos jugadores
+  circles: { left: string; top: string }[] = [];
+  texts: string[] = ['AB', 'DC', 'CMI', 'AC'];
+
+  //Jugadores Eliminados
+  idJugador=0;
+  jugadoresSala: PuntosJugador[]=[]; 
+  mostrarEspera: boolean= false;
+  isLife: boolean = true;
+  isUltimoenPie: boolean = false;
+
+  //Para una pequeña animacion
+  animationState = '';
+
+  //Para repetir pregunta
+  repetirPregunta = false;
+
+  //identificar si usuario gano
+  ganoJugador = false;
+
+  //Para cambiar la imagen de al fondo
+  mostrarJugadorVivo=true;
+  imgJugadorVivo = "assets/Imagenes Juego/JugadorVivo.png";
+  imgJugadorMuerto = "assets/Imagenes Juego/jugadorMuerto.png";
+  imgXEliminado = "assets/Imagenes Juego/JugadorXEliminado.png";
+
+    constructor(
     private renderer: Renderer2,
     private el: ElementRef,
     private encryptionService: EncryptionService,
@@ -155,19 +196,26 @@ export class SurvivorGameComponent implements OnInit, AfterViewInit, OnDestroy {
       this.idUsuario = parseInt(this.usuarioService.getIdUsuario()!);
     }
 
+    //Obtengo nuevos jugadores
+    this.getNumJugadoresNuevos();
+    //Test para ve el numero cambiado
+    setTimeout(() => {
+      this.updateNumJugadores(6);
+    },2500);
+
+
     setTimeout(() => {
       this.mostrarModal(); //ACTIVAR CUANDO TERMINES DE TESTEAR <------------
-      //console.log("Entro");
+      //console.log("Entro");      
     }, this.tiempoMostrarPrimerModal);
 
-    this.idSala = this.PreguntasList[0].pregunta.idSala;
+    //this.idSala = this.PreguntasList[0].pregunta.idSala;//<-Activar cuando tenga preguntas
 
     for (let i = 0; i < 6; i++) {
-      this.listaDePreguntas.push(this.preguntaOpcionTest);
+      this.listaDePreguntas.push(this.preguntaOpcionActual);
     }
+    console.log(this.listaDePreguntas);
     //this.listaDePreguntas = this.PreguntasList;//ACTIVAR CUANDO TERMINES DE TESTEAR <------------
-
-    //this.steps = 10;
 
     //Para las imagenes de los edificios principales
 
@@ -176,12 +224,172 @@ export class SurvivorGameComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.rellenarPregunta(1);
     //this.updateCenters(window.innerWidth);
+    
+    this.generarCirculos(4);
   }
   ngAfterViewInit() {}
 
   ngOnDestroy(): void {
-    this.modal.hide();
+    //this.modal.hide();
   }
+
+  updateNumJugadores(nuevoNumero: number) {
+    console.log("Jugadores "+nuevoNumero);
+    this.animationState = 'changed';
+    this.numerodeJugadores = nuevoNumero;
+
+    setTimeout(() => {
+      this.animationState = '';
+    }, 200); // Restablece la animación después de 200 ms
+  }
+
+
+  getNumJugadoresNuevos(){
+     //Obtener nuevo jugadores de la bd
+     const listaJugadoresBD = this.getListaBD();
+     this.updateNumJugadores(listaJugadoresBD.length);
+
+     //Comparar la lista de bd con la lista guardada
+     const listaNuevos = this.jugadoresSala.filter((elemento1) => {
+      return !listaJugadoresBD.some((elemento2) => elemento2.idUsuario == elemento1.idUsuario);
+    });
+
+    if(listaNuevos.length>0){
+      //Si hay nuevo jugadores los guardo en mi lista jugadores Sala
+      this.jugadoresSala=listaJugadoresBD;
+      const textsAux: string[] = [];
+
+      for (let i = 0; i < listaNuevos.length; i++) {
+        textsAux.push(listaNuevos[i].iniciales);        
+      }
+      //actualizo la lista de texto de los circulos animados
+      this.texts=textsAux;
+      this.generarCirculos(listaNuevos.length)
+    }
+
+  }
+
+  getNumJugadoresMuertos(){
+    console.log("Jugadores muertos");
+    //Obtener nuevo jugadores de la bd
+    const listaJugadoresBD = this.getListaBD();
+    const PosicionActual = this.numPreguntasContestadas;
+    
+    //Comparar la lista de bd con la lista guardada
+    
+
+    const valorInicial: { jugadoresMuertos: PuntosJugador[]; jugadoresVivos: PuntosJugador[] } = { jugadoresMuertos: [], jugadoresVivos: [] };
+
+    const { jugadoresMuertos, jugadoresVivos } = listaJugadoresBD.reduce(
+      (result, jugador) => {
+        if (jugador.puntaje < PosicionActual) {
+          result.jugadoresMuertos.push(jugador);
+        } else {
+          result.jugadoresVivos.push(jugador);
+        }
+        return result;
+      },
+      valorInicial
+    );
+
+    this.updateNumJugadores(jugadoresVivos.length);
+
+    //Si solo hay un jugador vivo <-- comprobar si este usuario ganó
+    const idJugador = this.usuarioService.getIdUsuario();
+
+    if(jugadoresVivos.length==1){
+      if(jugadoresVivos[0].idUsuario.toString() == idJugador ){
+        this.ganoJugador=true;
+      }
+    }
+
+    if(jugadoresVivos.length==0){
+      this.repetirPregunta=true;
+
+    }
+        
+
+   if(jugadoresMuertos.length>0){
+    
+     //this.jugadoresSala=listaJugadoresBD;
+     const textsAux: string[] = [];
+
+     for (let i = 0; i < jugadoresMuertos.length; i++) {
+       textsAux.push(jugadoresMuertos[i].iniciales);        
+     }
+     //actualizo la lista de texto de los circulos animados
+     this.texts=textsAux;
+     setTimeout(() => {
+      this.generarCirculos(jugadoresMuertos.length)
+    },2500);
+     
+   }
+
+ }
+
+  getListaBD(){
+    console.log("Obtengo los nuevos jugadores");
+    const listaJugadoresBD:PuntosJugador[] =[{
+      idUsuario: 1,
+      iniciales: 'AB',
+      usuario: 'Ana Benitez',
+      rol: '1',
+      idSala: 1,
+      sala: '1',
+      puntaje: 2,
+      tiempo: 0,
+      fecha_creacion: '',
+      fecha_modificacion: '',
+     },{
+      idUsuario: 2,
+      iniciales: 'FB',
+      usuario: 'Facebook',
+      rol: '1',
+      idSala: 1,
+      sala: '1',
+      puntaje: 4,
+      tiempo: 0,
+      fecha_creacion: '',
+      fecha_modificacion: '',
+     }]; //Lista de la bd TEST - ejemplo
+     return listaJugadoresBD;
+  }
+
+  sendResultadoBD(){
+    console.log("Envié mis resultados");
+    this.puntosJugador.puntaje=this.puntosGanados;
+    this.puntosJugador.tiempo=this.tiempoDelJugador;
+  //COLOCAR FUNCION PARA ENVIAR A LA BD
+
+  }
+
+
+  generarCirculos(numCircles:number){
+    this.mostrarJugadorVivo=true;
+    
+    const circlesAux: { left: string; top: string }[] = [];
+    const circleSpacing = 50;
+    
+    for (let i = 0; i < numCircles; i++) {
+      const randomX = Math.random() * (window.innerWidth - 200 - numCircles * circleSpacing) + i * circleSpacing + 'px';
+      
+      const randomY = Math.random() * (window.innerHeight - 200) + 'px';
+
+      circlesAux.push({ left: randomX, top: randomY });
+    }   
+    this.circles=circlesAux;
+
+    
+    if(this.numPreguntasContestadas+1>1){
+      setTimeout(() => {
+        this.mostrarJugadorVivo=false;
+        
+      }, 1500);
+
+    }
+   
+    
+}
 
   mostrarModal() {
     //this.sidebarVisible4 = false;
@@ -197,23 +405,40 @@ export class SurvivorGameComponent implements OnInit, AfterViewInit, OnDestroy {
     this.modal.show();
     //this.musicaFondo.play();
     //TIEMPO
-    this.startTime = new Date(); //CAPTURAMOS LA HORA QUE EMPIEZA EN MILISENGOS
+    this.startTime = new Date(); //CAPTURAMOS LA HORA QUE EMPIEZA EN MILISEGUNDOS
   }
 
   closeModal(id: number) {
     if (this.puedeResponder) {
-      this.userClicked = true;
-      this.stopTimer(); // Detiene el temporizador principal
+      //this.userClicked = true;
+      this.mostrarEspera=true;
+      //this.stopTimer(); // Detiene el temporizador principal
       this.userClickTime = new Date();
       this.puedeResponder = false;
 
       this.botonSeleccionado[id] = true;
       const respuestaSeleccionada = this.actualOpcionList[id];
-      this.tiempoDelJugador +=
+      this.tiempoDelJugador =
         this.userClickTime.getTime() - this.startTime.getTime();
       console.log(this.tiempoDelJugador);
-      if (respuestaSeleccionada.correcta === 1) {
-        // La respuesta es correcta, puedes reproducir un sonido, cambiar el color, etc.
+      this.mostrarMsjAnalisis=true;
+
+      if (respuestaSeleccionada.correcta == 1) 
+      {
+        this.puntosGanados++;
+        this.isLife=true;
+        
+      }else{
+        this.Mensaje_error = 'Respuesta equivocada';
+        this.isLife=false;
+      }
+
+     // this.numPreguntasContestadas++;
+
+      this.sendResultadoBD();
+
+     /*  if (respuestaSeleccionada.correcta === 1) {
+        
         this.puntosGanados++;
         this.mostrarAlert = true;
         this.reproducirSonido('assets/musicAndSFX/QuizCorrect.wav');
@@ -225,13 +450,13 @@ export class SurvivorGameComponent implements OnInit, AfterViewInit, OnDestroy {
           this.numPreguntasContestadas++;
           this.puedeResponder = true;
           this.countdown = 20;
-        }, 3000); // 3000 milisegundos = 3 segundos
+        }, 3000); 
       } else {
         this.Mensaje_error = 'Respuesta equivocada';
         this.preguntaMalConstestada();
-      }
+      } */
 
-      this.pasarAOtraPregunta();
+     /*  this.pasarAOtraPregunta(); */
     }
   }
 
@@ -241,35 +466,70 @@ export class SurvivorGameComponent implements OnInit, AfterViewInit, OnDestroy {
     setTimeout(() => {
       this.mostrarWrongAlert = false;
       this.modal.hide();
-
-      this.numPreguntasContestadas++;
+      //this.numPreguntasContestadas++;
       this.puedeResponder = true;
       this.countdown = 20;
-    }, 3000); // 3000 milisegundos = 3 segundos
+      this.onClickCambiar();
+    }, this.tiempoMostrarRespuesta); // 3000 milisegundos = 3 segundos
+  }
+
+  preguntaBienContestada(){
+        this.mostrarAlert = true;
+        this.reproducirSonido('assets/musicAndSFX/QuizCorrect.wav');
+
+        setTimeout(() => {
+          this.mostrarAlert = false;
+          this.modal.hide();          
+          this.puedeResponder = true;
+          this.countdown = 20;
+        }, this.tiempoMostrarRespuesta); 
   }
 
   pasarAOtraPregunta() {
-    //console.log(this.numPreguntasContestadas);
-    //console.log(this.listaDePreguntas.length);
+        
+    setTimeout(() => {
+      this.getNumJugadoresMuertos();
+    }, 1000);
 
-    if (this.numPreguntasContestadas + 1 < this.listaDePreguntas.length) {
+    if (this.repetirPregunta) {      
       setTimeout(() => {
-        //this.activarBoton(this.numPreguntasContestadas + 1, 1);
-        this.rellenarPregunta(this.numPreguntasContestadas + 1);
-      }, 4000);
+        this.generarCirculos(2);
+      }, 3500);
+    }    
 
-      setTimeout(() => {
-        this.mostrarModal();
-      }, this.tiempoMostrarModal);
-    } else {
+    //Si toca repetir pregunta restamos 1 pregunta contestada
+    if(this.repetirPregunta){
+      this.numPreguntasContestadas--;      
+    }
+
+    //Pasamos a la siguiente pregunta
+    //Si gano jugador, terminar juego
+    if(this.ganoJugador){
       setTimeout(() => {
         this.onClickCambiar();
-      }, 2000);
-    }
+      }, 5000);
+    }else{
+      //Si aun no gana continuar con las preguntas
+      if (this.numPreguntasContestadas + 1 < this.listaDePreguntas.length) {
+        setTimeout(() => {
+          //this.activarBoton(this.numPreguntasContestadas + 1, 1);
+          this.rellenarPregunta(this.numPreguntasContestadas + 1);
+        }, 4000);
+  
+        setTimeout(() => {
+          this.mostrarModal();
+        }, this.tiempoMostrarModal);
+      }    
+      else {
+        setTimeout(() => {
+          this.onClickCambiar();
+        }, 5000);
+      }
+    }    
   }
 
   rellenarPregunta(numPregunta: number) {
-    console.log(numPregunta);
+    //console.log(numPregunta);
     setTimeout(() => {
       this.quitarSeleccionado();
       const PreguntaActual = this.listaDePreguntas[numPregunta - 1];
@@ -303,12 +563,37 @@ export class SurvivorGameComponent implements OnInit, AfterViewInit, OnDestroy {
           this.countdown--; // Temporizador principal disminuye en segundos
         }
         if (this.countdown <= 0) {
+          this.numPreguntasContestadas++;  
+
+          if (this.isLife) {  
+            if(!this.puedeResponder){
+              this.preguntaBienContestada()  
+            }         
+                               
+          }
+          else{
+            this.preguntaMalConstestada();
+          }
+          if(this.puedeResponder){
+            console.log("No respondió");
+            this.isLife=false;
+            this.sendResultadoBD();
+            this.userClickTime = new Date();
+            this.preguntaMalConstestada();
+            this.Mensaje_error = 'Se acabo el tiempo';
+          }
+          
+          this.mostrarEspera=false;
           this.puedeResponder = false;
           this.userClicked = true;
-          this.preguntaMalConstestada();
+          //this.preguntaMalConstestada();
+          
           this.stopTimer();
-          this.pasarAOtraPregunta();
-          this.Mensaje_error = 'Se acabo el tiempo';
+          if(this.isLife || this.repetirPregunta){
+            this.pasarAOtraPregunta();
+          }
+          
+          
         }
       }, 1000); // El temporizador principal se actualiza cada segundo (1000 ms)
     }
@@ -368,6 +653,7 @@ export class SurvivorGameComponent implements OnInit, AfterViewInit, OnDestroy {
       },
     });
   }
+
 
   cambiarPag(ruta: string, id: number) {
     let idSala = this.encryptionService.encrypt(id.toString());

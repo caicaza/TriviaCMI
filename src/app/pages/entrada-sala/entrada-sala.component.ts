@@ -4,6 +4,7 @@ import { ConstantsService } from 'src/app/constants.service';
 import { EncryptionService } from 'src/app/encryption.service';
 import { Pregunta_OpcionList } from 'src/app/model/SalaModel';
 import { PreguntaService } from 'src/app/services/pregunta.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-entrada-sala',
@@ -13,6 +14,7 @@ import { PreguntaService } from 'src/app/services/pregunta.service';
 export class EntradaSalaComponent implements OnInit {
   numVentana: number = 1;
   idSala: number = 0;
+  currentIdJugador: number = 0;
   errorResultPreOp: number = 0;
   preList_opcList: Pregunta_OpcionList[] = [];
 
@@ -21,7 +23,8 @@ export class EntradaSalaComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private encryptionService: EncryptionService,
-    private constantsService: ConstantsService
+    private constantsService: ConstantsService,
+    private usuarioService: UsuarioService
   ) {
     this.numVentana = 1;
   }
@@ -35,6 +38,7 @@ export class EntradaSalaComponent implements OnInit {
 
   ngOnInit() {
     this.constantsService.loading(true);
+    this.currentIdJugador = parseInt(this.usuarioService.getIdUsuario()!);
     this.route.queryParams.subscribe((params) => {
       let idSala = this.encryptionService.decrypt(params['idSala']);
       if (idSala === '') {

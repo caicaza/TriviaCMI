@@ -11,10 +11,12 @@ export class EncryptionService {
   constructor() {}
 
   encrypt(text: string): string {
-    return CryptoJS.AES.encrypt(text, this.key).toString();
+    let datoEncriptado = CryptoJS.AES.encrypt(text, this.key).toString();
+    return encodeURIComponent(datoEncriptado);
   }
 
-  decrypt(encryptedText: string): string {
+  decrypt(encodedText: string): string {
+    let encryptedText = decodeURIComponent(encodedText);
     return CryptoJS.AES.decrypt(encryptedText, this.key).toString(
       CryptoJS.enc.Utf8
     );

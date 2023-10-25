@@ -32,6 +32,7 @@ export class SalaComponent implements OnInit {
 
   miSala: Sala = {
     idSala: 1,
+    idEncrypt: '',
     nombre: 'Mi primera sala',
     imagen: 'assets/Imagenes Juego/Imagen test.png',
     descripcion: 'Descripcion Sala',

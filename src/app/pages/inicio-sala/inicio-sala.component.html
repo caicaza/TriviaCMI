@@ -1,6 +1,8 @@
-<body class="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+<body
+  class="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;"
+>
   <div class="container-fluid">
-    <div class="extra-container" ></div>
+    <div class="extra-container"></div>
     <div class="row align-items-center text-center">
       <div class="col-12 py-3">
         <!-- Contenido izquierdo foto -->
@@ -8,7 +10,6 @@
           src="assets/Imagenes Empresa/Logo_App.png"
           alt="Imagen"
           class="img-fluid"
-          
         />
       </div>
       <!-- TITULO-->
@@ -33,14 +34,32 @@
     <!-- IMAGEN -->
 
     <div class="row">
-      <div class="col text-center m-4">
-        <img #mi_imagen
+      <div class="col text-center mx-4">
+        <img
+          #mi_imagen
           [src]="getImageSala(miSala.imagen)"
           onerror="this.src='assets/Imagenes Juego/ImagenDefault.png'"
           alt="imagen de la clase"
-          [ngClass]="{'imagen-sm': imagenEsHorizontal, 'imagen-md': imagenEsHorizontal, 'imagen-lg': imagenEsHorizontal, 'imagen-sm-h': !imagenEsHorizontal, 'imagen-md-h': !imagenEsHorizontal, 'imagen-lg-h': !imagenEsHorizontal}"
-
+          [ngClass]="{
+            'imagen-sm': imagenEsHorizontal,
+            'imagen-md': imagenEsHorizontal,
+            'imagen-lg': imagenEsHorizontal,
+            'imagen-sm-h': !imagenEsHorizontal,
+            'imagen-md-h': !imagenEsHorizontal,
+            'imagen-lg-h': !imagenEsHorizontal
+          }"
         />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col text-center mx-sm-2 mx-4 my-5">
+        <strong> ¡Bienvenido a Challenger! </strong>
+        <br />
+        Contesta correctamente las preguntas para ganar puntos y avanza rápido
+        para llegar primero a la meta. Tienes 20 segundos por pregunta,
+        ¡Diviértete!
+        <br />
       </div>
     </div>
 
@@ -50,11 +69,16 @@
       <div class="col align-items-center">
         <div class="text-center">
           <button
+            *ngIf="miSala.estado === 1"
             class="btn btn-secondary btn-lg px-5"
             (click)="validarDataPregOpc()"
           >
             Jugar
           </button>
+          <div class="textmsj my-3 mb-2" *ngIf="miSala.estado === 0">
+            <div>Mantente a la espera, </div>
+            <div id="animated-dots">pronto la sala será activada </div>
+          </div>
         </div>
       </div>
     </div>
