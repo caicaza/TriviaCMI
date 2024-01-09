@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConstantsService } from 'src/app/constants.service';
 import { EncryptionService } from 'src/app/encryption.service';
@@ -21,17 +22,22 @@ export class CrearSalaComponent implements OnInit {
   existeError: boolean = false;
   result: string = '';
 
+  nombreInput: FormControl;
+  descripcionInput: FormControl;
+
   nuevaSala: Sala = {
     idSala: 1,
-    idEncrypt: '',
     nombre: '',
     imagen: '',
     descripcion: '',
     idModoJuego: 0,
     modoJuego: '',
     estado: 1,
+    totalPreguntas: 0,
+    cantJugadas: 0,
     fecha_creacion: '',
     fecha_modificacion: '',
+    fechaActivacion: '',
   };
 
   constructor(
@@ -40,7 +46,16 @@ export class CrearSalaComponent implements OnInit {
     private route: ActivatedRoute,
     private encryptionService: EncryptionService,
     private constantsService: ConstantsService
-  ) {}
+  ) {
+    this.nombreInput = new FormControl('', [
+      Validators.required,
+      Validators.maxLength(20),
+    ]);
+    this.descripcionInput = new FormControl('', [
+      Validators.required,
+      Validators.maxLength(200),
+    ]);
+  }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -90,11 +105,15 @@ export class CrearSalaComponent implements OnInit {
     this.constantsService.loading(true);
     switch (this.type) {
       case 'crear': {
-        this.crearNuevaSala();
+        if (this.validForm()) {
+          this.crearNuevaSala();
+        }
         break;
       }
       case 'editar': {
-        this.editarSala();
+        if (this.validForm()) {
+          this.editarSala();
+        }
         break;
       }
       default: {
@@ -105,7 +124,7 @@ export class CrearSalaComponent implements OnInit {
   }
 
   cargarData(idSala: number) {
-    this.salaServicio.itemSala(0, idSala).subscribe({
+    this.salaServicio.itemSala(0, idSala, 0).subscribe({
       next: (data: any) => {
         const { info, error, sala } = data.result;
         this.result = info;
@@ -198,5 +217,21 @@ export class CrearSalaComponent implements OnInit {
         }
       },
     });
+  }
+
+  validForm(): boolean {
+    let isValid: boolean = true;
+    if (this.nombreInput.hasError('maxlength')) {
+      isValid = false;
+    }
+
+    if (this.descripcionInput.hasError('maxlength')) {
+      isValid = false;
+    }
+
+    if (!isValid) {
+      this.constantsService.loading(false);
+    }
+    return isValid;
   }
 }

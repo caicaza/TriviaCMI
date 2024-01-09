@@ -13,17 +13,21 @@ import {
   QueryList,
   OnDestroy,
 } from '@angular/core';
-import { Opcion, Pregunta, Pregunta_OpcionList } from 'src/app/model/SalaModel';
+import {
+  Opcion,
+  Pregunta,
+  Pregunta_OpcionList,
+  SalaJuego,
+} from 'src/app/model/SalaModel';
 import { Options, LabelType } from 'ngx-slider-v2';
 import { EncryptionService } from 'src/app/encryption.service';
 import { Router } from '@angular/router';
 import { UsuarioSalaService } from 'src/app/services/usuario-sala.service';
 import { PuntosJugador } from 'src/app/model/PuntosJugador';
-import { UsuarioService } from 'src/app/services/usuario.service';
 import { ConstantsService } from 'src/app/constants.service';
 import { MessageService } from 'primeng/api';
-import { JuegoChallengerService } from 'src/app/services/juego-challenger.service';
 import { JuegoChallenger } from 'src/app/model/JuegoChallenger';
+import { SalaJuegoService } from 'src/app/services/sala-juego.service';
 
 declare var bootstrap: any;
 declare var LeaderLine: any;
@@ -161,7 +165,7 @@ export class ChallengersGameComponent
 
   listaDePreguntas: Pregunta_OpcionList[] = [];
 
-  listaPosiciones: JuegoChallenger[] = [];
+  listaPosiciones: SalaJuego[] = [];
 
   // numPreguntaActual: number = 0;
   preguntaTexto: string = '';
@@ -262,7 +266,20 @@ export class ChallengersGameComponent
     event.preventDefault();
   }
 
-  colores = ['#c9700394', '#d89e578f', '#b39039b5','#c9700394', '#d89e578f', '#b39039b5','#c9700394', '#d89e578f', '#b39039b5','#c9700394', '#d89e578f', '#b39039b5'];
+  colores = [
+    '#c9700394',
+    '#d89e578f',
+    '#b39039b5',
+    '#c9700394',
+    '#d89e578f',
+    '#b39039b5',
+    '#c9700394',
+    '#d89e578f',
+    '#b39039b5',
+    '#c9700394',
+    '#d89e578f',
+    '#b39039b5',
+  ];
 
   constructor(
     private renderer: Renderer2,
@@ -270,9 +287,8 @@ export class ChallengersGameComponent
     private encryptionService: EncryptionService,
     private router: Router,
     private usuarioSalaService: UsuarioSalaService,
-    private usuarioService: UsuarioService,
     private constantsService: ConstantsService,
-    private juegoChallengerService: JuegoChallengerService,
+    private salaJuegoService: SalaJuegoService,
     private messageService: MessageService
   ) {
     this.numPreguntasContestadas = 0;
@@ -314,7 +330,7 @@ export class ChallengersGameComponent
       { length: numberOfItems },
       (_, index) => index
     );
-    console.log(this.EdificiosCount);
+    //console.log(this.EdificiosCount);
 
     if (this.listaDePreguntas.length > 20) {
       this.numIntervaloImg = 5;
@@ -330,6 +346,7 @@ export class ChallengersGameComponent
   }
 
   ngAfterViewInit() {
+    //Slide para la meta
     this.optionsMeta = {
       readOnly: true,
       floor: 0,
@@ -338,7 +355,7 @@ export class ChallengersGameComponent
       translate: (value: number, label: LabelType): string => {
         switch (label) {
           case LabelType.Low:
-            return 'Meta';
+            return '';
 
           default:
             return '';
@@ -348,7 +365,7 @@ export class ChallengersGameComponent
         return '#F29523';
       },
     };
-    this.valueMeta=this.listaDePreguntas.length;
+    this.valueMeta = this.listaDePreguntas.length;
     // Obtén el elemento .sinusoidal-container por su ID
     const sinusoidalContainer = document.getElementById('sinusoidal-container');
     // Establece la altura deseada en píxeles
@@ -395,14 +412,14 @@ export class ChallengersGameComponent
   }
 
   getListaPosiciones(idSala: number, idJugador: number) {
-    this.juegoChallengerService.getList(idSala, idJugador).subscribe({
+    this.salaJuegoService.getList(idSala, idJugador).subscribe({
       next: (data: any) => {
-        console.log(data);
+        //console.log(data);
 
         let { error, info, lista } = data.result;
         if (error > 0) {
         } else {
-          console.log(lista);
+          //console.log(lista);
           this.listaPosiciones = lista;
         }
       },
@@ -482,7 +499,7 @@ export class ChallengersGameComponent
   }
 
   rellenarPregunta(numPregunta: number) {
-    console.log(numPregunta);
+    //console.log(numPregunta);
     setTimeout(() => {
       this.quitarSeleccionado();
       const PreguntaActual = this.listaDePreguntas[numPregunta - 1];
@@ -532,20 +549,19 @@ export class ChallengersGameComponent
       const respuestaSeleccionada = this.actualOpcionList[id];
       this.tiempoDelJugador +=
         this.userClickTime.getTime() - this.startTime.getTime();
-      console.log(this.tiempoDelJugador);
-
-     
+      //console.log(this.tiempoDelJugador);
 
       if (respuestaSeleccionada.correcta === 1) {
-
-         //AQUI PONER LA ACTUALIZACION DE LAS POSICIONES
-      let juego = {
-        idSala: this.idSala,
-        idJugador: this.idJugador,
-        iniciales: 'pp',
-        posicion: 1,
-      };
-      this.actualizarPosicion(juego);
+        //AQUI PONER LA ACTUALIZACION DE LAS POSICIONES
+        let juego = {
+          idSala: this.idSala,
+          idJugador: this.idJugador,
+          nombre: 'prueba',
+          iniciales: 'pp',
+          posicion: 1,
+          estadoJuego: 1,
+        };
+        this.actualizarPosicion(juego);
         // La respuesta es correcta, puedes reproducir un sonido, cambiar el color, etc.
         this.puntosGanados++;
         this.mostrarAlert = true;
@@ -568,8 +584,8 @@ export class ChallengersGameComponent
     }
   }
 
-  actualizarPosicion(juego: JuegoChallenger) {
-    this.juegoChallengerService.updateItem(juego).subscribe({
+  actualizarPosicion(juego: SalaJuego) {
+    this.salaJuegoService.updateItem(juego).subscribe({
       next: (data: any) => {
         let { error } = data.result;
         if (error === 0) {
@@ -583,6 +599,11 @@ export class ChallengersGameComponent
   }
 
   preguntaMalConstestada() {
+    const indexCorrecto = this.actualOpcionList.findIndex(
+      (item) => item.correcta === 1
+    ); //Obtengo la id del correcto
+    this.botonSeleccionado[indexCorrecto] = true; //Activo al correcto
+
     this.mostrarWrongAlert = true;
     this.reproducirSonido('assets/musicAndSFX/QuizWrong.wav');
     setTimeout(() => {
@@ -659,7 +680,7 @@ export class ChallengersGameComponent
         `#boton-${id - 1}`
       );
       if (buttonElement) {
-        console.log("Scroll boton");
+        //console.log('Scroll boton');
         buttonElement.scrollIntoView({ behavior: 'smooth' }); // Hace scroll suavemente
 
         setTimeout(() => {
@@ -745,7 +766,7 @@ export class ChallengersGameComponent
     this.usuarioSalaService.crearRanking(puntosJugador).subscribe({
       next: (data: any) => {
         let { info, error } = data.result;
-        console.log(info);
+        //console.log(info);
         if (error > 0) {
           this.messageService.add({
             severity: 'error',
@@ -919,34 +940,31 @@ export class ChallengersGameComponent
     this.router.navigate([ruta], { queryParams: params });
   }
 
-  scrollInicial(){
+  scrollInicial() {
     // Hacer scroll hacia el botón activado
-  const vehicleElement = this.el.nativeElement.querySelector(
-    `#elementoVehiculo`
-  );
-  if (vehicleElement) {
-    console.log("Entro carro");
-    
+    const vehicleElement =
+      this.el.nativeElement.querySelector(`#elementoVehiculo`);
+    if (vehicleElement) {
+      //console.log('Entro carro');
 
-    setTimeout(() => {
-      vehicleElement.scrollIntoView({ behavior: 'smooth' });
-    }, 40);
-    setTimeout(() => {
-      vehicleElement.scrollIntoView({ behavior: 'smooth' });
-    }, 70);
-    setTimeout(() => {
-      vehicleElement.scrollIntoView({ behavior: 'smooth' });
-    }, 150);
-    setTimeout(() => {
-      vehicleElement.scrollIntoView({ behavior: 'smooth' });
-    }, 300);
-    setTimeout(() => {
-      vehicleElement.scrollIntoView({ behavior: 'smooth' });
-    }, 500);
-    setTimeout(() => {
-      vehicleElement.scrollIntoView({ behavior: 'smooth' });
-    }, 750);
-  }
-
+      setTimeout(() => {
+        vehicleElement.scrollIntoView({ behavior: 'smooth' });
+      }, 40);
+      setTimeout(() => {
+        vehicleElement.scrollIntoView({ behavior: 'smooth' });
+      }, 70);
+      setTimeout(() => {
+        vehicleElement.scrollIntoView({ behavior: 'smooth' });
+      }, 150);
+      setTimeout(() => {
+        vehicleElement.scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+      setTimeout(() => {
+        vehicleElement.scrollIntoView({ behavior: 'smooth' });
+      }, 500);
+      setTimeout(() => {
+        vehicleElement.scrollIntoView({ behavior: 'smooth' });
+      }, 750);
+    }
   }
 }

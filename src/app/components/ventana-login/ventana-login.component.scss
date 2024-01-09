@@ -41,5 +41,12 @@ body {
     border-color: #3D5057;
 }
 
+.rounded-eye {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
+}
 
   

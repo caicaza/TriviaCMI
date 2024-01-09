@@ -1,16 +1,36 @@
 <body
   class="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;"
 >
-  <div class="container-fluid">
-    <div class="extra-container"></div>
+  <div>
+    
     <div class="row align-items-center text-center">
-      <div class="col-12 py-3">
-        <!-- Contenido izquierdo foto -->
-        <img
+      
+      <div class="col-12">
+        <div class="container-orange"> 
+          <div class="extra-container"></div>               
+          <div class="row text-center ">
+            <div class="col">
+              <img
+                src="assets/Imagenes Empresa/LogoBlanco_App.png"
+                style="height: 80px; width: auto"
+                alt="Imagen"
+                class="image-inside-container"
+              />
+            </div>
+          </div>
+          <div class="extra-container"></div>
+      
+          <!-- Mensaje error -->
+          <div class="mb-3 px-md-5" *ngIf="existeError" style="color: #3d5057">
+            {{ result }}
+          </div>
+        </div>
+        
+        <!-- <img
           src="assets/Imagenes Empresa/Logo_App.png"
           alt="Imagen"
           class="img-fluid"
-        />
+        /> -->
       </div>
       <!-- TITULO-->
       <div class="col-sm-12 col-lg-12 text-center">
@@ -54,11 +74,9 @@
 
     <div class="row">
       <div class="col text-center mx-sm-2 mx-4 my-5">
-        <strong> ¡Bienvenido a Challenger! </strong>
+        <strong> {{ msjJuego[0] }} </strong>
         <br />
-        Contesta correctamente las preguntas para ganar puntos y avanza rápido
-        para llegar primero a la meta. Tienes 20 segundos por pregunta,
-        ¡Diviértete!
+        {{ msjJuego[1] }}
         <br />
       </div>
     </div>
@@ -69,16 +87,95 @@
       <div class="col align-items-center">
         <div class="text-center">
           <button
-            *ngIf="miSala.estado === 1"
+            *ngIf="
+              miSala.estado === 1 &&
+              miSala.cantJugadas === 0 &&
+              miSala.modoJuego === 'Challenger'
+            "
             class="btn btn-secondary btn-lg px-5"
             (click)="validarDataPregOpc()"
           >
             Jugar
           </button>
-          <div class="textmsj my-3 mb-2" *ngIf="miSala.estado === 0">
-            <div>Mantente a la espera, </div>
-            <div id="animated-dots">pronto la sala será activada </div>
+
+          <!--Temporizador para el modo SURVIVOR-->
+          <div
+            class="container"
+            *ngIf="
+              miSala.modoJuego == 'Supervivencia' &&
+              miSala.estado > 0 &&
+              minutes >= 0 &&
+              seconds > 0 &&
+              miSala.cantJugadas == 0
+            "
+          >
+            <div class="row">
+              <div class="col-12 d-flex align-items-center justify-content-center position-relative" >
+               
+                <div style=" position: relative;
+                    
+                    font-weight: bold;
+                  ">
+                  <img
+                    src="assets/Imagenes Juego/S2Reloj.png"
+                    style="height: 60px; width: auto"
+                    alt="reloj"
+                  />
+                </div>
+
+                <div id="RELOJ" class="position-absolute top-50 start-50 translate-middle" style="font-size: 25px;">
+                  <div style="transform: translate(15px,0px);">
+                    <span style="font-weight: bold; color: #dc8127"
+                    >0{{ minutes }}:</span
+                  >
+                  <span style="font-weight: bold; color: #dc8127">{{
+                    seconds | number : "2.0-0"
+                  }}</span>
+
+                  </div>
+                 
+                </div>
+              </div>
+            </div>
           </div>
+
+          <!--Mensaje si llegó tarde a la sala SURVIVOR-->
+          <div
+            class="textmsj my-3 mb-2"
+            *ngIf="
+              miSala.modoJuego == 'Supervivencia' &&
+              miSala.estado > 0 &&
+              minutes <= 0 &&
+              seconds <= 0 &&
+              miSala.cantJugadas == 0
+            "
+          >
+            <div>Lo sentimos, llegaste tarde para jugar en esta sala.</div>
+          </div>
+
+          <div class="textmsj my-3 mb-2" *ngIf="miSala.estado === 0">
+            <div>Mantente a la espera,</div>
+            <div id="animated-dots">pronto la sala será activada</div>
+          </div>
+          <div
+            class="textmsj my-3 mb-2"
+            *ngIf="miSala.estado === 1 && miSala.cantJugadas > 0"
+          >
+            <div>Ya jugaste en esta sala</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="miSala.cantJugadas > 0">
+      <div class="col align-items-center my-2">
+        <div class="text-center">
+          <button
+            class="btn btn-secondary btn-lg px-5"
+            (click)="cambiarPag('/RankingChallengers', miSala.idSala)"
+          >
+            Ranking
+          </button>
         </div>
       </div>
     </div>
@@ -109,4 +206,8 @@
       ></button>
     </ng-template>
   </p-confirmDialog>
+
+  <div class="container" style="height: 15px;">
+
+  </div>
 </body>

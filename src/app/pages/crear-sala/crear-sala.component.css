@@ -5,7 +5,7 @@ body {
     /*height: 100vh;*/
    
     min-height: calc(
-    100vh - 105px
+    100vh + 20px
   ); /* Establece la altura mínima igual a la altura de la ventana menos 50px */
 
   box-sizing: border-box; /* Incluye el relleno en la altura total del contenedor */

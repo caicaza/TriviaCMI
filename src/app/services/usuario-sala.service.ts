@@ -10,7 +10,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UsuarioSalaService {
-  private apiURL: string = environment.URL + '/api/Usuario_Sala'; //Para crear el usuario
+  private apiURL: string = environment.URL + '/api/Usuario_Sala';
+  private apiURLArchivos: string =
+    environment.URL + '/Content/Archivos/Ranking';
 
   constructor(
     private http: HttpClient,
@@ -44,5 +46,39 @@ export class UsuarioSalaService {
         headers: headers,
       }
     );
+  }
+
+  deleteRanking(idSala: Number): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.usuarioServicio.getToken()}`,
+    });
+    return this.http.delete<any>(`${this.apiURL}/delete?idSala=${idSala}`, {
+      headers: headers,
+    });
+  }
+
+  reporteRankingById(estados: number, idSala: number): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.usuarioServicio.getToken()}`,
+    });
+    return this.http.get<any>(
+      `${this.apiURL}/reporte/ranking/${estados}/${idSala}`,
+      {
+        headers: headers,
+      }
+    );
+  }
+
+  reporteRanking(estados: number): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.usuarioServicio.getToken()}`,
+    });
+    return this.http.get<any>(`${this.apiURL}/reporte/ranking/${estados}`, {
+      headers: headers,
+    });
+  }
+
+  getUrlArchivo(nombreArcivo: string): string {
+    return `${this.apiURLArchivos}/${nombreArcivo}`;
   }
 }

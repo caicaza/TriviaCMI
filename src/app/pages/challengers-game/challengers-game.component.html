@@ -5,6 +5,7 @@
 <div class="card flex flex-wrap justify-content-center gap-2">
   <p-sidebar
     [(visible)]="sidebarVisible4"
+    [closeOnEscape]="false"
     position="bottom"
     [showCloseIcon]="false"
     block="true"
@@ -25,7 +26,7 @@
     </div>
 
     <div class="container" style="width: 100%; max-height: 110px">
-      <div class="miSlide">
+      <!-- <div class="miSlide">
         <div class="custom-slider3">
           <ngx-slider
             class="slider"
@@ -33,7 +34,7 @@
             [options]="optionsMeta"
           ></ngx-slider>
         </div>
-      </div>
+      </div> -->
       <div *ngFor="let item of listaPosiciones; let i = index;">
         <div class="miSlide" *ngIf="item.posicion<listaDePreguntas.length">
           <div class="custom-slider2">
@@ -108,18 +109,14 @@
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
     data-bs-backdrop="static"
+    data-bs-keyboard="false"
   >
     <div class="modal-dialog">
       <div class="col">
         <div class="row">
           <div class="modal-content">
             <div>
-              <!--  <div class="col">
-                <div class="row">
-                  {{countdown}}
-                </div>
-              </div> -->
-
+            
               <div class="modal-title m-4">
                 <div class="row my-2">
                   <div class="col-6 ml-2">
@@ -147,24 +144,28 @@
             </div>
 
             <div class="modal-body">
-              <div class="container">
-                <div class="row">
-                  <div class="col text-center">
+              <div>
+                <div class="row" style="min-width: 100%;">
+                  <div class="col-12 text-center">
                     <div
                       *ngFor="let miOpcion of actualOpcionList; let i = index"
                     >
                       <button
                         type="button"
-                        class="btn btn-secondary btn-block text-center my-2"
+                        class="btn custom-btn btn-secondary btn-block text-center my-2 position-relative"
                         (click)="closeModal(i)"
                         [ngClass]="{'respuesta-correcta': miOpcion.correcta==1 && botonSeleccionado[i], 'respuesta-incorrecta': miOpcion.correcta==0 && botonSeleccionado[i], 
-                        }"
+                        }"                                             
                       >
                         {{ miOpcion.nombre }}
+                        <div class="position-absolute top-50 start-100 translate-middle" *ngIf="miOpcion.correcta==0 && botonSeleccionado[i]" >
+                          <img src="assets/Imagenes Juego/S2Mal.png" alt="XOpciones" style="width: 40px; height: 40px; transform: translate(-18px,0px);" >                              
+                       </div>
                       </button>
                     </div>
                   </div>
                 </div>
+                <div class="container" style="height: 15px;"></div>
               </div>
             </div>
           </div>
@@ -467,7 +468,7 @@
         <div class="col-9 my-4" [style.marginLeft.px]="calculateMargin(i)">
           <ng-container *ngIf="boton.tipo === 'boton'">
             <button
-              (click)="moverVehiculo()"
+              
               class="sinusoidal-button"
               id="boton-{{ boton.id }}"
             >

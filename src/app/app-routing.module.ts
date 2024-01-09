@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IniciarSesionComponent } from './pages/iniciar-sesion/iniciar-sesion.component';
 import { AdminComponent } from './pages/admin/admin.component';
-import { authGuard } from './auth.guard';
+import { authGuard, authGuardAdmin, authGuardPlayer } from './auth.guard';
 import { CrearSalaComponent } from './pages/crear-sala/crear-sala.component';
 import { SalaComponent } from './pages/sala/sala.component';
 import { EditarPreguntaComponent } from './pages/editar-pregunta/editar-pregunta.component';
@@ -14,6 +14,7 @@ import { ChallengersGameComponent } from './pages/challengers-game/challengers-g
 import { SurvivorGameComponent } from './pages/survivor-game/survivor-game.component';
 import { EntradaSalaComponent } from './pages/entrada-sala/entrada-sala.component';
 import { RankingChallengerComponent } from './components/ranking-challenger/ranking-challenger.component';
+import { SurvivorPersonalResultComponent } from './components/survivor-personal-result/survivor-personal-result.component';
 
 const routes: Routes = [
   {
@@ -22,38 +23,30 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'Iniciar_Sesion', component: IniciarSesionComponent,
-  },
-  {
     path: 'Administrador',
     component: AdminComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuardAdmin],
   },
   {
     path: 'CrearSala',
     component: CrearSalaComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuardAdmin],
   },
-  { path: 'Sala', component: SalaComponent, canActivate: [authGuard] },
+  { path: 'Sala', component: SalaComponent, canActivate: [authGuardAdmin] },
   {
     path: 'Editar_pregunta',
     component: EditarPreguntaComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuardAdmin],
   },
   {
     path: 'Ingresar_Imagen',
     component: IngresarImagenComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuardAdmin],
   },
   {
     path: 'MisSalas',
     component: PlayerComponent,
-    canActivate: [authGuard],
-  },
-  {
-    path: 'EntradaSala/:idSala', // Define una ruta con un parámetro dinámico
-    component: EntradaSalaComponent,
-     //canActivate: [authGuard],
+    //canActivate: [authGuardPlayer],
   },
   {
     path: 'Resultados',
@@ -63,27 +56,32 @@ const routes: Routes = [
   {
     path: 'InicioSala',
     component: InicioSalaComponent,
-    //canActivate: [authGuard],
+    canActivate: [authGuardPlayer],
   },
   {
     path: 'JuegoChallengers',
     component: ChallengersGameComponent,
-    //canActivate: [authGuard],
+    canActivate: [authGuardPlayer],
   },
   {
     path: 'JuegoSupervivencia',
     component: SurvivorGameComponent,
-    //canActivate: [authGuard],
+    //canActivate: [authGuardPlayer],
   },
   {
     path: 'EntradaSala',
     component: EntradaSalaComponent,
-    //canActivate: [authGuard],
+    canActivate: [authGuardPlayer],
   },
   {
     path: 'RankingChallengers',
     component: RankingChallengerComponent,
     //canActivate: [authGuard],
+  },
+  {
+    path: 'SurvivorResult',
+    component: SurvivorPersonalResultComponent,
+   // canActivate: [authGuardPlayer],
   },
 
 ];

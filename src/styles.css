@@ -2,9 +2,12 @@
 
 body {
   font-family: "Century Gothic", sans-serif;
+  
 }
+
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
+@import "~font-awesome/css/font-awesome.min.css";
 
 .btn-primary {
   border-radius: 25px;
@@ -131,3 +134,38 @@ body.modal-open {
 .hidden {
   display: none;
 }
+
+
+.pagination > li > a
+{
+    background-color: white;
+    color: #5A4181;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #5a5a5a;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.pagination > .active > a
+{
+    color: white;
+    background-color: #DC8127 !Important;
+    border: solid 1px #DC8127 !Important;
+}
+
+.pagination > .active > a:hover
+{
+    background-color: #DC8127 !Important;
+    border: solid 1px #DC8127;
+}
+
+/* MENU LATERAL
+ */
+
+ 

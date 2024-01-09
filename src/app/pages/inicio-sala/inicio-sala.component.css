@@ -145,3 +145,10 @@ body {
     content: "";
   }
 }
+
+.container-orange {
+  background-color: #dc8127;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}

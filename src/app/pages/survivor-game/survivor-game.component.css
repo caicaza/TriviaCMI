@@ -1,240 +1,353 @@
 .circle {
+  width: 200px;
+  height: 200px;
+ /*  border-radius: 50%;
+  background-color: rgb(240, 240, 240); */
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);  
+  padding: 0;
+  margin: 0;
+
+
+}
+
+.centered{
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
+.centered img {
+  width: 100%; /* Ajustar el ancho de la imagen para que no sea más ancha que el contenedor */
+  text-align: center; /* Centrar horizontalmente la imagen */
+}
+.text-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+
+
+
+.container{
+  min-width: 100%;
+  height: 100%;
+  
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+    /* Estilo para dispositivos LG */
+@media (min-width: 992px) {
+  .txtYo{
+    font-size: 55px;
+    font-weight: bold;
+  }
+  .imgYo{
+    min-width: 250px;
+    max-width: 350px;
+    height: auto;
+  }
+  .circle-lg{
+    width: 400px;
+    height: 400px;
+  }
+  .imgPreguntas{
+    background-image: url('../../../assets/Imagenes Juego/jugadorMuerto.png');
+  }
+  .imgEliminados{
+    background-image: url('../../../assets/Imagenes Juego/Campero.png');
+  }
+}
+
+.imgArriba{
+  min-width: 100%; height: auto;
+}
+
+@media (min-width: 577px) and (max-width: 991px) {
+  .txtYo{
+    font-size: 45px;
+    font-weight: bold;
+  }
+  .imgYo{
+    min-width: 220px;
+    height: auto;
+    max-width: 300px;
+  }
+  .circle-md{
+    width: 300px;
+    height: 300px;
+  }
+  .imgPreguntas{
+    background-image: url('../../../assets/Imagenes Juego/jugadorMuerto.png');
+    
+  }
+  .imgEliminados{
+    background-image: url('../../../assets/Imagenes Juego/Campero.png');
+}
+
+}
+      
+/* Estilo para dispositivos SM */
+@media (max-width: 576px) {
+  .txtYo{
+    font-size: 30px;
+    font-weight: bold;
+  }
+  .imgYo{
+    max-width: 60%;
+    /* min-width: 70%; */
+    height: auto;
+  }
+  .circle-sm{
     width: 200px;
     height: 200px;
-    border-radius: 50%;
-    background-color: rgb(240, 240, 240);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
-
-
   }
-
-
-
-  .container{
-    max-width: 100%;
+  .imgPreguntas{
+    background-image: url('../../../assets/Imagenes Juego/Industria.png');
   }
-
-  .content {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+  .imgEliminados{
+    background-image: url('../../../assets/Imagenes Juego/JugadorXEliminado.png');
   }
+}
 
-      /* Estilo para dispositivos LG */
-      @media (min-width: 992px) {
-        .circle-lg{
-            width: 400px;
-            height: 400px;
+    .containerMsj {
+      position: absolute;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      height:100%;
+      background-color: rgba(0, 0, 0, 0.884); 
+      z-index: 4;        
+      color: white;
+      display: flex;
+      align-items: center; /* Centra verticalmente el contenido */  justify-content: center; /* Centra horizontalmente el contenido */
+      z-index: 20;
+      
 
-        }
+    }
+
+  
+
+    .container-circle {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .circle-wrapper {
+      position: relative;
+      animation: circle-animation 4s linear infinite;
+    }
+    
+    .circle-Player {
+      width: 100px;
+      height: 100px;        
+      
+      font-size: 18px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      animation: circle-fade-in 1s ease-in 0s 1 forwards, circle-translate-up 5s ease-in 1s 1 forwards, circle-fade-out 1s ease-in 5s 1 forwards;
+    }
+    
+    @keyframes circle-fade-in {
+      from {
+        opacity: 0;
       }
-      
-      @media (min-width: 577px) and (max-width: 991px) {
-        
-        .circle-md{
-            width: 300px;
-            height: 300px;
-
-        }
+      to {
+        opacity: 1;
       }
-      
-      
-      
-      /* Estilo para dispositivos SM */
-      @media (max-width: 576px) {
-        
-        
-        .circle-sm{
-            width: 200px;
-            height: 200px;
-
-        }
-       
+    }
+    
+    @keyframes circle-translate-up {
+      from {
+        transform: translateY(0);
       }
+      to {
+        transform: translateY(-100px);
+      }
+    }
+    
+    @keyframes circle-fade-out {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+    
+    @keyframes circle-animation {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      25% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(0);
+      }
+      75% {
+        transform: translateY(0);
+      }
+    }
 
-      .containerMsj {
+    #animated-dots::after {
+      content: "";
+      animation: dots 1.5s infinite;
+    }
+    
+    @keyframes dots {
+      0%, 20% {
+        content: ".";
+      }
+      40% {
+        content: "..";
+      }
+      60% {
+        content: "...";
+      }
+      80%, 100% {
+        content: "";
+      }
+    }
+
+
+ 
+      .numero {
         position: absolute;
-        padding: 0;
-        margin: 0;
-        width: 100%;
-        height:100%;
-        background-color: rgba(0, 0, 0, 0.75); 
-        z-index: 4;        
-        color: white;
-        display: flex;
-        align-items: center; /* Centra verticalmente el contenido */  justify-content: center; /* Centra horizontalmente el contenido */
-        z-index: 20;
-        
-
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* Centra vertical y horizontalmente */
+        color: #fff; /* Color del texto del número */
       }
+    
+    
+      .container-fluid{
+        background-color: transparent; /* Elimina el fondo blanco */
+      }
+    
+      button.respuesta-correcta {
+        background-color: #4CAF50; /* Verde para respuestas correctas */
+      }
+      
+      button.respuesta-incorrecta {
+        background-color: #FF5733; /* Rojo para respuestas incorrectas */
+      }
+      
+      button.respuesta-bloqueada {
+        cursor: not-allowed; /* Cambia el cursor para indicar que el botón está bloqueado */
+      }
+    
+      .btn-secondary {
+        background-color: #F29523;
+        border: none;    
+        border-radius: 20px;
+        color: #ffffff;
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
+      
+      }
+      
+    
+      .modal-content{
+        border-radius: 35px;
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
+      }
+    
+      .overlay-container {
+        position: relative;   
+        z-index: 1;
+      }
+      
+      .list-item {
+        
+        padding: 10px;
+        margin-bottom: 10px;
+        position:sticky;
+        z-index: 2;
+      }
+    
+      .modal-container {
+        max-width: 80%;
+        margin: 0 auto;
+        z-index: 1050;
+      }
+    
+      @media (max-width: 767px) { /* Ajusta el ancho máximo según tus necesidades */
+        .mobile-modal {
+          position: fixed !important;
+        }
+      }
+
+.imgDeath{
+max-height: 60px;
+width: auto;
+}
+
+
+
+
+.elementScroll {  
+  min-width: 100%;
+  overflow-y: auto;
+}
+
+#image-container {
+  max-height: 300px; /* Ajusta la altura máxima según tus necesidades */
+  overflow-y: auto;
+}
+
+.custom-image {
+  width: 100%; /* Ajusta el ancho según tus necesidades */
+  height: auto;
+  max-width: 100%; /* Para asegurarse de que la imagen no se extienda más allá de su contenedor */
+}
+
+::ng-deep .p-progressbar .p-progressbar-value {
+  background: #F29523;
+  border-radius: 20px;
+}
+
+::ng-deep .p-progressbar  {  
+  border-radius: 20px;
+}
+
+.custom-btn {
+  width: 90%;
+  margin: 0 auto; /* Centra el botón horizontalmente en el modal */
+}
+
+
+
+
+
 
     
+    
+    
+    
 
-      .container-circle {
-        position: relative;
-        width: 300px;
-        height: 300px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      
-      .circle-wrapper {
-        position: relative;
-        animation: circle-animation 4s linear infinite;
-      }
-      
-      .circle-Player {
-        width: 100px;
-        height: 100px;        
-        
-        font-size: 18px;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        animation: circle-fade-in 1s ease-in 0s 1 forwards, circle-translate-up 5s ease-in 1s 1 forwards, circle-fade-out 1s ease-in 5s 1 forwards;
-      }
-      
-      @keyframes circle-fade-in {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-      
-      @keyframes circle-translate-up {
-        from {
-          transform: translateY(0);
-        }
-        to {
-          transform: translateY(-100px);
-        }
-      }
-      
-      @keyframes circle-fade-out {
-        from {
-          opacity: 1;
-        }
-        to {
-          opacity: 0;
-        }
-      }
-      
-      @keyframes circle-animation {
-        0%, 100% {
-          transform: translateY(0);
-        }
-        25% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(0);
-        }
-        75% {
-          transform: translateY(0);
-        }
-      }
-
-      #animated-dots::after {
-        content: "";
-        animation: dots 1.5s infinite;
-      }
-      
-      @keyframes dots {
-        0%, 20% {
-          content: ".";
-        }
-        40% {
-          content: "..";
-        }
-        60% {
-          content: "...";
-        }
-        80%, 100% {
-          content: "";
-        }
-      }
-
-
-   
-        .numero {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%); /* Centra vertical y horizontalmente */
-          color: #fff; /* Color del texto del número */
-        }
-      
-      
-        .container-fluid{
-          background-color: transparent; /* Elimina el fondo blanco */
-        }
-      
-        button.respuesta-correcta {
-          background-color: #4CAF50; /* Verde para respuestas correctas */
-        }
-        
-        button.respuesta-incorrecta {
-          background-color: #FF5733; /* Rojo para respuestas incorrectas */
-        }
-        
-        button.respuesta-bloqueada {
-          cursor: not-allowed; /* Cambia el cursor para indicar que el botón está bloqueado */
-        }
-      
-        .btn-secondary {
-          background-color: #F29523;
-          border: none;    
-          border-radius: 20px;
-          color: #ffffff;
-          box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
-        
-        }
-        
-      
-        .modal-content{
-          border-radius: 35px;
-          box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
-        }
-      
-        .overlay-container {
-          position: relative;   
-          z-index: 1;
-        }
-        
-        .list-item {
-          
-          padding: 10px;
-          margin-bottom: 10px;
-          position:sticky;
-          z-index: 2;
-        }
-      
-        .modal-container {
-          max-width: 80%;
-          margin: 0 auto;
-          z-index: 1050;
-        }
-      
-        @media (max-width: 767px) { /* Ajusta el ancho máximo según tus necesidades */
-          .mobile-modal {
-            position: fixed !important;
-          }
-        }
-      
-      
-      
-      
-
-      
+    

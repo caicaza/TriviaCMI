@@ -6,7 +6,7 @@
 body {
   background-color: #efefef;
   min-height: calc(
-    100vh - 1px
+    100vh + 10px
   ); /* Establece la altura mínima igual a la altura de la ventana menos 50px */
   box-sizing: border-box; /* Incluye el relleno en la altura total del contenedor */
 }

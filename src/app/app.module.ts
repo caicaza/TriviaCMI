@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 /* import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog'; */
+import { ProgressBarModule } from 'primeng/progressbar';
 import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
@@ -20,6 +21,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogModule } from 'primeng/dialog';
 import { SidebarModule } from 'primeng/sidebar';
 import { SliderModule } from 'primeng/slider';
+import { KnobModule } from 'primeng/knob';
+import { MenuModule } from 'primeng/menu';
 
 //Ventanas creadas
 import { VentanaLoginComponent } from './components/ventana-login/ventana-login.component';
@@ -36,10 +39,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IngresarImagenComponent } from './pages/ingresar-imagen/ingresar-imagen.component';
 
 //import { NgxDropzoneModule } from 'ngx-dropzone';
+import { BsDropdownModule,BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 
 import { NgxSliderModule } from 'ngx-slider-v2';
 
-import { authGuard } from './auth.guard';
+import { authGuard, authGuardAdmin, authGuardPlayer } from './auth.guard';
 
 import { InicioSalaComponent } from './pages/inicio-sala/inicio-sala.component';
 import { ChallengersGameComponent } from './pages/challengers-game/challengers-game.component';
@@ -48,6 +52,10 @@ import { EsperarJChallengersComponent } from './components/esperar-jchallengers/
 import { RankingChallengerComponent } from './components/ranking-challenger/ranking-challenger.component';
 import { EntradaSalaComponent } from './pages/entrada-sala/entrada-sala.component';
 import { SurvivorGameComponent } from './pages/survivor-game/survivor-game.component';
+import { ClipboardModule } from 'ngx-clipboard';
+import { SurvivorPersonalResultComponent } from './components/survivor-personal-result/survivor-personal-result.component';
+import { GestionarUsuariosComponent } from './pages/gestionar-usuarios/gestionar-usuarios.component';
+import { CrearUsuarioComponent } from './pages/crear-usuario/crear-usuario.component';
 
 @NgModule({
   declarations: [
@@ -68,16 +76,25 @@ import { SurvivorGameComponent } from './pages/survivor-game/survivor-game.compo
     RankingChallengerComponent,
     EntradaSalaComponent,
     SurvivorGameComponent,
+    SurvivorPersonalResultComponent,
+    GestionarUsuariosComponent,
+    CrearUsuarioComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     DropdownModule,
+    ClipboardModule,
+
+    BsDropdownModule,
 
     /* ButtonModule,
     DialogModule,
     NgxDropzoneModule,
     ToastModule, */
+    MenuModule,
+    ProgressBarModule,
+    KnobModule,
     NgxSliderModule,
     SliderModule,
     SidebarModule,
@@ -93,62 +110,77 @@ import { SurvivorGameComponent } from './pages/survivor-game/survivor-game.compo
       {
         path: 'Administrador',
         component: AdminComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuardAdmin],
       },
       {
         path: 'CrearSala',
         component: CrearSalaComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuardAdmin],
       },
-      { path: 'Sala', component: SalaComponent, canActivate: [authGuard] },
+      { path: 'Sala', component: SalaComponent, canActivate: [authGuardAdmin] },
       {
         path: 'Editar_pregunta',
         component: EditarPreguntaComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuardAdmin],
       },
       {
         path: 'Ingresar_Imagen',
         component: IngresarImagenComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuardAdmin],
       },
       {
         path: 'MisSalas',
         component: PlayerComponent,
-        canActivate: [authGuard],
+        canActivate: [authGuardPlayer],
       },
       {
         path: 'Resultados',
         component: ResultadosAdminComponent,
-        //canActivate: [authGuard],
+        canActivate: [authGuardPlayer],
       },
       {
         path: 'InicioSala',
         component: InicioSalaComponent,
-        //canActivate: [authGuard],
+        canActivate: [authGuardPlayer],
       },
       {
         path: 'JuegoChallengers',
         component: ChallengersGameComponent,
-        //canActivate: [authGuard],
+        canActivate: [authGuardPlayer],
       },
       {
         path: 'JuegoSupervivencia',
         component: SurvivorGameComponent,
-        //canActivate: [authGuard],
+        //canActivate: [authGuardPlayer],
       },
       {
         path: 'EntradaSala',
         component: EntradaSalaComponent,
-        //canActivate: [authGuard],
+        canActivate: [authGuardPlayer],
       },
       {
         path: 'RankingChallengers',
         component: RankingChallengerComponent,
-        //canActivate: [authGuard],
+        canActivate: [authGuardPlayer],
+      },
+      {
+        path: 'SurvivorResult',
+        component: SurvivorPersonalResultComponent,
+        canActivate: [authGuardPlayer],
+      },
+      {
+        path: 'GestionarUsuarios',
+        component: GestionarUsuariosComponent,
+        canActivate: [authGuardAdmin],
+      },
+      {
+        path: 'CrearUsuario',
+        component: CrearUsuarioComponent,
+        canActivate: [authGuardAdmin],
       },
     ]),
   ],
-  providers: [],
+  providers: [BsDropdownConfig],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

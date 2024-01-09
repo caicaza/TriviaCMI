@@ -99,7 +99,26 @@ input[type="radio"]:checked {
   transform: translateY(-50%);
 }
 
-:host ::ng-deep .p-dropdown {
-  border-radius: 20px;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+
+select {
+  background-color: #3d5057;
+  color: rgb(48, 48, 48);
+  border: none; /* Elimina el borde del select */
+  outline: none; /* Elimina el contorno al hacer clic */
 }
+
+::ng-deep option:checked,
+option:hover, 
+option:focus,
+option:active,
+option:visited,
+option::after,
+option::selection {
+      background-color: #3d5057  !important;
+      color: white;
+      overflow: hidden;
+    }
+    ::ng-deep select:-internal-list-box option:checked {
+      background-color: -internal-light-dark(rgb(206, 206, 206), rgb(84, 84, 84));
+      color: -internal-light-dark(rgb(16, 16, 16), rgb(255, 255, 255));
+  }

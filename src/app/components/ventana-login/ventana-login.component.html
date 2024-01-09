@@ -45,15 +45,25 @@
                 />
               </div>
               <div class="mb-3 px-md-5">
-                <input
+                <div class="input-group" style="height: 46px;">
+                  <input
                   [(ngModel)]="loginUsuario.contrasena"
-                  type="password"
+                  type="{{ hidePassword ? 'password' : 'text' }}"
                   class="form-control"
                   id="password"
                   placeholder="Ingresa tu contraseña"
                   name="contrasena"
-                  required
-                />
+                  required>
+                  <div class="input-group-append" >
+                    <span class="input-group-text rounded-eye " (click)="togglePasswordVisibility()" style="height: 46px; position: relative;">
+                        <i class="fa" [ngClass]="{'fa-eye-slash': hidePassword, 'fa-eye': !hidePassword}"></i>
+                        
+                    </span>
+                </div>
+
+                </div>
+                
+
               </div>
               <div class="mb-3 px-md-5">
                 <div class="form-check custom-checkbox">

@@ -1,14 +1,30 @@
 export interface Sala {
   idSala: number;
-  idEncrypt: string;
   nombre: string;
   imagen: string;
   descripcion: string;
   idModoJuego: number;
   modoJuego: string;
   estado: number;
+  totalPreguntas: number;
+  cantJugadas: number;
   fecha_creacion: string;
   fecha_modificacion: string;
+  fechaActivacion: string;
+}
+
+export interface SalaReciente {
+  idSala: number;
+  idUsuario: number;
+}
+
+export interface SalaJuego {
+  idSala: number;
+  idJugador: number;
+  nombre: string;
+  iniciales: string;
+  posicion: number;
+  estadoJuego: number;
 }
 
 export interface Pregunta {

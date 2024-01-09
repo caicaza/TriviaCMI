@@ -37,7 +37,7 @@ export class EntradaSalaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.constantsService.loading(true);
+    this.constantsService.loading(false);
     this.currentIdJugador = parseInt(this.usuarioService.getIdUsuario()!);
     this.route.queryParams.subscribe((params) => {
       let idSala = this.encryptionService.decrypt(params['idSala']);

@@ -94,9 +94,45 @@ body {
   cursor: pointer;
 }
 
-.currentText {
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
+.navbar-toggler, .navbar-toggler.active {
+  border-radius:20px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
+
+.navbar-toggler-icon {
+  background-size: 80%; 
+  background-image: url('../../../assets/Imagenes Juego/Menu.png');
+  
+}
+
+.nav-link {
+  display: inline;  
+}
+
+.nav-item {
+  padding-bottom: 15px;
+}
+
+.nav-link.active, .navbar-nav .nav-link.show {
+  color: #dc8127;
+}
+
+.nav-link:active, .nav-link:focus {
+  background-color: rgba(0, 0, 0, 0); /* Naranja */
+  border-color: none; /* Color del borde si deseas cambiarlo también */
+  border-radius: 0px;
+  box-shadow: none;
+}
+
+.select, .select:active, .select:focus{
+  background-color: white;
+  border-radius: 25px;
+}
+.dropdown-item:hover{
+ background-color: #dc8127;
+ color: white;
+}
+.dropdown-item{
+  color: white;
+ }
+

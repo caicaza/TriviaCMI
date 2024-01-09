@@ -1,10 +1,20 @@
 .scrollable-list {
     max-height: 500px; /* Define la altura máxima que desees */
     overflow-y: auto; /* Agrega un scroll vertical cuando el contenido excede la altura */
+    overflow-x: auto;
+    white-space: nowrap;
+
+  }
+
+  table{
+    min-width: 90%;
   }
 
 /* Estilos para pantallas grandes ("lg") */
 @media (min-width: 992px) {
+  .logoCMI{
+    max-width: 300px; height: auto
+  }
   .custom-container {
     height: 650px; /* Altura en pantallas grandes */
   }
@@ -12,6 +22,9 @@
 
 /* Estilos para pantallas pequeñas ("sm") */
 @media (max-width: 576px) {
+  .logoCMI{
+    max-width: 150px; height: auto
+  }
   .custom-container {
     height: 150px; /* Altura en pantallas pequeñas */
   }
@@ -21,6 +34,9 @@
 }
 
 @media (min-width: 577px) and (max-width: 991px) {
+  .logoCMI{
+    max-width: 250px; height: auto
+  }
   .scrollable-list {
     max-height: 250px;  
   }
@@ -65,6 +81,8 @@
     margin-left: 10px; /* Espacio entre el círculo y el texto */
     font-weight: bold;
     font-size: small;
+    /*Maximo 2 lineas + puntos*/
+        
   }
 
   .custom-badge {
@@ -78,10 +96,13 @@
     font-weight: bold;
 
   }
+  
 
-  .list-group-item {
-    
+  .list-group-item {    
     border: none !important;
+    display: inline-block; /* Asegura que los elementos se muestren en línea */
+    margin-right: 5px; /* Añade margen entre los elementos */
+
   }
 
   .container-ranking {

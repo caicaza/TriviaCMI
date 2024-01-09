@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environments';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { Sala } from '../model/SalaModel';
+import { Sala, SalaReciente } from '../model/SalaModel';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +11,7 @@ import { Sala } from '../model/SalaModel';
 export class SalaService {
   private apiURL: string = environment.URL + '/api/sala'; //Para crear el usuario
   private apiURLImages: string = environment.URL + '/Content/Images/Sala';
+  private apiURLArchivos: string = environment.URL + '/Content/Archivos/Sala';
 
   constructor(
     private http: HttpClient,
@@ -42,13 +43,45 @@ export class SalaService {
     );
   }
 
-  itemSala(estados: number, idSala: number): Observable<Sala> {
+  listaSalaReciente(estados: number, idUsuario: number): Observable<Sala[]> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.usuarioServicio.getToken()}`,
     });
-    return this.http.get<Sala>(`${this.apiURL}/list/${estados}/${idSala}`, {
-      headers: headers,
+    return this.http.get<Sala[]>(
+      `${this.apiURL}/listReciente/${estados}/${idUsuario}`,
+      {
+        headers: headers,
+      }
+    );
+  }
+
+  crearSalaReciente(salaReciente: SalaReciente): Observable<SalaReciente> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.usuarioServicio.getToken()}`,
     });
+    return this.http.post<SalaReciente>(
+      `${this.apiURL}/createReciente`,
+      salaReciente,
+      {
+        headers: headers,
+      }
+    );
+  }
+
+  itemSala(
+    estados: number,
+    idSala: number,
+    idUsuario: number
+  ): Observable<Sala> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.usuarioServicio.getToken()}`,
+    });
+    return this.http.get<Sala>(
+      `${this.apiURL}/list/${estados}/${idSala}/${idUsuario}`,
+      {
+        headers: headers,
+      }
+    );
   }
 
   crearSala(formData: FormData): Observable<FormData> {
@@ -87,5 +120,18 @@ export class SalaService {
     return this.http.delete<number>(`${this.apiURL}/delete?idSala=${idSala}`, {
       headers: headers,
     });
+  }
+
+  reporteSalas(estados: number): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.usuarioServicio.getToken()}`,
+    });
+    return this.http.get<any>(`${this.apiURL}/reporte/sala/${estados}`, {
+      headers: headers,
+    });
+  }
+
+  getUrlArchivo(nombreArcivo: string): string {
+    return `${this.apiURLArchivos}/${nombreArcivo}`;
   }
 }

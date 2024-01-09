@@ -1,0 +1,69 @@
+body {
+  background-color: #F0F0F0;
+}
+.btn-primary {
+    background-color: #3D5057;
+    border: none;
+    font-weight: bold;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
+  }
+  #btnIngresar:active,
+  #btnIngresar:focus {
+    background-color: #DC8127; /* Naranja */
+    border-color: #DC8127; /* Color del borde si deseas cambiarlo también */
+    border-radius: 28px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
+  }
+
+  .btn-secondary {
+    border-radius: 25px;
+  }
+    
+
+.card {
+    background-color: #F38901;
+    border-radius: 25px; 
+    box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.2); 
+
+  }
+  .card h5 {
+    color: #3D5057; /* Cambia el color del texto a blanco */
+    font-weight: bold; /* Aplica el estilo en negrita */
+    text-decoration: underline; /* Aplica un subrayado */
+    text-underline-offset: 12px;
+  }
+  .card label {
+    color: white; /* Cambia el color del texto a blanco */
+  }
+  
+.form-control {
+    border-radius: 25px; 
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
+  }
+
+  .rounded-eye {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); 
+  }
+
+  /*PARA LA ALERTA DE USUARIO REGISTRADO*/
+  /* Redondear los bordes */
+  div:where(.swal2-container) div:where(.swal2-popup) {
+  border-radius: 25px; /* Ajusta el valor según tu preferencia */
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.25); /* Ajusta los valores de sombra según tus preferencias */
+}
+
+/* Agregar sombra */
+
+::ng-deep .swal2-popup.swal2-modal.swal2-icon-success.swal2-show,
+::ng-deep .btn-secondary {
+  border-radius: 25px;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.25);
+}
+
+
+
+  

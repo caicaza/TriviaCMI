@@ -1,6 +1,6 @@
 <body class="justify-content-center align-items-center">
   <div class="container-orange py-2">
-    <div class="row">
+    <div class="row" *ngIf="!isLogin2">
       <!-- Contenido derecho -->
       <div class="col mx-2">
         <button
@@ -39,11 +39,11 @@
             type="text"
             class="form-control"
             style="background-color: #fff"
-            placeholder="Sala..."
+            placeholder="Ingrese el nombre de la sala"
             [(ngModel)]="textoBuscar"
             (keyup.enter)="buscar()"
           />
-          <button class="btn btn-primary" type="button">
+          <button class="btn btn-primary" type="button" (click)="buscar()">
             <img src="assets/Icons/Lupa.svg" alt="Icono" class="icono-svg2" />
           </button>
         </div>
@@ -67,7 +67,29 @@
     <!-- SALAS  -->
     <div class="container">
       <div class="row">
-        <div class="col-md-6" *ngFor="let sala of misSalas">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li
+              [class.active]="elementoActivo == 0"
+              class="breadcrumb-item"
+              style="cursor: pointer"
+            >
+              <a (click)="todasLasSalas()">Todas las Salas</a>
+            </li>
+            <li
+              [class.active]="elementoActivo == 1"
+              class="breadcrumb-item"
+              aria-current="page"
+              style="cursor: pointer"
+            >
+              <a (click)="salasRecientes2()">Últimas salas visitas</a>
+            </li>
+          </ol>
+        </nav>
+        <!--  <div class="col py-2">{{ msjSalas }}</div> -->
+      </div>
+      <div class="row">
+        <div class="col-md-6" *ngFor="let sala of cardsToShow">
           <!-- <a
             routerLink="/EntradaSala"
             [queryParams]="{ idSala: sala.idSala }"
@@ -77,7 +99,7 @@
             <div class="card-body">
               <div class="row align-items-center">
                 <div
-                  class="col-sm-6 col-lg-6 align-items-center text-center px-sm-5"
+                  class="col-sm-6 col-lg-6 align-items-center text-center px-sm-2 px-0"
                 >
                   <img
                     [src]="getImageSala(sala.imagen)"
@@ -90,17 +112,27 @@
                   class="col-sm-6 col-lg-6 align-items-center text-center text-lg-start my-3"
                 >
                   <div class="container">
-                    <div class="row">
+                    <div style="text-align: center; margin: 0 auto">
                       {{ sala.nombre }}
                     </div>
-                    <button
-                      class="btn btn-primary btn-md my-2"
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal"
-                      (click)="abrirModal(sala.idSala)"
-                    >
-                      Ingresar
-                    </button>
+
+                    <div style="text-align: center; margin: 0 auto">
+                      <button
+                        class="btn btn-primary btn-md my-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        (click)="abrirModal(sala)"
+                      >
+                        Ingresar
+                      </button>
+                      <button
+                        class="btn btn-primary ms-2"
+                        (click)="cambiarPag('/RankingChallengers', sala.idSala)"
+                      >
+                        Ranking
+                      </button>
+                    </div>
+
                     <!-- <div class="row">id: {{ sala.idSala }}</div> -->
                   </div>
                 </div>
@@ -110,6 +142,41 @@
           <!--  </a> -->
         </div>
       </div>
+
+      <div class="container" style="height: 15px"></div>
+
+      <!-- Paginación de Bootstrap -->
+      <nav aria-label="Page navigation modal-2">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a
+              class="page-link"
+              (click)="onPageChange(currentPage - 1)"
+              aria-label="Previous"
+            >
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li
+            class="page-item"
+            *ngFor="let page of pages"
+            [class.active]="currentPage === page"
+          >
+            <a class="page-link" (click)="onPageChange(page)">{{ page }}</a>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === pages.length">
+            <a
+              class="page-link"
+              (click)="onPageChange(currentPage + 1)"
+              aria-label="Next"
+            >
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="container" style="height: 15px"></div>
     </div>
   </div>
 

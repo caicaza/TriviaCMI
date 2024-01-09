@@ -1,146 +1,452 @@
 <!-- <app-esperar-jchallengers ></app-esperar-jchallengers>
- --><!-- BOTONES EN FORMA SENOSOIDAL
  -->
 
-  <!-- Modal -->
-
-
-
-  <div class="modal-container">
-    
-    <div class="modal fade mobile-modal " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
-      <div  class="container containerMsj text-center" *ngIf="mostrarEspera" >
-        <p id="animated-dots" style="font-size: 15px;">
-          Obteniendo Resultados de otros jugadores
-        </p> 
-      </div>  
-      <div class="modal-dialog modal-dialog-centered" style="position: relative;">
-
-        
-            <div class="container " style="position: absolute; z-index: 1;">
-          <div class="row">
-            <div class="modal-content">
-              <div>
-               <!--  <div class="col">
-                  <div class="row">
-                    {{countdown}}
-                  </div>
-                </div> -->
-                
-                <div class="modal-title m-4 ">
-    
-                  <div class="row my-2">
-                    <div class="col-6 ml-2">
-                      {{numPreguntasContestadas+1}}/{{listaDePreguntas.length}}
-                    </div>
-                    <div class="col-6 te" style="color: orange; text-align: right;">
-                      {{countdown}} <strong style="font-size: small;">SEGUNDOS</strong> 
-                    </div>
-                  </div>
-    
-                  <div class="row text-center">
-                    <div class="col">
-                      <h5 style="font-weight: bold;">
-                        {{preguntaTexto}}
-                      </h5>
-                    </div>
-                  </div>
-                </div>
-    
-              </div>
-                        
-              <div class="modal-body">
-                <div class="container">
-                  <div class="row">
-                      <div class="col text-center">
-                        <div *ngFor="let miOpcion of actualOpcionList; let i = index">
-                          <button type="button" class="btn btn-secondary btn-block text-center my-2"
-                            (click)="closeModal(i)"
-                            [ngClass]="{'respuesta-correcta': miOpcion.correcta==1 && botonSeleccionado[i], 'respuesta-incorrecta': miOpcion.correcta==0 && botonSeleccionado[i], 
-                          }">
-                            {{ miOpcion.nombre }} 
-                          </button>
-                        </div>
-                      </div>
-                  </div>
-      
-                </div>
-              </div>
-    
-            </div>
-          </div>
-    
-          <div class="col py-2">
+ <div class="modal-container text-center">
+  <div
+    class="modal fade mobile-modal"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+  >
+    <div
+      class="containerMsj text-center"
+      *ngIf="mostrarEspera"
+      style="width: 100%"
+    >
+      <div class="container" style="width: 100%; height: 100%; z-index: 2">
+        <div class="centered">
+          <div class="container">
             <div class="row">
-              <div  *ngIf="mostrarAlert" class="alert alert-success text-center" role="alert">
-                ¡GENIAL!
-              </div>
-              <div  *ngIf="mostrarWrongAlert" class="alert alert-danger text-center" role="alert">
-                
-                {{Mensaje_error}}
-              </div>
-    
+              <div class="col"></div>
             </div>
-          </div>      
-        </div>  
-      </div>  
-      
-    
-    </div>
-  
-  </div>
-  
-  <!-- FONDO DEL JUEGO-->
-  <body  id="main-body"style="overflow: hidden;">
-    <div class="containerFondo"  id="containerFondo" style=" width: 100%;height: 100vh; position: relative; z-index: 0;"> 
-      <div class="container" style="width: 100%;height: 100%; position: absolute; z-index: 2;">
-        <div class="circle circle-sm circle-md circle-lg">
-          <div class="content text-center" style="font-size: 25px; color: orange; font-weight: bold;">
-            <div>
-              <div [@jugadoresChanged]="animationState" style="font-size: 40px;">
-                {{ numerodeJugadores }}
+
+            <div class="row">
+              <div class="col">
+                <p
+                  id="animated-dots"
+                  style="font-size: 18px; font-weight: bold"
+                >
+                  <!-- {{ msjResultados }} -->
+                  Revisando Respuestas
+                </p>
               </div>
-              Jugadores
-            
             </div>
-    
+
+            <div class="position-relative row">
+              <div class="col-sm-6 col-12 position-absolute top-0 start-50 translate-middle-x " >
+                <div class="text-center" style="position: relative">
+                  <p-progressBar 
+                  [value]="valorKnob"                                 
+                  valueColor="#F29523"
+                  ></p-progressBar>
+
+                  <!-- <p-knob
+                    [(ngModel)]="valorKnob"
+                    [size]="200"
+                    [showValue]="false"
+                    [disabled]="true"
+                    valueColor="#F29523"
+                  ></p-knob> -->
+
+                  <!-- <div
+                    class="position-absolute top-50 start-50 translate-middle text-center"
+                    style="font-size: 25px; color: orange; font-weight: bold"
+                  >
+                    <div style="transform: translate(8px, -30px)">
+                      {{ countdown }}
+                    </div>
+                  </div>
+                  <img
+                    src="assets/Imagenes Juego/STemporizador.png"
+                    alt="CirculoCentral"
+                    style="width: 300px; height: auto"
+                  /> -->
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      
-      <div id="circle-container" class="container" style="width: 100%;height: 100%; position: absolute; z-index: 4;" *ngFor="let circle of circles; let i = index" [style.left]="circle.left" [style.top]="circle.top">
-        
-          <div class="container-circle">
-            <div class="circle-wrapper">
-              
-              <div class="circle-Player" style="position: relative;">
-                
-                <div style="position: absolute;z-index: 1;">  {{ texts[i] }}</div>
-               
-                <img [src]="mostrarJugadorVivo ? imgJugadorVivo : imgJugadorMuerto" alt="Imagen animada" />
-                <img *ngIf="!mostrarJugadorVivo" [src]="imgXEliminado" style="position: absolute;z-index: 2;"/>
+    </div>
+
+    <!--       Mensaje Eliminados
+-->
+    <!-- <div
+      class="containerMsj text-center"
+      *ngIf="mostrarEliminados"
+      style="width: 100%"
+    >
+      <div class="container" style="width: 100%; height: 100%; z-index: 2">
+        <div class="centered">
+          <div class="text-center">
+            <img
+              src="assets/Imagenes Juego/SCiculo_Conteo.png"
+              alt="CirculoCentral"
+              style="width: 300px; height: auto"
+            />
+          </div>
+
+          <div
+            class="text-overlay"
+            style="font-size: 25px; color: orange; font-weight: bold"
+          >
+            <div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-6">
+                    <div style="font-size: 60px; text-align: right">
+                      {{ numerodeEliminados }}
+                    </div>
+                  </div>
+                  <div class="col-6 my-3">
+                    <img
+                      class="imgDeath"
+                      src="assets/Imagenes Juego/SEliminado.png"
+                      alt="Death"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {{ txtJugadorX }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <!--       MODAL
+-->
+    <div class="modal-dialog modal-dialog-centered" style="position: relative">
+      <div class="modal-content">
+        <div>
+          <div class="modal-title m-4">
+            <div class="row">
+              <div class="col text-center">
+                <div
+                  *ngIf="mostrarAlert"
+                  class="alert alert-success"
+                  role="alert"
+                >
+                  ¡GENIAL!
+                </div>
+
+                <div
+                  *ngIf="mostrarWrongAlert"
+                  class="alert alert-danger"
+                  role="alert"
+                >
+                  {{ Mensaje_error }}
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="!mostrarWrongAlert">
+              <div *ngIf="!mostrarAlert" class="row my-2">
+                <div class="col-6 ml-2" style="text-align: left">
+                  {{ numPreguntasContestadas + 1 }}/{{
+                    listaDePreguntas.length
+                  }}
+                </div>
+                <div class="col-6 te" style="color: orange; text-align: right">
+                  {{ countdown }}
+                  <strong style="font-size: small">SEGUNDOS</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="row text-center">
+              <div class="col">
+                <h5 style="font-weight: bold">
+                  {{ preguntaTexto }}
+                </h5>
               </div>
             </div>
           </div>
-        
-        
-        
-        <!-- <div class="container-circle">
-          <div class="circle-wrapper">
-            <div class="circle-Player">{{ texts[i] }}</div>
-          </div>
-        </div> -->
-      </div> 
+        </div>
 
-  
+        <div class="modal-body">
+          <div>
+            <div class="row">
+              <div class="col text-center">
+                <div *ngFor="let miOpcion of actualOpcionList; let i = index">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col"></div>
+                      <div class="col"></div>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    class="btn custom-btn btn-secondary btn-block text-center my-2"
+                    (click)="closeModal(i)"
+                    [ngClass]="{'respuesta-correcta': miOpcion.correcta==1 && botonSeleccionado[i], 'respuesta-incorrecta': miOpcion.correcta==0 && botonSeleccionado[i], 
+                         }"
+                    style="position: relative"
+                  >
+                    {{ miOpcion.nombre }}
+
+                    <!--  <div
+                      class="position-absolute top-50 end-0 translate-middle-y"
+                    >
+                      <div
+                        style="position: relative; width: 40px; height: 40px"
+                        *ngIf="mostrarNumResp"
+                      >
+                        
+                      </div>
+                    </div> -->
+                    <!-- <div
+                      class="position-absolute top-50 start-50 translate-middle-y"
+                      *ngIf="miOpcion.correcta == 0 && botonSeleccionado[i]"
+                    >
+                      <img
+                        src="assets/Imagenes Juego/SEliminado.png"
+                        alt="XOpciones"
+                        style="width: 40px; height: 40px"
+                      />
+                    </div> -->
+
+                    <div
+                      class="position-absolute top-50 start-100 translate-middle"
+                      *ngIf="miOpcion.correcta == 0 && botonSeleccionado[i]"
+                    >
+                      <img
+                        src="assets/Imagenes Juego/S2Mal.png"
+                        alt="XOpciones"
+                        style="width: 40px; height: 40px"
+                      />
+                    </div>
+                    <!--  OPCION CORRECTA -->
+                    <div
+                      class="position-absolute top-50 start-100 translate-middle"
+                      *ngIf="miOpcion.correcta == 1 && botonSeleccionado[i]"
+                    >
+                      <img
+                        src="assets/Imagenes Juego/S2Bien.png"
+                        alt="XOpciones"
+                        style="width: 40px; height: 40px"
+                      />
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FONDO DEL JUEGO-->
+<body id="main-body">
+  <div class="container" style="position: relative; padding: 0">
+    <!-- <div class="container" style="width: 100%; height: 100%; z-index: 2">
+      <div class="centered">
+        <div class="text-center">
+          <img
+            src="assets/Imagenes Juego/SCiculo_Conteo.png"
+            alt="CirculoCentral"
+            style="width: 300px; height: auto"
+          />
+        </div>
+
+        <div
+          class="text-overlay"
+          style="font-size: 25px; color: orange; font-weight: bold"
+        >
+          <div>
+            <div [@jugadoresChanged]="animationState" style="font-size: 40px">
+              {{ numerodeJugadores }}
+            </div>
+             {{ txtJugadorX }} 
+            Jugadores
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <!--     parte de arriba
+ -->
+    <div
+      class="container position-relative text-center"
+      style="width: 100%; height: auto; padding: 0"
+    >
+      <div class="container" style="padding: 0">
+        <!-- TITULO JUGADORES EN SALA -->
+        <!-- Aparece solo en movil -->
+        <img
+          class="d-sm-none"
+          src="assets/Imagenes Juego/S2JugadpresSalaMovil.png"
+          alt="imagen superior"
+          style="max-width: 100%; height: auto"
+          *ngIf="fondoPreguntas"
+        />
+        <!--NO  Aparece solo en movil -->
+        <img
+          class="d-none d-sm-block d-md-block d-lg-block d-lg-block"
+          src="assets/Imagenes Juego/S2JugadpresSalaWeb.png"
+          alt="imagen superior"
+          style="max-width: 100%; height: auto"
+          *ngIf="fondoPreguntas"
+        />
+
+        <!-- TITULO ELIMINADOS EN SALA -->
+        <!-- Aparece solo en movil -->
+        <img
+          class="d-sm-none"
+          src="assets/Imagenes Juego/s2JugadoresEliminados.png"
+          alt="imagen superior"
+          style="max-width: 100%; height: auto"
+          *ngIf="!fondoPreguntas"
+        />
+        <!--NO  Aparece solo en movil -->
+        <img
+          class="d-none d-sm-block d-md-block d-lg-block d-lg-block"
+          src="assets/Imagenes Juego/s2JugadoresEliminadosW.png"
+          alt="imagen superior"
+          style="max-width: 100%; height: auto"
+          *ngIf="!fondoPreguntas"
+        />
+
+        <!--  <div class="imgArriba" [ngClass]="{ 'imgPreguntas': fondoPreguntas, 'imgEliminados': !fondoPreguntas }"> -->
+
+        <!--  <img class="" src="assets/Imagenes Juego/Arbol.png" alt="imagen superior" style="min-width: 100%; height: auto; "> -->
+      </div>
+      <!-- <div class="container position-absolute bottom-0 start-50 translate-middle-x" style="z-index: 2;">
+        <img class="" src="assets/Imagenes Juego/Arbol.png" alt="imagen superior" style="max-height: 120px;">
+      </div> -->
+
+      <!-- <div class="container position-absolute bottom-0 start-50 translate-middle-x" style="width: 100%; height: 25px; background-color: aqua;">
+        <img src="" alt="mini">
+        
+      
+      </div> -->
     </div>
 
-    
+    <!-- jUGADOR PRINCIPAL    
+ -->
+ 
+    <div class="container text-center pt-2 position-relative" *ngIf="jugadorYo">
+      <div class="position-absolute top-50 start-50 translate-middle">
+        <div class="txtYo">
+          {{ jugador.iniciales }}
+        </div>
+        <div>(Tú)</div>
+      </div>
+      <img class="imgYo" [src]="imgJugadorVivo" />
+    </div>
 
-    
-    
-  </body>
-   
-  
-   
-   
+    <div *ngIf="!fondoPreguntas" >
+      <div class="text-center py-2" *ngIf="isNadiePerdio" style="font-size: 20px;"> 
+        <div class="card text-center" style="box-shadow: rgba(0, 0, 0, 0.3);">
+          <div class="card-body">
+            Todos pasan a la siguiente roda.
+          </div>
+        </div>
+        
+       </div>
+     </div>
+
+    <!--     ELEMENTOS LISTA JUGADORES
+ -->
+    <div class="container elementScroll" *ngIf="viewotrosjugadores">
+      <div class="row px-3">
+        <div
+          class="col-sm-2 col-4 text-center"
+          *ngFor="let miJugador of jugadoresSurvivor; let i = index"
+        >
+
+        <!-- CIRCULO -->
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div
+
+            class="container position-relative py-3 ctranlation"
+            style="min-height: 120px; min-width: 120px;"
+            *ngIf="miJugador.idJugador !== idUsuario"s
+          >
+            <div
+              class="position-absolute top-50 start-50 translate-middle"
+              style="color: rgb(65, 65, 65); font-weight: bold; font-size: 30px"
+            >
+              <!-- <div style="transform: translate(0px,-10px);" >
+                {{ texts[i] }}
+              </div> -->
+              {{ texts[i] }}
+            </div>
+            <div
+              class="position-absolute bottom-0 start-50 translate-middle-x"
+              *ngIf="!jugadorYo"
+            >
+              <img
+                src="assets/Imagenes Juego/S2Mal2.png"
+                alt="muerto"
+                style="max-width: 40px; height: auto"
+              />
+            </div>             
+            
+            
+            <img
+              [src]="mostrarJugadorVivo ? imgJugadorVivo : imgJugadorMuerto"
+              class="img-fluid"
+              alt="Image"
+            />
+          </div>
+
+            </div>
+          </div>
+
+           <!-- NOMBRE USUARIO -->
+
+          <div class="row" style="padding-right: 0px;" >
+            <div class="col">
+              <div class="text-center">
+                 {{names[i]}} 
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        
+          
+
+          
+        
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- <div
+      id="circle-container"
+      class="container"
+      style="width: 100%; height: 100%; position: absolute; z-index: 4"
+      *ngFor="let circle of circles; let i = index"
+      [style.left.px]="circle.left"
+      [style.top.px]="circle.top"
+    >
+      <div class="container-circle">
+        <div class="circle-wrapper">
+          <div class="circle-Player" style="position: relative">
+            <div style="position: absolute; z-index: 1">{{ texts[i] }}</div>
+
+            <img
+              [src]="mostrarJugadorVivo ? imgJugadorVivo : imgJugadorMuerto"
+              alt="Imagen animada"
+            />
+            <img
+              *ngIf="!mostrarJugadorVivo"
+              [src]="imgXEliminado"
+              style="position: absolute; z-index: 2"
+            />
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</body>

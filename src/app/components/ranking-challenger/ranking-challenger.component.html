@@ -1,9 +1,32 @@
- <img src="assets/Imagenes Juego/RankingHorizontal.png" alt="Imagen de fondo" class="background-image">
+<img
+  src="assets/Imagenes Juego/RankingHorizontal.png"
+  alt="Imagen de fondo"
+  class="background-image"
+/>
 <div class="container my-4">
   <div class="row">
     <div class="col-sm-12 col-lg-6">
-      <div class="row">
-        <H3 class="my-4" style="font-weight: bold"> RESULTADOS </H3>
+      <div class="row g-3 my-4 align-items-center">
+        <div class="col-auto">
+          <h3 style="font-weight: bold">RESULTADOS</h3>
+        </div>
+        <div class="col-6">
+          <button
+            class="btn btn-primary position-relative text-center"
+            style="font-size: 15px"
+            (click)="refrescarRanking()"
+          >
+            <div>
+              <img
+                src="assets/Icons/Actualizar.svg"
+                alt="Icono"
+                class="icono-svg"
+                style="height: 22px"
+              />
+              Actualizar Resultados
+            </div>
+          </button>
+        </div>
       </div>
 
       <div class="row">
@@ -14,53 +37,74 @@
           <div class="row">
             <div class="col text-center py-2">
               <img
+                class="logoCMI"
                 src="assets/Imagenes Empresa/LogoBlanco_App.png"
                 alt="cmiBlanco"
-                style="width: 300px; height: auto"
               />
+            </div>
+            <div class="mb-3 text-center" *ngIf="idRol === 1 || idRol === 3">
+              <button
+                class="btn btn-primary btn-sm px-3"
+                (click)="descargarRanking()"
+                style="font-size: medium"
+              >
+                Descargar Ranking
+              </button>
             </div>
           </div>
           <div class="row">
-            <div class="col">
-              <div class="scrollable-list" #scrollableList>
-                <ul class="list-group">
-                  <li
-                    class="list-group-item d-flex justify-content-between align-items-center odd"
-                    *ngFor="let miJugador of listaJugadores; let i = index"
-                    [class]="i % 2 === 0 ? 'even' : 'odd'"
-                    [ngClass]="{
-                      'gris-oscuro': miJugador.usuario == nombreJugador
-                    }"
-                  >
-                    <div class="number-text mx-2">{{ i + 1 }}</div>
-                    <div class="container" style="width: 45px">
-                      <div
-                        class="circle-badge"
-                        [style.background-color]="miListadeColores[i]"
-                      >
-                        {{ miJugador.iniciales }}
-                      </div>
-                      <!-- Círculo con dos letras -->
-                    </div>
+            <div class="col" style="position: relative">
+              <div class="scrollable-list mx-auto" #scrollableList>
+                <table class="mx-auto">
+                  <tbody>
+                    <td>
+                      <ul class="list-group">
+                        <li
+                          class="list-group-item d-flex justify-content-between align-items-center odd"
+                          *ngFor="
+                            let miJugador of listaJugadores;
+                            let i = index
+                          "
+                          [class]="i % 2 === 0 ? 'even' : 'odd'"
+                          [ngClass]="{
+                            'gris-oscuro': miJugador.usuario == nombreJugador
+                          }"
+                        >
+                          <div class="number-text mx-2">{{ i + 1 }}</div>
+                          <div class="container" style="width: 45px">
+                            <div
+                              class="circle-badge"
+                              [style.background-color]="miListadeColores[i]"
+                            >
+                              {{ miJugador.iniciales }}
+                            </div>
+                            <!-- Círculo con dos letras -->
+                          </div>
 
-                    <div
-                      class="container mx-4"
-                      style="
-                        background-color: orange;
-                        border-radius: 20px;
-                        height: 40px;
-                        display: flex;
-                        align-items: center;
-                      "
-                    >
-                      <div class="player-text">{{ miJugador.usuario }}</div>
-                    </div>
-                    <!-- Texto "Jugador" alineado a la izquierda -->
-                    <span class="badge bg-primary rounded-pill custom-badge"
-                      >{{ miJugador.puntaje }} puntos</span
-                    >
-                  </li>
-                </ul>
+                          <div
+                            class="container mx-4"
+                            style="
+                              background-color: orange;
+                              border-radius: 20px;
+                              height: 40px;
+                              display: flex;
+                              align-items: center;
+                            "
+                          >
+                            <div class="player-text text-truncate">
+                              {{ miJugador.usuario }}
+                            </div>
+                          </div>
+                          <!-- Texto "Jugador" alineado a la izquierda -->
+                          <span
+                            class="badge bg-primary rounded-pill custom-badge"
+                            >{{ miJugador.puntaje }} puntos</span
+                          >
+                        </li>
+                      </ul>
+                    </td>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -70,9 +114,14 @@
 
     <div class="col-sm-12 col-lg-6">
       <div class="custom-container d-flex flex-column mb-3 my-3 text-center">
-        <div class="container xs-none sm-none md-block lg-block" style="height: 81px;"></div>
-        <div class="p-2 d-md-none d-sm-none d-none d-lg-block d-xl-block">
-          <div class="card">
+        <div
+          class="container xs-none sm-none md-block lg-block"
+          style="height: 81px"
+        ></div>
+        <div
+          class="p-2 d-md-none d-sm-none d-none d-lg-block d-xl-block text-center"
+        >
+          <div class="card mx-auto" style="max-width: 70%">
             <div class="card-top">
               <!-- Imagen con fondo naranja -->
               <img
@@ -109,3 +158,4 @@
     </div>
   </div>
 </div>
+<p-toast [styleClass]="'col-10 col-md-6 col-lg-3'"></p-toast>

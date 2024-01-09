@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
 import { Observable } from 'rxjs';
 import { Usuario } from '../model/UsuarioModel';
@@ -18,12 +18,63 @@ export class UsuarioService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
+  listaUsuario(estados: number, buscar: string): Observable<Usuario[]> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.getToken()}`,
+    });
+    return this.http.get<Usuario[]>(
+      `${this.apiURL}/list?estados=${estados}&buscar=${buscar}`,
+      {
+        headers: headers,
+      }
+    );
+  }
+
+  getUsuario(estados: number, idUsuario: number) {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.getToken()}`,
+    });
+    return this.http.get<Usuario[]>(
+      `${this.apiURL}/list/${estados}/${idUsuario}`,
+      {
+        headers: headers,
+      }
+    );
+  }
+
   crearUsuario(modelo: Usuario): Observable<Usuario> {
     return this.http.post<Usuario>(`${this.apiURL}/Create`, modelo);
   }
 
-  loginUsuario(modelo: LoginUsuario): Observable<LoginUsuario> {
-    return this.http.post<LoginUsuario>(`${this.apiURL}/auth`, modelo);
+  editarUsuario(modelo: Usuario): Observable<Usuario> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.getToken()}`,
+    });
+    return this.http.put<Usuario>(`${this.apiURL}/Update`, modelo, {
+      headers: headers,
+    });
+  }
+
+  eliminarUsuario(idUsuario: number) {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.getToken()}`,
+    });
+    return this.http.delete<Usuario>(
+      `${this.apiURL}/Delete?idUsuario=${idUsuario}`,
+      {
+        headers: headers,
+      }
+    );
+  }
+
+  loginUsuario(
+    modelo: LoginUsuario,
+    tipoLogin: number
+  ): Observable<LoginUsuario> {
+    return this.http.post<LoginUsuario>(
+      `${this.apiURL}/auth?tipoLogin=${tipoLogin}`,
+      modelo
+    );
   }
 
   loggedIn() {
@@ -31,11 +82,12 @@ export class UsuarioService {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('id');
-    localStorage.removeItem('user');
-    localStorage.removeItem('rol');
+    this.removeLocalItems();
     this.router.navigate(['/Iniciar_Sesion']);
+  }
+
+  removeLocalItems() {
+    localStorage.removeItem('token');
   }
 
   getToken() {
@@ -43,26 +95,58 @@ export class UsuarioService {
   }
 
   getRol() {
-    if (!localStorage.getItem('rol')) {
+    let idRol = '';
+
+    if (this.loggedIn()) {
+      let token = this.getToken();
+      const decodeToken = this.helper.decodeToken(token!);
+      idRol = decodeToken.idRol;
+    } else {
       this.router.navigate(['/']);
     }
 
-    return localStorage.getItem('rol');
+    return idRol;
   }
 
   getIdUsuario() {
-    if (!localStorage.getItem('id')) {
+    let idUsuario = '';
+
+    if (this.loggedIn()) {
+      let token = this.getToken();
+      const decodeToken = this.helper.decodeToken(token!);
+      idUsuario = decodeToken.id;
+    } else {
       this.router.navigate(['/']);
     }
 
-    return localStorage.getItem('id');
+    return idUsuario;
   }
 
   getUserName() {
-    if (!localStorage.getItem('user')) {
+    let nombre = '';
+
+    if (this.loggedIn()) {
+      let token = this.getToken();
+      const decodeToken = this.helper.decodeToken(token!);
+      nombre = decodeToken.nombre;
+    } else {
       this.router.navigate(['/']);
     }
 
-    return localStorage.getItem('user');
+    return nombre;
+  }
+
+  getTipoLogin() {
+    let tipoLogin = '';
+
+    if (this.loggedIn()) {
+      let token = this.getToken();
+      const decodeToken = this.helper.decodeToken(token!);
+      tipoLogin = decodeToken.tipoLogin;
+    } else {
+      this.router.navigate(['/']);
+    }
+
+    return tipoLogin;
   }
 }

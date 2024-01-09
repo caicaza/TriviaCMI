@@ -40,7 +40,7 @@
                   type="text"
                   class="form-control"
                   id="username"
-                  placeholder="Ingresa tu nombre de usuario"
+                  placeholder="Ingresa tu nombre y apellido *"
                   name="nombreUsuario"
                   required
                 />
@@ -54,28 +54,66 @@
                 </small>
               </div>
 
-              <!-- MAIL USUARIO -->
+              <!-- PASSWORD USUARIO DPI-->
+              <div class="mb-3 px-md-5">
+                <div class="input-group">
+                  <input
+                    [(ngModel)]="nuevoUsuario.contrasena"
+                    type="{{ hidePassword ? 'password' : 'text' }}"
+                    class="form-control"
+                    id="password"
+                    placeholder="Ingresa tu DPI *"
+                    name="passwordUsuario"
+                    required
+                  />
+
+                  <div class="input-group-append">
+                    <span
+                      class="input-group-text rounded-eye"
+                      (click)="togglePasswordVisibility()"
+                      style="height: 46px; position: relative"
+                    >
+                      <i
+                        class="fa"
+                        [ngClass]="{
+                          'fa-eye-slash': hidePassword,
+                          'fa-eye': !hidePassword
+                        }"
+                      ></i>
+                    </span>
+                  </div>
+                </div>
+
+                <small
+                  class="ms-3"
+                  *ngIf="existeError && campo === 'clave'"
+                  style="color: rgb(255, 255, 255)"
+                  >El Dpi
+                  <span class="text-lowercase">{{ errorEncontrado }}</span>
+                </small>
+              </div>
 
               <!-- <div class="mb-3 px-md-5">
                     <input [(ngModel)]="nuevoUsuario.correo" type="email" class="form-control" id="usermail" placeholder="Ingresa tu correo" name="mailUsuario" required>
                   </div> -->
 
-              <!-- PASSWORD USUARIO -->
+              <!-- CORREO USUARIO -->
               <div class="mb-3 px-md-5">
                 <input
-                  [(ngModel)]="nuevoUsuario.contrasena"
-                  type="password"
+                  [(ngModel)]="nuevoUsuario.correo"
+                  type="email"
                   class="form-control"
-                  id="password"
-                  placeholder="Ingresa tu contraseña"
-                  name="passwordUsuario"
-                  required
+                  id="usermail"
+                  placeholder="Ingresa tu correo electrónico (opcional)"
+                  name="mailUsuario"
+                  maxlength="50"
                 />
+
                 <small
                   class="ms-3"
-                  *ngIf="existeError && campo === 'clave'"
+                  *ngIf="existeError && campo === 'correo'"
                   style="color: rgb(255, 255, 255)"
-                  >La contraseña
+                  >El correo
                   <span class="text-lowercase">{{ errorEncontrado }}</span>
                 </small>
               </div>
@@ -87,7 +125,7 @@
                   id="btnIngresar"
                   successModal
                 >
-                  {{textoRegistrar}}
+                  Registrarse
                 </button>
               </div>
               <div class="text-center py-2">

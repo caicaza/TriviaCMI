@@ -1,0 +1,220 @@
+<!-- <div
+  class="containerFondo"
+  id="containerFondo"
+  style="width: 100%; height: 100vh; max-height: 100%; position: relative"
+>
+  <div
+    class="position-absolute bottom-0 start-50 translate-middle"
+    *ngIf="finTemporizador"
+  >
+    <div class="container" style="min-height: 50%">
+      <button class="btn btn-primary btn-lg" routerLink="/MisSalas">
+        <img
+          src="assets/Icons/Puerta3.svg"
+          alt="Icono"
+          class="icono-svg mx-2"
+        />
+        Salir
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="error === true">
+    <p>{{ info }}</p>
+  </div>
+
+  <div
+    class="position-absolute top-50 start-50 translate-middle cardSize"
+    *ngIf="finTemporizador"
+  >
+    <div
+      class="card"
+      style="min-width: 90%; position: relative"
+      style="background-color: rgba(255, 0, 0, 0); border-color: transparent"
+    >
+      <img
+        src="assets/Imagenes Juego/SxFondo.png"
+        class="card-img"
+        alt="PopCard"
+      />
+      <div class="card-img-overlay">
+        <div
+          class="container-fluid my-sm-1 my-lg-4"
+          style="display: flex; flex-direction: column; height: 100%"
+        >
+          <div class="row" style="height: 35px"></div>
+
+          <div
+            class="row flex-fill align-items-center justify-content-center pe-4"
+          >
+            <div
+              class="col text-center textIniciales"
+              style="color: #f38901; font-weight: bold"
+            >
+              {{ InicialesJugador }}
+            </div>
+          </div>
+          <div class="row align-items-center justify-content-center">
+            <div class="col text-center pe-4">
+              <div
+                class="btn btnPos p-3"
+                style="
+                  background-color: #f38901;
+                  border-color: transparent;
+                  border-radius: 25px;
+                "
+              >
+                <div class="textPos" style="font-weight: bold; color: white">
+                  POSICIÓN {{ Posicion }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row flex-fill align-items-center justify-content-center">
+            <div class="col text-center">
+            
+            </div>
+          </div>
+          <div class="row" style="height: 35px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="centered" *ngIf="!finTemporizador">
+    <div class="container">
+      <div class="row">
+        <div class="col text-center">
+          <div style="position: relative">
+            <img
+              src="assets/Imagenes Juego/SHasPerdido.png"
+              class="rounded mx-auto d-block"
+              alt="panel resultados"
+              style="max-width: 90%"
+            />
+            <div
+              style="
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -40%);
+              "
+            >
+              <div style="font-size: 80px; font-weight: bold; color: #dc8127">
+                {{ seconds }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ -->
+
+ <div
+ class="container position-relative text-center"
+ style="width: 100%; height: auto; padding: 0"
+>
+ <div class="container" style="padding: 0">
+   <!-- TITULO JUGADORES EN SALA -->
+   <!-- Aparece solo en movil -->
+   <img
+     class="d-sm-none"
+     src="assets/Imagenes Juego/S2VentanaGanasteM.png"
+     alt="imagen superior"
+     style="max-width: 100%; height: auto"
+     *ngIf="fondoGanar"
+   />
+   <!--NO  Aparece solo en movil -->
+   <img
+     class="d-none d-sm-block d-md-block d-lg-block d-lg-block"
+     src="assets/Imagenes Juego/s2GenialSurivar3.png"
+     alt="imagen superior"
+     style="max-width: 100%; height: auto"
+     *ngIf="fondoGanar"
+   />
+
+   <!-- TITULO ELIMINADOS EN SALA -->
+   <!-- Aparece solo en movil -->
+   <img
+     class="d-sm-none"
+     src="assets/Imagenes Juego/S2VentanaEliminadoM.png"
+     alt="imagen superior"
+     style="max-width: 100%; height: auto"
+     *ngIf="!fondoGanar"
+   />
+   <!--NO  Aparece solo en movil -->
+   <img
+     class="d-none d-sm-block d-md-block d-lg-block d-lg-block"
+     src="assets/Imagenes Juego/S2EliminadoSurvivor3.png"
+     alt="imagen superior"
+     style="max-width: 100%; height: auto"
+     *ngIf="!fondoGanar"
+   />
+ </div>
+</div>
+<!-- Circulo iniciales
+-->
+<div class="container text-center pt-2 position-relative">
+ <div class="position-relative">
+   <div class="position-absolute top-50 start-50 translate-middle">
+     <div class="txtYo" style="color: rgb(73, 73, 73)">
+       {{ InicialesJugador }}
+     </div>
+   </div>
+   <img class="imgYo" [src]="imgJugadorVivo" />
+   <div
+     class="position-absolute top-100 start-50 translate-middle"
+     *ngIf="!fondoGanar"
+   >
+     <img
+       src="assets/Imagenes Juego/S2Mal2.png"
+       alt="muerto"
+       style="max-width: 70px; height: auto"
+     />
+   </div>
+ </div>
+</div>
+
+<div class="container" style="height: 75px"></div>
+
+<div class="container text-center py-2">
+ <strong style="color: orange; font-size: 35px"
+   >Puntos Obtenidos:
+   <p style="color: rgb(73, 73, 73)">{{ Puntos }}</p></strong
+ >
+</div>
+
+<div class="container" style="height: 10px"></div>
+
+<div class="text-center" *ngIf="!verRanking">
+ Cuando el juego termine puedes ver el ranking.
+</div>
+
+<div class="container text-center" style="min-height: 50%">
+ <div class="row py-2" *ngIf="verRanking">
+   
+   <div class="col">
+     <button
+       class="btn btn-secondary btn-lg px-5"
+       (click)="cambiarPag('/RankingChallengers', idSala)"
+     >
+       Ranking
+     </button>
+   </div>
+ </div>
+
+ <div class="row py-2">
+   <div class="col">
+     <button class="btn btn-primary btn-lg" routerLink="/MisSalas">
+       <img
+         src="assets/Icons/Puerta3.svg"
+         alt="Icono"
+         class="icono-svg mx-2"
+       />
+       Salir
+     </button>
+   </div>
+ </div>
+</div>
